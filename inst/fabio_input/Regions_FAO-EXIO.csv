@@ -1,0 +1,256 @@
+Country.Code;Country;EXIOregion;EXIO2digit;EXIOcode
+1;Armenia;RoW Asia and Pacific;WA;45
+2;Afghanistan;RoW Asia and Pacific;WA;45
+3;Albania;RoW Europe;WE;47
+4;Algeria;RoW Africa;WF;48
+5;American Samoa;RoW Asia and Pacific;WA;45
+6;Andorra;RoW Europe;WE;47
+7;Angola;RoW Africa;WF;48
+8;Antigua and Barbuda;RoW America;WL;46
+9;Argentina;RoW America;WL;46
+10;Australia;Australia;AU;38
+11;Austria;Austria;AT;1
+12;Bahamas;RoW America;WL;46
+13;Bahrain;RoW Middle East;WM;49
+14;Barbados;RoW America;WL;46
+15;Belgium-Luxembourg;#NV;#NV;#NV
+16;Bangladesh;RoW Asia and Pacific;WA;45
+17;Bermuda;RoW America;WL;46
+18;Bhutan;RoW Asia and Pacific;WA;45
+19;Bolivia (Plurinational State of);RoW America;WL;46
+20;Botswana;RoW Africa;WF;48
+21;Brazil;Brazil;BR;34
+22;Aruba;RoW America;WL;46
+23;Belize;RoW America;WL;46
+24;British Indian Ocean Territory;RoW Asia and Pacific;WA;45
+25;Solomon Islands;RoW Asia and Pacific;WA;45
+26;Brunei Darussalam;RoW Asia and Pacific;WA;45
+27;Bulgaria;Bulgaria;BG;3
+28;Myanmar;RoW Asia and Pacific;WA;45
+29;Burundi;RoW Africa;WF;48
+30;Antarctica;RoW Asia and Pacific;WA;45
+31;Bouvet Island;RoW Asia and Pacific;WA;45
+32;Cameroon;RoW Africa;WF;48
+33;Canada;Canada;CA;32
+34;Canton and Enderbury Islands;#NV;#NV;#NV
+35;Cabo Verde;RoW Africa;WF;48
+36;Cayman Islands;RoW America;WL;46
+37;Central African Republic;RoW Africa;WF;48
+38;Sri Lanka;RoW Asia and Pacific;WA;45
+39;Chad;RoW Africa;WF;48
+40;Chile;RoW America;WL;46
+41;China, mainland;China;CN;31
+42;Christmas Island;RoW Asia and Pacific;WA;45
+43;Cocos (Keeling) Islands;RoW Asia and Pacific;WA;45
+44;Colombia;RoW America;WL;46
+45;Comoros;RoW Africa;WF;48
+46;Congo;RoW Africa;WF;48
+47;Cook Islands;RoW Asia and Pacific;WA;45
+48;Costa Rica;RoW America;WL;46
+49;Cuba;RoW America;WL;46
+50;Cyprus;Cyprus;CY;4
+51;Czechoslovakia;#NV;#NV;#NV
+52;Azerbaijan;RoW Asia and Pacific;WA;45
+53;Benin;RoW Africa;WF;48
+54;Denmark;Denmark;DK;7
+55;Dominica;RoW America;WL;46
+56;Dominican Republic;RoW America;WL;46
+57;Belarus;RoW Europe;WE;47
+58;Ecuador;RoW America;WL;46
+59;Egypt;RoW Middle East;WM;49
+60;El Salvador;RoW America;WL;46
+61;Equatorial Guinea;RoW Africa;WF;48
+62;Ethiopia PDR;RoW Africa;WF;48
+63;Estonia;Estonia;EE;8
+64;Faroe Islands;#NV;#NV;#NV
+65;Falkland Islands (Malvinas);RoW America;WL;46
+66;Fiji;RoW Asia and Pacific;WA;45
+67;Finland;Finland;FI;10
+68;France;France;FR;11
+69;French Guiana;RoW America;WL;46
+70;French Polynesia;RoW Asia and Pacific;WA;45
+71;French Southern and Antarctic Territories;#NV;#NV;#NV
+72;Djibouti;RoW Africa;WF;48
+73;Georgia;RoW Asia and Pacific;WA;45
+74;Gabon;RoW Africa;WF;48
+75;Gambia;RoW Africa;WF;48
+79;Germany;Germany;DE;6
+80;Bosnia and Herzegovina;RoW Europe;WE;47
+81;Ghana;RoW Africa;WF;48
+82;Gibraltar;RoW Europe;WE;47
+83;Kiribati;RoW Asia and Pacific;WA;45
+84;Greece;Greece;GR;12
+85;Greenland;RoW America;WL;46
+86;Grenada;RoW America;WL;46
+87;Guadeloupe;RoW America;WL;46
+88;Guam;RoW Asia and Pacific;WA;45
+89;Guatemala;RoW America;WL;46
+90;Guinea;RoW Africa;WF;48
+91;Guyana;RoW America;WL;46
+92;Heard and McDonald Islands;RoW Asia and Pacific;WA;45
+93;Haiti;RoW America;WL;46
+94;Holy See;RoW Europe;WE;47
+95;Honduras;RoW America;WL;46
+96;China, Hong Kong SAR;RoW Asia and Pacific;WA;45
+97;Hungary;Hungary;HU;14
+98;Croatia;Croatia;HR;13
+99;Iceland;RoW Europe;WE;47
+100;India;India;IN;35
+101;Indonesia;Indonesia;ID;43
+102;Iran (Islamic Republic of);RoW Middle East;WM;49
+103;Iraq;RoW Middle East;WM;49
+104;Ireland;Ireland;IE;15
+105;Israel;RoW Middle East;WM;49
+106;Italy;Italy;IT;16
+107;Côte d'Ivoire;RoW Africa;WF;48
+108;Kazakhstan;RoW Asia and Pacific;WA;45
+109;Jamaica;RoW America;WL;46
+110;Japan;Japan;JP;30
+111;Johnston Island;#NV;#NV;#NV
+112;Jordan;RoW Middle East;WM;49
+113;Kyrgyzstan;RoW Asia and Pacific;WA;45
+114;Kenya;RoW Africa;WF;48
+115;Cambodia;RoW Asia and Pacific;WA;45
+116;Democratic People's Republic of Korea;RoW Asia and Pacific;WA;45
+117;Republic of Korea;South Korea;KR;33
+118;Kuwait;RoW Middle East;WM;49
+119;Latvia;Latvia;LV;19
+120;Lao People's Democratic Republic;RoW Asia and Pacific;WA;45
+121;Lebanon;RoW Middle East;WM;49
+122;Lesotho;RoW Africa;WF;48
+123;Liberia;RoW Africa;WF;48
+124;Libya;RoW Africa;WF;48
+125;Liechtenstein;RoW Europe;WE;47
+126;Lithuania;Lithuania;LT;17
+127;Marshall Islands;RoW Asia and Pacific;WA;45
+128;China, Macao SAR;RoW Asia and Pacific;WA;45
+129;Madagascar;RoW Africa;WF;48
+130;Malawi;RoW Africa;WF;48
+131;Malaysia;RoW Asia and Pacific;WA;45
+132;Maldives;RoW Asia and Pacific;WA;45
+133;Mali;RoW Africa;WF;48
+134;Malta;Malta;MT;20
+135;Martinique;RoW America;WL;46
+136;Mauritania;RoW Africa;WF;48
+137;Mauritius;RoW Africa;WF;48
+138;Mexico;Mexico;MX;36
+139;Midway Island;#NV;#NV;#NV
+140;Monaco;RoW Europe;WE;47
+141;Mongolia;RoW Asia and Pacific;WA;45
+142;Montserrat;RoW America;WL;46
+143;Morocco;RoW Africa;WF;48
+144;Mozambique;RoW Africa;WF;48
+145;Micronesia (Federated States of);RoW Asia and Pacific;WA;45
+146;Republic of Moldova;RoW Europe;WE;47
+147;Namibia;RoW Africa;WF;48
+148;Nauru;RoW Asia and Pacific;WA;45
+149;Nepal;RoW Asia and Pacific;WA;45
+150;Netherlands;Netherlands;NL;21
+151;Netherlands Antilles;RoW America;WL;46
+152;Neutral Zone;#NV;#NV;#NV
+153;New Caledonia;RoW Asia and Pacific;WA;45
+154;The former Yugoslav Republic of Macedonia;RoW Europe;WE;47
+155;Vanuatu;RoW Asia and Pacific;WA;45
+156;New Zealand;RoW Asia and Pacific;WA;45
+157;Nicaragua;RoW America;WL;46
+158;Niger;RoW Africa;WF;48
+159;Nigeria;RoW Africa;WF;48
+160;Niue;RoW Asia and Pacific;WA;45
+161;Norfolk Island;RoW Asia and Pacific;WA;45
+162;Norway;Norway;NO;42
+163;Northern Mariana Islands;RoW Asia and Pacific;WA;45
+164;Pacific Islands Trust Territory;#NV;#NV;#NV
+165;Pakistan;RoW Asia and Pacific;WA;45
+166;Panama;RoW America;WL;46
+167;Czech Republic;Czech Republic;CZ;5
+168;Papua New Guinea;RoW Asia and Pacific;WA;45
+169;Paraguay;RoW America;WL;46
+170;Peru;RoW America;WL;46
+171;Philippines;RoW Asia and Pacific;WA;45
+172;Pitcairn Islands;RoW Asia and Pacific;WA;45
+173;Poland;Poland;PL;22
+174;Portugal;Portugal;PT;23
+175;Guinea-Bissau;RoW Africa;WF;48
+176;Timor-Leste;RoW Asia and Pacific;WA;45
+177;Puerto Rico;RoW America;WL;46
+178;Eritrea;RoW Africa;WF;48
+179;Qatar;RoW Middle East;WM;49
+180;Palau;RoW Asia and Pacific;WA;45
+181;Zimbabwe;RoW Africa;WF;48
+182;Réunion;RoW Africa;WF;48
+183;Romania;Romania;RO;24
+184;Rwanda;RoW Africa;WF;48
+185;Russian Federation;Russia;RU;37
+186;Serbia and Montenegro;RoW Europe;WE;47
+187;Saint Helena, Ascension and Tristan da Cunha;RoW Africa;WF;48
+188;Saint Kitts and Nevis;RoW America;WL;46
+189;Saint Lucia;RoW America;WL;46
+190;Saint Pierre and Miquelon;RoW America;WL;46
+191;Saint Vincent and the Grenadines;RoW America;WL;46
+192;San Marino;RoW Europe;WE;47
+193;Sao Tome and Principe;RoW Africa;WF;48
+194;Saudi Arabia;RoW Middle East;WM;49
+195;Senegal;RoW Africa;WF;48
+196;Seychelles;RoW Africa;WF;48
+197;Sierra Leone;RoW Africa;WF;48
+198;Slovenia;Slovenia;SI;26
+199;Slovakia;Slovakia;SK;27
+200;Singapore;RoW Asia and Pacific;WA;45
+201;Somalia;RoW Africa;WF;48
+202;South Africa;South Africa;ZA;44
+203;Spain;Spain;ES;9
+205;Western Sahara;RoW Africa;WF;48
+206;Sudan (former);RoW Africa;WF;48
+207;Suriname;RoW America;WL;46
+208;Tajikistan;RoW Asia and Pacific;WA;45
+209;Swaziland;RoW Africa;WF;48
+210;Sweden;Sweden;SE;25
+211;Switzerland;Switzerland;CH;39
+212;Syrian Arab Republic;RoW Middle East;WM;49
+213;Turkmenistan;RoW Asia and Pacific;WA;45
+214;China, Taiwan Province of;Taiwan;TW;41
+215;United Republic of Tanzania;RoW Africa;WF;48
+216;Thailand;RoW Asia and Pacific;WA;45
+217;Togo;RoW Africa;WF;48
+218;Tokelau;RoW Asia and Pacific;WA;45
+219;Tonga;RoW Asia and Pacific;WA;45
+220;Trinidad and Tobago;RoW America;WL;46
+221;Oman;RoW Middle East;WM;49
+222;Tunisia;RoW Africa;WF;48
+223;Turkey;Turkey;TR;40
+224;Turks and Caicos Islands;RoW America;WL;46
+225;United Arab Emirates;RoW Middle East;WM;49
+226;Uganda;RoW Africa;WF;48
+227;Tuvalu;RoW Asia and Pacific;WA;45
+228;USSR;#NV;#NV;#NV
+229;United Kingdom;United Kingdom;GB;28
+230;Ukraine;RoW Europe;WE;47
+231;United States of America;United States;US;29
+232;US Minor Is.;RoW Asia and Pacific;WA;45
+233;Burkina Faso;RoW Africa;WF;48
+234;Uruguay;RoW America;WL;46
+235;Uzbekistan;RoW Asia and Pacific;WA;45
+236;Venezuela (Bolivarian Republic of);RoW America;WL;46
+237;Viet Nam;RoW Asia and Pacific;WA;45
+238;Ethiopia;RoW Africa;WF;48
+239;British Virgin Islands;RoW America;WL;46
+240;United States Virgin Islands;RoW America;WL;46
+242;Wake Island;#NV;#NV;#NV
+243;Wallis and Futuna Islands;RoW Asia and Pacific;WA;45
+244;Samoa;RoW Asia and Pacific;WA;45
+248;Yugoslav SFR;#NV;#NV;#NV
+249;Yemen;RoW Middle East;WM;49
+250;Democratic Republic of the Congo;RoW Africa;WF;48
+251;Zambia;RoW Africa;WF;48
+252;Unspecified;#NV;#NV;#NV
+255;Belgium;Belgium;BE;2
+256;Luxembourg;Luxembourg;LU;18
+258;Anguilla;RoW America;WL;46
+260;Svalbard and Jan Mayen Islands;RoW Europe;WE;47
+270;Mayotte;RoW Africa;WF;48
+271;South Georgia and the South Sandwich Islands;RoW Asia and Pacific;WA;45
+272;Serbia;RoW Europe;WE;47
+273;Montenegro;RoW Europe;WE;47
+299;Occupied Palestinian Territory;RoW Middle East;WM;49
+351;China;China;CN;31
+999;RoW;#NV;#NV;#NV

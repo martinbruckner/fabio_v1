@@ -1,0 +1,47 @@
+Nr;ISO;Country;Continent
+9;AUT;Austria;EU
+17;BRA;Brazil;LAM
+21;BGR;Bulgaria;EU
+25;CAN;Canada;NAM
+31;CHN;China, mainland;ASI
+36;CYP;Cyprus;EU
+40;DNK;Denmark;EU
+45;EGY;Egypt;AFR
+47;EST;Estonia;EU
+49;FIN;Finland;EU
+50;FRA;France;EU
+56;DEU;Germany;EU
+60;GRC;Greece;EU
+68;HUN;Hungary;EU
+69;HRV;Croatia;EU
+71;IND;India;ASI
+75;IRL;Ireland;EU
+76;ISR;Israel;ASI
+77;ITA;Italy;EU
+81;JPN;Japan;ASI
+84;KEN;Kenya;AFR
+89;LVA;Latvia;EU
+95;LTU;Lithuania;EU
+102;MLT;Malta;EU
+105;MEX;Mexico;LAM
+112;NLD;Netherlands;EU
+120;NGA;Nigeria;AFR
+121;NOR;Norway;EUR
+124;CZE;Czech Republic;EU
+129;POL;Poland;EU
+130;PRT;Portugal;EU
+139;RUS;Russian Federation;ASI
+145;SAU;Saudi Arabia;ASI
+148;SVN;Slovenia;EU
+149;SVK;Slovakia;EU
+151;SOM;Somalia;AFR
+152;ZAF;South Africa;AFR
+153;ESP;Spain;EU
+157;SWE;Sweden;EU
+158;CHE;Switzerland;EUR
+168;TUR;Turkey;EUR
+172;GBR;United Kingdom;EU
+174;USA;United States of America;NAM
+183;ROU;Romania;EU
+186;BEL;Belgium;EU
+187;LUX;Luxembourg;EU

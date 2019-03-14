@@ -1,0 +1,67 @@
+Prod.Code;Prod.Item;Item.Code;Item;TCF
+1806;Beef and Buffalo Meat;2731;Bovine Meat;1
+1807;Sheep and Goat Meat;2732;Mutton & Goat Meat;1
+1035;Meat, pig;2733;Pigmeat;1
+1808;Meat, Poultry;2734;Poultry Meat;1
+1108;Meat, ass;2735;Meat, Other;1
+1127;Meat, camel;2735;Meat, Other;1
+1163;Meat, game;2735;Meat, Other;1
+1097;Meat, horse;2735;Meat, Other;1
+1111;Meat, mule;2735;Meat, Other;1
+1166;Meat, nes;2735;Meat, Other;1
+1158;Meat, other camelids;2735;Meat, Other;1
+1151;Meat, other rodents;2735;Meat, Other;1
+1141;Meat, rabbit;2735;Meat, Other;1
+1167;Offals, nes;2736;Offals, Edible;1
+2740;Butter, Ghee;2740;Butter, Ghee;1
+1783;Eggs Primary;2744;Eggs;1
+1182;Honey, natural;2745;Honey;1
+987;Wool, greasy;2746;Wool (Clean Eq.);0.64
+1185;Silk-worm cocoons, reelable;2747;Silk;1
+957;Hides, buffalo, fresh;2748;Hides and skins;1
+919;Hides, cattle, fresh;2748;Hides and skins;1
+1025;Skins, goat, fresh;2748;Hides and skins;1
+995;Skins, sheep, fresh;2748;Hides and skins;1
+1780;Milk,Total;2848;Milk - Excluding Butter;1
+1183;Beeswax;;;
+1062;Eggs, hen, in shell;;;
+1067;Eggs, hen, in shell (number);;;
+1091;Eggs, other bird, in shell;;;
+1092;Eggs, other bird, in shell (number);;;
+1100;Hair, horse;;;
+1122;Meat indigenous, ass;;;
+1084;Meat indigenous, bird nes;;;
+972;Meat indigenous, buffalo;;;
+1137;Meat indigenous, camel;;;
+944;Meat indigenous, cattle;;;
+1094;Meat indigenous, chicken;;;
+1070;Meat indigenous, duck;;;
+1077;Meat indigenous, geese;;;
+1032;Meat indigenous, goat;;;
+1120;Meat indigenous, horse;;;
+1124;Meat indigenous, mule;;;
+1161;Meat indigenous, other camelids;;;
+1055;Meat indigenous, pig;;;
+1775;Meat indigenous, poultry;;;
+1144;Meat indigenous, rabbit;;;
+1154;Meat indigenous, rodents;;;
+1012;Meat indigenous, sheep;;;
+1770;Meat indigenous, total;;;
+1087;Meat indigenous, turkey;;;
+1089;Meat, bird nes;;;
+947;Meat, buffalo;;;
+867;Meat, cattle;;;
+1058;Meat, chicken;;;
+1069;Meat, duck;;;
+1017;Meat, goat;;;
+1073;Meat, goose and guinea fowl;;;
+977;Meat, sheep;;;
+1765;Meat, Total;;;
+1080;Meat, turkey;;;
+951;Milk, whole fresh buffalo;;;
+1130;Milk, whole fresh camel;;;
+882;Milk, whole fresh cow;;;
+1020;Milk, whole fresh goat;;;
+982;Milk, whole fresh sheep;;;
+999;Skins, sheep, with wool;;;
+1176;Snails, not sea;;;

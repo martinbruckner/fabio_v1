@@ -1,0 +1,258 @@
+Country.Code;Country;ISO;Region.Code;Region
+1;Armenia;ARM;NAFRI;Northern Africa and Western Asia
+2;Afghanistan;AFG;SASIA;Southern Asia
+3;Albania;ALB;EEUR;Eastern and South-Eastern Europe
+4;Algeria;DZA;NAFRI;Northern Africa and Western Asia
+5;American Samoa;ASM;OCEA;Oceania and Australia
+6;Andorra;AND;WEUR;Western Europe
+7;Angola;AGO;SSAF;Sub-Saharan Africa
+8;Antigua and Barbuda;ATG;LAM;Latin America
+9;Argentina;ARG;LAM;Latin America
+10;Australia;AUS;OCEA;Oceania and Australia
+11;Austria;AUT;WEUR;Western Europe
+12;Bahamas;BHS;LAM;Latin America
+13;Bahrain;BHR;NAFRI;Northern Africa and Western Asia
+14;Barbados;BRB;LAM;Latin America
+15;Belgium-Luxembourg;BLX;WEUR;Western Europe
+16;Bangladesh;BGD;SASIA;Southern Asia
+17;Bermuda;BMU;SSAF;Sub-Saharan Africa
+18;Bhutan;BTN;SASIA;Southern Asia
+19;Bolivia (Plurinational State of);BOL;LAM;Latin America
+20;Botswana;BWA;SSAF;Sub-Saharan Africa
+21;Brazil;BRA;LAM;Latin America
+22;Aruba;ABW;LAM;Latin America
+23;Belize;BLZ;LAM;Latin America
+24;British Indian Ocean Territory;IOT;OCEA;Oceania and Australia
+25;Solomon Islands;SLB;OCEA;Oceania and Australia
+26;Brunei Darussalam;BRN;SEASIA;South-Eastern Asia
+27;Bulgaria;BGR;EEUR;Eastern and South-Eastern Europe
+28;Myanmar;MMR;SEASIA;South-Eastern Asia
+29;Burundi;BDI;SSAF;Sub-Saharan Africa
+30;Antarctica;ATA;NA;NA
+31;Bouvet Island;BVT;LAM;Latin America
+32;Cameroon;CMR;SSAF;Sub-Saharan Africa
+33;Canada;CAN;NAM;Northern America
+34;Canton and Enderbury Islands;CTE;OCEA;Oceania and Australia
+35;Cabo Verde;CPV;SSAF;Sub-Saharan Africa
+36;Cayman Islands;CYM;LAM;Latin America
+37;Central African Republic;CAF;SSAF;Sub-Saharan Africa
+38;Sri Lanka;LKA;SASIA;Southern Asia
+39;Chad;TCD;SSAF;Sub-Saharan Africa
+40;Chile;CHL;LAM;Latin America
+41;China, mainland;CHN;EASIA;Eastern Asia
+42;Christmas Island;CXR;OCEA;Oceania and Australia
+43;Cocos (Keeling) Islands;CCK;OCEA;Oceania and Australia
+44;Colombia;COL;LAM;Latin America
+45;Comoros;COM;SSAF;Sub-Saharan Africa
+46;Congo;COG;SSAF;Sub-Saharan Africa
+47;Cook Islands;COK;OCEA;Oceania and Australia
+48;Costa Rica;CRI;LAM;Latin America
+49;Cuba;CUB;LAM;Latin America
+50;Cyprus;CYP;NAFRI;Northern Africa and Western Asia
+51;Czechoslovakia;CSK;EEUR;Eastern and South-Eastern Europe
+52;Azerbaijan;AZE;NAFRI;Northern Africa and Western Asia
+53;Benin;BEN;SSAF;Sub-Saharan Africa
+54;Denmark;DNK;WEUR;Western Europe
+55;Dominica;DMA;LAM;Latin America
+56;Dominican Republic;DOM;LAM;Latin America
+57;Belarus;BLR;EEUR;Eastern and South-Eastern Europe
+58;Ecuador;ECU;LAM;Latin America
+59;Egypt;EGY;NAFRI;Northern Africa and Western Asia
+60;El Salvador;SLV;LAM;Latin America
+61;Equatorial Guinea;GNQ;SSAF;Sub-Saharan Africa
+62;Ethiopia PDR;ETH;SSAF;Sub-Saharan Africa
+63;Estonia;EST;EEUR;Eastern and South-Eastern Europe
+64;Faroe Islands;FRO;WEUR;Western Europe
+65;Falkland Islands (Malvinas);FLK;LAM;Latin America
+66;Fiji;FJI;OCEA;Oceania and Australia
+67;Finland;FIN;WEUR;Western Europe
+68;France;FRA;WEUR;Western Europe
+69;French Guiana;GUF;LAM;Latin America
+70;French Polynesia;PYF;OCEA;Oceania and Australia
+71;French Southern and Antarctic Territories;ATF;OCEA;Oceania and Australia
+72;Djibouti;DJI;SSAF;Sub-Saharan Africa
+73;Georgia;GEO;NAFRI;Northern Africa and Western Asia
+74;Gabon;GAB;SSAF;Sub-Saharan Africa
+75;Gambia;GMB;SSAF;Sub-Saharan Africa
+79;Germany;DEU;WEUR;Western Europe
+80;Bosnia and Herzegovina;BIH;EEUR;Eastern and South-Eastern Europe
+81;Ghana;GHA;SSAF;Sub-Saharan Africa
+82;Gibraltar;GIB;WEUR;Western Europe
+83;Kiribati;KIR;OCEA;Oceania and Australia
+84;Greece;GRC;WEUR;Western Europe
+85;Greenland;GRL;NAM;Northern America
+86;Grenada;GRD;LAM;Latin America
+87;Guadeloupe;GLP;LAM;Latin America
+88;Guam;GUM;OCEA;Oceania and Australia
+89;Guatemala;GTM;LAM;Latin America
+90;Guinea;GIN;SSAF;Sub-Saharan Africa
+91;Guyana;GUY;LAM;Latin America
+92;Heard and McDonald Islands;HMD;OCEA;Oceania and Australia
+93;Haiti;HTI;LAM;Latin America
+94;Holy See;VAT;WEUR;Western Europe
+95;Honduras;HND;LAM;Latin America
+96;China, Hong Kong SAR;HKG;EASIA;Eastern Asia
+97;Hungary;HUN;EEUR;Eastern and South-Eastern Europe
+98;Croatia;HRV;EEUR;Eastern and South-Eastern Europe
+99;Iceland;ISL;WEUR;Western Europe
+100;India;IND;SASIA;Southern Asia
+101;Indonesia;IDN;SEASIA;South-Eastern Asia
+102;Iran (Islamic Republic of);IRN;SASIA;Southern Asia
+103;Iraq;IRQ;NAFRI;Northern Africa and Western Asia
+104;Ireland;IRL;WEUR;Western Europe
+105;Israel;ISR;NAFRI;Northern Africa and Western Asia
+106;Italy;ITA;WEUR;Western Europe
+107;Côte d'Ivoire;CIV;SSAF;Sub-Saharan Africa
+108;Kazakhstan;KAZ;CASIARU;Central Asia and Russian Federation
+109;Jamaica;JAM;LAM;Latin America
+110;Japan;JPN;EASIA;Eastern Asia
+111;Johnston Island;JTN;OCEA;Oceania and Australia
+112;Jordan;JOR;NAFRI;Northern Africa and Western Asia
+113;Kyrgyzstan;KGZ;CASIARU;Central Asia and Russian Federation
+114;Kenya;KEN;SSAF;Sub-Saharan Africa
+115;Cambodia;KHM;SEASIA;South-Eastern Asia
+116;Democratic People's Republic of Korea;PRK;EASIA;Eastern Asia
+117;Republic of Korea;KOR;EASIA;Eastern Asia
+118;Kuwait;KWT;NAFRI;Northern Africa and Western Asia
+119;Latvia;LVA;EEUR;Eastern and South-Eastern Europe
+120;Lao People's Democratic Republic;LAO;SEASIA;South-Eastern Asia
+121;Lebanon;LBN;NAFRI;Northern Africa and Western Asia
+122;Lesotho;LSO;SSAF;Sub-Saharan Africa
+123;Liberia;LBR;SSAF;Sub-Saharan Africa
+124;Libya;LBY;NAFRI;Northern Africa and Western Asia
+125;Liechtenstein;LIE;WEUR;Western Europe
+126;Lithuania;LTU;EEUR;Eastern and South-Eastern Europe
+127;Marshall Islands;MHL;OCEA;Oceania and Australia
+128;China, Macao SAR;MAC;EASIA;Eastern Asia
+129;Madagascar;MDG;SSAF;Sub-Saharan Africa
+130;Malawi;MWI;SSAF;Sub-Saharan Africa
+131;Malaysia;MYS;SEASIA;South-Eastern Asia
+132;Maldives;MDV;SSAF;Sub-Saharan Africa
+133;Mali;MLI;SSAF;Sub-Saharan Africa
+134;Malta;MLT;WEUR;Western Europe
+135;Martinique;MTQ;LAM;Latin America
+136;Mauritania;MRT;SSAF;Sub-Saharan Africa
+137;Mauritius;MUS;SSAF;Sub-Saharan Africa
+138;Mexico;MEX;LAM;Latin America
+139;Midway Island;MID;OCEA;Oceania and Australia
+140;Monaco;MCO;WEUR;Western Europe
+141;Mongolia;MNG;EASIA;Eastern Asia
+142;Montserrat;MSR;LAM;Latin America
+143;Morocco;MAR;NAFRI;Northern Africa and Western Asia
+144;Mozambique;MOZ;SSAF;Sub-Saharan Africa
+145;Micronesia (Federated States of);FSM;OCEA;Oceania and Australia
+146;Republic of Moldova;MDA;EEUR;Eastern and South-Eastern Europe
+147;Namibia;NAM;SSAF;Sub-Saharan Africa
+148;Nauru;NRU;OCEA;Oceania and Australia
+149;Nepal;NPL;SASIA;Southern Asia
+150;Netherlands;NLD;WEUR;Western Europe
+151;Netherlands Antilles;ANT;LAM;Latin America
+152;Neutral Zone;NTZ;NAFRI;Northern Africa and Western Asia
+153;New Caledonia;NCL;OCEA;Oceania and Australia
+154;The former Yugoslav Republic of Macedonia;MKD;EEUR;Eastern and South-Eastern Europe
+155;Vanuatu;VUT;OCEA;Oceania and Australia
+156;New Zealand;NZL;OCEA;Oceania and Australia
+157;Nicaragua;NIC;LAM;Latin America
+158;Niger;NER;SSAF;Sub-Saharan Africa
+159;Nigeria;NGA;SSAF;Sub-Saharan Africa
+160;Niue;NIU;OCEA;Oceania and Australia
+161;Norfolk Island;NFK;OCEA;Oceania and Australia
+162;Norway;NOR;WEUR;Western Europe
+163;Northern Mariana Islands;MNP;OCEA;Oceania and Australia
+164;Pacific Islands Trust Territory;PCI;EASIA;Eastern Asia
+165;Pakistan;PAK;SASIA;Southern Asia
+166;Panama;PAN;LAM;Latin America
+167;Czech Republic;CZE;EEUR;Eastern and South-Eastern Europe
+168;Papua New Guinea;PNG;OCEA;Oceania and Australia
+169;Paraguay;PRY;LAM;Latin America
+170;Peru;PER;LAM;Latin America
+171;Philippines;PHL;SEASIA;South-Eastern Asia
+172;Pitcairn Islands;PCN;OCEA;Oceania and Australia
+173;Poland;POL;EEUR;Eastern and South-Eastern Europe
+174;Portugal;PRT;WEUR;Western Europe
+175;Guinea-Bissau;GNB;SSAF;Sub-Saharan Africa
+176;Timor-Leste;TLS;SEASIA;South-Eastern Asia
+177;Puerto Rico;PRI;LAM;Latin America
+178;Eritrea;ERI;SSAF;Sub-Saharan Africa
+179;Qatar;QAT;NAFRI;Northern Africa and Western Asia
+180;Palau;PLW;SEASIA;South-Eastern Asia
+181;Zimbabwe;ZWE;SSAF;Sub-Saharan Africa
+182;Réunion;REU;SSAF;Sub-Saharan Africa
+183;Romania;ROU;EEUR;Eastern and South-Eastern Europe
+184;Rwanda;RWA;SSAF;Sub-Saharan Africa
+185;Russian Federation;RUS;CASIARU;Central Asia and Russian Federation
+186;Serbia and Montenegro;SCG;EEUR;Eastern and South-Eastern Europe
+187;Saint Helena, Ascension and Tristan da Cunha;SHN;SSAF;Sub-Saharan Africa
+188;Saint Kitts and Nevis;KNA;LAM;Latin America
+189;Saint Lucia;LCA;LAM;Latin America
+190;Saint Pierre and Miquelon;SPM;NAM;Northern America
+191;Saint Vincent and the Grenadines;VCT;LAM;Latin America
+192;San Marino;SMR;WEUR;Western Europe
+193;Sao Tome and Principe;STP;SSAF;Sub-Saharan Africa
+194;Saudi Arabia;SAU;NAFRI;Northern Africa and Western Asia
+195;Senegal;SEN;SSAF;Sub-Saharan Africa
+196;Seychelles;SYC;SSAF;Sub-Saharan Africa
+197;Sierra Leone;SLE;SSAF;Sub-Saharan Africa
+198;Slovenia;SVN;EEUR;Eastern and South-Eastern Europe
+199;Slovakia;SVK;EEUR;Eastern and South-Eastern Europe
+200;Singapore;SGP;EASIA;Eastern Asia
+201;Somalia;SOM;SSAF;Sub-Saharan Africa
+202;South Africa;ZAF;SSAF;Sub-Saharan Africa
+203;Spain;ESP;WEUR;Western Europe
+205;Western Sahara;ESH;NAFRI;Northern Africa and Western Asia
+206;Sudan (former);SDN;SSAF;Sub-Saharan Africa
+207;Suriname;SUR;LAM;Latin America
+208;Tajikistan;TJK;CASIARU;Central Asia and Russian Federation
+209;Swaziland;SWZ;SSAF;Sub-Saharan Africa
+210;Sweden;SWE;WEUR;Western Europe
+211;Switzerland;CHE;WEUR;Western Europe
+212;Syrian Arab Republic;SYR;NAFRI;Northern Africa and Western Asia
+213;Turkmenistan;TKM;CASIARU;Central Asia and Russian Federation
+214;China, Taiwan Province of;TWN;EASIA;Eastern Asia
+215;United Republic of Tanzania;TZA;SSAF;Sub-Saharan Africa
+216;Thailand;THA;SEASIA;South-Eastern Asia
+217;Togo;TGO;SSAF;Sub-Saharan Africa
+218;Tokelau;TKL;OCEA;Oceania and Australia
+219;Tonga;TON;OCEA;Oceania and Australia
+220;Trinidad and Tobago;TTO;LAM;Latin America
+221;Oman;OMN;NAFRI;Northern Africa and Western Asia
+222;Tunisia;TUN;NAFRI;Northern Africa and Western Asia
+223;Turkey;TUR;NAFRI;Northern Africa and Western Asia
+224;Turks and Caicos Islands;TCA;LAM;Latin America
+225;United Arab Emirates;ARE;NAFRI;Northern Africa and Western Asia
+226;Uganda;UGA;SSAF;Sub-Saharan Africa
+227;Tuvalu;TUV;OCEA;Oceania and Australia
+228;USSR;SUN;CASIARU;Central Asia and Russian Federation
+229;United Kingdom;GBR;WEUR;Western Europe
+230;Ukraine;UKR;EEUR;Eastern and South-Eastern Europe
+231;United States of America;USA;NAM;Northern America
+232;US Minor Is.;UMI;OCEA;Oceania and Australia
+233;Burkina Faso;BFA;SSAF;Sub-Saharan Africa
+234;Uruguay;URY;LAM;Latin America
+235;Uzbekistan;UZB;CASIARU;Central Asia and Russian Federation
+236;Venezuela (Bolivarian Republic of);VEN;LAM;Latin America
+237;Viet Nam;VNM;SEASIA;South-Eastern Asia
+238;Ethiopia;ETH;SSAF;Sub-Saharan Africa
+239;British Virgin Islands;VGB;LAM;Latin America
+240;United States Virgin Islands;VIR;LAM;Latin America
+242;Wake Island;WAK;OCEA;Oceania and Australia
+243;Wallis and Futuna Islands;WLF;OCEA;Oceania and Australia
+244;Samoa;WSM;OCEA;Oceania and Australia
+248;Yugoslav SFR;YUG;EEUR;Eastern and South-Eastern Europe
+249;Yemen;YEM;NAFRI;Northern Africa and Western Asia
+250;Democratic Republic of the Congo;COD;SSAF;Sub-Saharan Africa
+251;Zambia;ZMB;SSAF;Sub-Saharan Africa
+255;Belgium;BEL;WEUR;Western Europe
+256;Luxembourg;LUX;WEUR;Western Europe
+258;Anguilla;AIA;LAM;Latin America
+260;Svalbard and Jan Mayen Islands;SJM;WEUR;Western Europe
+270;Mayotte;MYT;SSAF;Sub-Saharan Africa
+271;South Georgia and the South Sandwich Islands;SGS;LAM;Latin America
+272;Serbia;SRB;EEUR;Eastern and South-Eastern Europe
+273;Montenegro;MNE;EEUR;Eastern and South-Eastern Europe
+276;Sudan;SDN;SSAF;Sub-Saharan Africa
+277;South Sudan;SSD;SSAF;Sub-Saharan Africa
+279;Curaçao;CUW;LAM;Latin America
+281;Saint-Martin (French Part);MAF;LAM;Latin America
+299;Occupied Palestinian Territory;PSE;NAFRI;Northern Africa and Western Asia
+351;China;CHN;EASIA;Eastern Asia

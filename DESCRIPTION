@@ -1,0 +1,37 @@
+Package: fabio
+Version: 0.0-9999
+Title: Forestry and Agriculture Biomass Input-Output Tables
+Description: In 2015 we started building physical supply-use and input-output tables covering global agriculture and forestry. 
+  The work is fully based on freely available data from FAOSTAT, IEA, EIA and UN Comtrade. FABIO now covers 191 countries, 
+  116 processes and 130 commodities for the years 1986-2013. The code will be released here in July 2018. An R package is in preparation.
+Authors@R: c(person("Martin", "Bruckner", role = c("aut", "cre"), email = "martin.bruckner@wu.ac.at", comment = c(ORCID = "0000-0002-1405-7951")),
+        person("Hanspeter", "Wieland", role = c("aut"),  email = "hanspeter.wieland@wu.ac.at"),
+        person("Sebastian", "Luckeneder", role = c("aut"), email = "sebastian.luckeneder@wu.ac.at"),
+        person("Victor", "Maus", role = "ctb",  email = "victor.maus@wu.ac.at", comment = c(ORCID = "0000-0002-7385-4723")),
+        person("Stefan", "Giljum", role = "ths", email = "stefan.giljum@wu.ac.at", comment = c(ORCID = "0000-0002-4719-5867")))
+Depends:
+        R (>= 3.3.0)
+Imports:
+        utils,
+	      openxlsx,
+        comtradr,
+        data.table,
+        stats,
+        Matrix,
+        reshape2,
+        MASS,
+        xlsx,
+        dplyr,
+        magrittr
+Suggests: 
+        testthat,
+        knitr,
+        captioner,
+        stargazer,
+        kableExtra
+License: GPL-3 | file LICENSE
+URL: https://github.com/fineprint-global/fabio/
+BugReports: https://github.com/fineprint-global/fabio/issues/
+RoxygenNote: 6.0.1
+Encoding: UTF-8
+VignetteBuilder: knitr

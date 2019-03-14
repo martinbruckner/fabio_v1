@@ -1,0 +1,37 @@
+## Appendix
+
+```{r table1, eval = T, echo = FALSE}
+library(magrittr)
+suppressMessages(
+  readxl::read_excel(system.file("fabio_input/fabio_classifications.xlsx", package =  "fabio"), sheet = "Commodities") %>% 
+  # openxlsx::read.xlsx(system.file("fabio_input/fabio_classifications.xlsx", package =  "fabio"), sheet = "Commodities") %>% 
+  knitr::kable(format = "latex", longtable = T, booktabs = TRUE, caption = "List of commodities") %>%
+  kableExtra::kable_styling(latex_options =c("repeat_header"))
+)
+```
+
+```{r table2, eval = T, echo = FALSE}
+suppressMessages(
+  readxl::read_excel(system.file("fabio_input/fabio_classifications.xlsx", package =  "fabio"), sheet = "Processes") %>% 
+  knitr::kable(format = "latex", longtable = T, booktabs = TRUE, caption = "List of processes") %>%
+  kableExtra::kable_styling(latex_options =c("repeat_header"))
+)
+```    
+
+```{r table3, eval = T, echo = FALSE}
+suppressMessages(
+  readxl::read_excel(system.file("fabio_input/fabio_classifications.xlsx", package =  "fabio"), sheet = "Countries") %>% 
+  knitr::kable(format = "latex", longtable = T, booktabs = TRUE, caption = "List of countries") %>%
+  kableExtra::kable_styling(latex_options =c("repeat_header"))
+)
+```    
+
+
+```{r table4, eval = T, echo = FALSE}
+suppressMessages(
+  read.csv2(system.file("fabio_input/CBS_2013.csv", package =  "fabio")) %>% 
+  knitr::kable(format = "latex", longtable = T, booktabs = TRUE, caption = "Number of commodity balances reported and estimated for each country in 2013") %>%
+  kableExtra::kable_styling(latex_options =c("repeat_header"))
+)
+```    
+

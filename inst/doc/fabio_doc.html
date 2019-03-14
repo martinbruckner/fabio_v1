@@ -1,0 +1,6108 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="author" content="Martin Bruckner" />
+
+<meta name="date" content="2018-09-04" />
+
+<title>FABIO Documentation</title>
+
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+
+
+<link href="data:text/css;charset=utf-8,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23header%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%20code%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">FABIO Documentation</h1>
+<h4 class="author"><em>Martin Bruckner</em></h4>
+<h4 class="date"><em>2018-09-04</em></h4>
+
+
+
+<div id="introduction" class="section level2">
+<h2>Introduction</h2>
+<p>This document provides a documentation of the scripts of the FABIO model as provided at <a href="https://github.com/gru-wu/fabio" class="uri">https://github.com/gru-wu/fabio</a>. FABIO (Food and Agriculture Biomass Input-Output) is a set of multi-regional physical supply-use and input-output tables covering global agriculture and forestry. The work is based on data from FAOSTAT, IEA, EIA and COMTRADE/BACI. FABIO now covers 191 countries, 116 processes and 130 commodities for 1986-2013.</p>
+<p>All scripts and auxiliary data are distributed under the GNU General Public License Version 3.</p>
+</div>
+<div id="download-data" class="section level2">
+<h2>Download data</h2>
+<p>In order to run the scripts, please fork the GitHub repository. Then download the following data sets and store them in the folder <em>./fabio_input/raw data/</em> of your local copy of the FABIO repository.</p>
+<p>Most of the data used for constructing the FABIO model are provided by FAOSTAT, the Statistical Services of the Food and Agriculture Organisation of the United Nations. The website of FAOSTAT is structured by data domains (such as <em>Production</em> or <em>Trade</em>) which each contain several data sets. For each of the required data sets, a bulk file can be downloaded from the following sources:</p>
+<ul>
+<li><p>Production, Crops: <a href="http://fenixservices.fao.org/faostat/static/bulkdownloads/Production_Crops_E_All_Data_(Normalized).zip" class="uri">http://fenixservices.fao.org/faostat/static/bulkdownloads/Production_Crops_E_All_Data_(Normalized).zip</a></p></li>
+<li><p>Production, Crops processed: <a href="http://fenixservices.fao.org/faostat/static/bulkdownloads/Production_CropsProcessed_E_All_Data_(Normalized).zip" class="uri">http://fenixservices.fao.org/faostat/static/bulkdownloads/Production_CropsProcessed_E_All_Data_(Normalized).zip</a></p></li>
+<li><p>Production, Live animals: <a href="http://fenixservices.fao.org/faostat/static/bulkdownloads/Production_Livestock_E_All_Data_(Normalized).zip" class="uri">http://fenixservices.fao.org/faostat/static/bulkdownloads/Production_Livestock_E_All_Data_(Normalized).zip</a></p></li>
+<li><p>Production, Livestock primary: <a href="http://fenixservices.fao.org/faostat/static/bulkdownloads/Production_LivestockPrimary_E_All_Data_(Normalized).zip" class="uri">http://fenixservices.fao.org/faostat/static/bulkdownloads/Production_LivestockPrimary_E_All_Data_(Normalized).zip</a></p></li>
+<li><p>Production, Livestock processed: <a href="http://fenixservices.fao.org/faostat/static/bulkdownloads/Production_LivestockProcessed_E_All_Data_(Normalized).zip" class="uri">http://fenixservices.fao.org/faostat/static/bulkdownloads/Production_LivestockProcessed_E_All_Data_(Normalized).zip</a></p></li>
+<li><p>Trade, Crops and livestock products: <a href="http://fenixservices.fao.org/faostat/static/bulkdownloads/Trade_Crops_Livestock_E_All_Data_(Normalized).zip" class="uri">http://fenixservices.fao.org/faostat/static/bulkdownloads/Trade_Crops_Livestock_E_All_Data_(Normalized).zip</a></p></li>
+<li><p>Trade, Live animals: <a href="http://fenixservices.fao.org/faostat/static/bulkdownloads/Trade_LiveAnimals_E_All_Data_(Normalized).zip" class="uri">http://fenixservices.fao.org/faostat/static/bulkdownloads/Trade_LiveAnimals_E_All_Data_(Normalized).zip</a></p></li>
+<li><p>Trade, Detailed trade matrix: <a href="http://fenixservices.fao.org/faostat/static/bulkdownloads/Trade_DetailedTradeMatrix_E_All_Data_(Normalized).zip" class="uri">http://fenixservices.fao.org/faostat/static/bulkdownloads/Trade_DetailedTradeMatrix_E_All_Data_(Normalized).zip</a></p></li>
+<li><p>Commodity Balances, Crops Primary Equivalent: <a href="http://fenixservices.fao.org/faostat/static/bulkdownloads/CommodityBalances_Crops_E_All_Data_(Normalized).zip" class="uri">http://fenixservices.fao.org/faostat/static/bulkdownloads/CommodityBalances_Crops_E_All_Data_(Normalized).zip</a></p></li>
+<li><p>Commodity Balances, Livestock and Fish Primary Equivalent: <a href="http://fenixservices.fao.org/faostat/static/bulkdownloads/CommodityBalances_LivestockFish_E_All_Data_(Normalized).zip" class="uri">http://fenixservices.fao.org/faostat/static/bulkdownloads/CommodityBalances_LivestockFish_E_All_Data_(Normalized).zip</a></p></li>
+</ul>
+<p>Additionally, fodder crop production data (part of the aggregated item “Crops Primary &gt; (List)” in the <em>Production</em> domain) was downloaded from <a href="http://www.fao.org/faostat/en/#data/QC" class="uri">http://www.fao.org/faostat/en/#data/QC</a>, but is no longer available from the FAOSTAT website. Therefore, in order to replicate the FABIO model, it is necessary to request these data from FAOSTAT.</p>
+<p>Global fishery statistics can be retrieved from FAO’s fishery division: <a href="http://www.fao.org/fishery/statistics/global-production/en" class="uri">http://www.fao.org/fishery/statistics/global-production/en</a>.</p>
+<p>COMTRADE, the global trade database of the United Nations Statistical Division, provides bilateral trade data, which are downloaded by the FABIO scripts directly via an API. Make sure that your computer is connected to the internet, when running the script. COMTRADE is free, but to use the web services it requires to register online. You will receive a token which has to be copied into the file <em>./fabio_input/comtrade_token.txt</em>. We use the COMTRADE database for data on bilateral fish and ethanol trade for 1988 to 1994. Data for all other years are sourced from BACI, a reconciled and harmonised version of the COMTRADE database, which is available for 1995 to 2016 from <a href="http://www.cepii.fr/cepii/en/bdd_modele/download.asp?id=1" class="uri">http://www.cepii.fr/cepii/en/bdd_modele/download.asp?id=1</a>. Download the BACI92 version. Please note that BACI is not free. Universities often provide access to the database. Alternatively, COMTRADE can be used for the whole time series with some minor adaptations of the code.</p>
+<p>Production data for ethanol from agricultural sources are reported by FAOSTAT under the name <em>Alcohol, non-food</em>. However, large data gaps forced us to use alternative sources. We downloaded ethanol/biogasoline production data in xlsx-format from both EIA and IEA:</p>
+<ul>
+<li><p>EIA: <a href="https://www.eia.gov/beta/international/data/browser/#/?pa=000001g&amp;c=ruvvvvvfvtvnvv1urvvvvfvvvvvvfvvvou20evvvvvvvvvnvvuvo&amp;ct=0&amp;tl_id=79-A&amp;vs=INTL.80-1-AFG-TBPD.A&amp;vo=0&amp;v=H&amp;start=1980&amp;end=2014" class="uri">https://www.eia.gov/beta/international/data/browser/#/?pa=000001g&amp;c=ruvvvvvfvtvnvv1urvvvvfvvvvvvfvvvou20evvvvvvvvvnvvuvo&amp;ct=0&amp;tl_id=79-A&amp;vs=INTL.80-1-AFG-TBPD.A&amp;vo=0&amp;v=H&amp;start=1980&amp;end=2014</a></p></li>
+<li><p>IEA: <a href="http://dx.doi.org/10.1787/data-00550-en" class="uri">http://dx.doi.org/10.1787/data-00550-en</a></p></li>
+</ul>
+<p>After downloading all these data, you can start running the script step by step.</p>
+</div>
+<div id="tidy-data" class="section level2">
+<h2>Tidy data</h2>
+<p>The first three functions of the package are used to read the raw data and harmonize and tidy their data structures, including country and commodity names. The final lists of countries, processes and commodities are given in the Annex.</p>
+<p>The basis for the FABIO model are the Commodity Balance Sheets (CBS) from FAOSTAT. The CBS provide data on the supply and utilization of agricultural commodities which are balanced in terms of physical quantities by matching supply (domestic production and imports) with uses (exports, stock changes and domestic use for food, feed, processing, seed, waste and other uses).</p>
+<p>While particularly the use accounts are an indispensable source of information for the development of physical supply-use tables (PSUT), an unavoidable limitation of these data is that for many cases crops and derived products are combined into a single CBS by converting products into primary equivalents. For example, the CBS for <em>wheat and products</em> comprises also trade and consumption of bread and pasta measured in wheat equivalents. This simplification significantly reduces the level of detail of the resulting PSUT and impedes a clear distinction of agriculture and food manufacturing.</p>
+<p>As other domains of FAOSTAT (e.g. <em>Trade</em> and <em>Production</em>) give the actual product weights, units had to be converted into primary equivalents where applicable. This was done using country specific technical conversion factors (TCF) published by the FAO (2001), which for example give the kg of wheat required to produce an average kg of bread.</p>
+<p>Trade data for crops and crop products, livestock and livestock products, timber, and fish are organized in different data domains of the FAO. We therefore harmonized their data structures and integrated them into one bilateral trade database (BTD). In any case, reported import data were given preference over reported export data, based on the expectations that the importer will rather know the correct origin of a traded commodity, than the exporter the correct final destination.</p>
+</div>
+<div id="estimate-missing-data" class="section level2">
+<h2>Estimate missing data</h2>
+<p>Data gaps are a common problem in any heavily data-dependent research work. We used several ways to estimate missing data.</p>
+<div id="commodity-balances" class="section level4">
+<h4>Commodity balances</h4>
+<p>Some gaps occur in the time series of the CBS. A certain commodity might be reported by a country most of the time, but with a few years missing. The same is the case for the forestry statistics. In these cases we inter- and extrapolate the available data.</p>
+<p>The CBS database does not cover some of the commodities included in the FABIO model, i.e. live animals, fodder crops (grasses, forages and silages), grazing (grasses and hay from grasslands), and timber. Therefore, commodity balances had to be built based on alternative sources. Production data for all missing commodities as well as trade data for live animals and timber are available from FAOSTAT. Fodder crops and grasses are assumed not to be traded internationally. Low prices and the consequent disproportionate transportation costs support this assumption. For simplicity, stock changes, seed use and waste were assumed to be zero. Domestic use of live animals is at large assigned to food processing (i.e. animal slaughtering), fodder crops and grazing to feed use, and timber to other uses.</p>
+<p>The CBS and bilateral trade data for <em>Alcohol, non-food</em> were updated with production data from IEA and EIA (using the highest value respectively) and trade data from COMTRADE/BACI.</p>
+<p>For some countries, not included in the CBS domain, all commodity balances were estimated based on available production, seed use<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a> and trade data. Processing requirements, e.g. the rapeseed used for rapeseed oil production or the sugar cane used for sugar production, were estimated for each commodity based on production data for the derived products and the country specific TCF. If we then found data gaps for co-products, e.g. molasses from sugar production, we imputed these data using again the respective TCF.</p>
+</div>
+<div id="bilateral-trade" class="section level4">
+<h4>Bilateral trade</h4>
+<p>The BTD show significant gaps and mismatch with the total import and export volumes reported in the CBS. We followed a multi-step approach to estimate a comprehensive set of bilateral trade data, which is in accordance with the CBS:</p>
+<ul>
+<li>We first derive a BTD estimate in the format countries-by-countries for each commodity and year by spreading exports for each commodity over all countries worldwide according to their import shares. This estimate <span class="math inline">\(BTD\_est1\)</span> for a specific crop <span class="math inline">\(c\)</span> and a country pair <span class="math inline">\(i, e\)</span> is derived by</li>
+</ul>
+<p><span class="math display">\[BTD\_est1\ _{c}^{i,e} = imp\ _{c}^{i}/imp\ _{c}^{total} * exp\ _{c}^{e}\]</span></p>
+<ul>
+<li>We repeat this procedure, but spreading imports for each commodity over all countries worldwide according to their export shares.</li>
+</ul>
+<p><span class="math display">\[BTD\_est2\ _{c}^{i,e} = exp\ _{c}^{e}/exp\ _{c}^{total} * imp\ _{c}^{i}\]</span></p>
+<ul>
+<li><p>We derive the average of the two estimates <span class="math inline">\(BTD\_est\)</span> and proceed.</p></li>
+<li><p>We calculate the gap for each row in <span class="math inline">\(BTD\ _{c}^{i,e}\)</span>, i.e. the difference between all exports of crop <span class="math inline">\(c\)</span> from country <span class="math inline">\(e\)</span> documented in the BTD and the total exports as reported in the CBS dataset.</p></li>
+<li><p>We populate the gaps in <span class="math inline">\(BTD\ _{c}^{i,e}\)</span> with the corresponding values from <span class="math inline">\(BTD\_est\ _{c}^{i,e}\)</span> up-/down-scaling them to meet the target export sum for each commodity and each exporting country as reported in the CBS.</p></li>
+<li><p>We balance the resulting trade matrices using the RAS technique.</p></li>
+</ul>
+</div>
+</div>
+<div id="populate-supply-table" class="section level2">
+<h2>Populate supply table</h2>
+</div>
+<div id="populate-use-table" class="section level2">
+<h2>Populate use table</h2>
+</div>
+<div id="tradelinking-supply-use-tables" class="section level2">
+<h2>Tradelinking supply-use tables</h2>
+</div>
+<div id="construct-symmetric-io-tables" class="section level2">
+<h2>Construct symmetric IO tables</h2>
+</div>
+<div id="calculate-footprints" class="section level2">
+<h2>Calculate footprints</h2>
+</div>
+<div id="figures" class="section level2">
+<h2>Figures</h2>
+<p>The figure sizes have been customised so that you can easily put two images side-by-side.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>)
+<span class="kw">plot</span>(<span class="dv">10</span><span class="op">:</span><span class="dv">1</span>)</code></pre></div>
+<p><img src="data:image/png;base64,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" alt="Test" /><img src="data:image/png;base64,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" alt="Test" /></p>
+</div>
+<div id="more-examples" class="section level2">
+<h2>More Examples</h2>
+<p>Also a quote using <code>&gt;</code>:</p>
+<blockquote>
+<p>“He who gives up [code] safety for [code] speed deserves neither.” (<a href="https://twitter.com/hadleywickham/status/504368538874703872">via</a>)</p>
+</blockquote>
+</div>
+<div id="annex" class="section level2">
+<h2>Annex</h2>
+<div style="overflow-x: auto">
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>
+Table 1. List of commodities
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Com.Code
+</th>
+<th style="text-align:right;">
+FAO.Code
+</th>
+<th style="text-align:left;">
+FAO.Name
+</th>
+<th style="text-align:left;">
+Com.Group
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+c001
+</td>
+<td style="text-align:right;">
+2805
+</td>
+<td style="text-align:left;">
+Rice (Milled Equivalent)
+</td>
+<td style="text-align:left;">
+Cereals
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c002
+</td>
+<td style="text-align:right;">
+2511
+</td>
+<td style="text-align:left;">
+Wheat and products
+</td>
+<td style="text-align:left;">
+Cereals
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c003
+</td>
+<td style="text-align:right;">
+2513
+</td>
+<td style="text-align:left;">
+Barley and products
+</td>
+<td style="text-align:left;">
+Cereals
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c004
+</td>
+<td style="text-align:right;">
+2514
+</td>
+<td style="text-align:left;">
+Maize and products
+</td>
+<td style="text-align:left;">
+Cereals
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c005
+</td>
+<td style="text-align:right;">
+2515
+</td>
+<td style="text-align:left;">
+Rye and products
+</td>
+<td style="text-align:left;">
+Cereals
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c006
+</td>
+<td style="text-align:right;">
+2516
+</td>
+<td style="text-align:left;">
+Oats
+</td>
+<td style="text-align:left;">
+Cereals
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c007
+</td>
+<td style="text-align:right;">
+2517
+</td>
+<td style="text-align:left;">
+Millet and products
+</td>
+<td style="text-align:left;">
+Cereals
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c008
+</td>
+<td style="text-align:right;">
+2518
+</td>
+<td style="text-align:left;">
+Sorghum and products
+</td>
+<td style="text-align:left;">
+Cereals
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c009
+</td>
+<td style="text-align:right;">
+2520
+</td>
+<td style="text-align:left;">
+Cereals, Other
+</td>
+<td style="text-align:left;">
+Cereals
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c010
+</td>
+<td style="text-align:right;">
+2531
+</td>
+<td style="text-align:left;">
+Potatoes and products
+</td>
+<td style="text-align:left;">
+Roots and tubers
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c011
+</td>
+<td style="text-align:right;">
+2532
+</td>
+<td style="text-align:left;">
+Cassava and products
+</td>
+<td style="text-align:left;">
+Roots and tubers
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c012
+</td>
+<td style="text-align:right;">
+2533
+</td>
+<td style="text-align:left;">
+Sweet potatoes
+</td>
+<td style="text-align:left;">
+Roots and tubers
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c013
+</td>
+<td style="text-align:right;">
+2534
+</td>
+<td style="text-align:left;">
+Roots, Other
+</td>
+<td style="text-align:left;">
+Roots and tubers
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c014
+</td>
+<td style="text-align:right;">
+2535
+</td>
+<td style="text-align:left;">
+Yams
+</td>
+<td style="text-align:left;">
+Roots and tubers
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c015
+</td>
+<td style="text-align:right;">
+2536
+</td>
+<td style="text-align:left;">
+Sugar cane
+</td>
+<td style="text-align:left;">
+Sugar crops
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c016
+</td>
+<td style="text-align:right;">
+2537
+</td>
+<td style="text-align:left;">
+Sugar beet
+</td>
+<td style="text-align:left;">
+Sugar crops
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c017
+</td>
+<td style="text-align:right;">
+2546
+</td>
+<td style="text-align:left;">
+Beans
+</td>
+<td style="text-align:left;">
+Vegetables, fruit, nuts, pulses, spices
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c018
+</td>
+<td style="text-align:right;">
+2547
+</td>
+<td style="text-align:left;">
+Peas
+</td>
+<td style="text-align:left;">
+Vegetables, fruit, nuts, pulses, spices
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c019
+</td>
+<td style="text-align:right;">
+2549
+</td>
+<td style="text-align:left;">
+Pulses, Other and products
+</td>
+<td style="text-align:left;">
+Vegetables, fruit, nuts, pulses, spices
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c020
+</td>
+<td style="text-align:right;">
+2551
+</td>
+<td style="text-align:left;">
+Nuts and products
+</td>
+<td style="text-align:left;">
+Vegetables, fruit, nuts, pulses, spices
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c021
+</td>
+<td style="text-align:right;">
+2555
+</td>
+<td style="text-align:left;">
+Soyabeans
+</td>
+<td style="text-align:left;">
+Oil crops
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c022
+</td>
+<td style="text-align:right;">
+2556
+</td>
+<td style="text-align:left;">
+Groundnuts (Shelled Eq)
+</td>
+<td style="text-align:left;">
+Oil crops
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c023
+</td>
+<td style="text-align:right;">
+2557
+</td>
+<td style="text-align:left;">
+Sunflower seed
+</td>
+<td style="text-align:left;">
+Oil crops
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c024
+</td>
+<td style="text-align:right;">
+2558
+</td>
+<td style="text-align:left;">
+Rape and Mustardseed
+</td>
+<td style="text-align:left;">
+Oil crops
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c025
+</td>
+<td style="text-align:right;">
+328
+</td>
+<td style="text-align:left;">
+Seed cotton
+</td>
+<td style="text-align:left;">
+Oil crops
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c026
+</td>
+<td style="text-align:right;">
+2560
+</td>
+<td style="text-align:left;">
+Coconuts - Incl Copra
+</td>
+<td style="text-align:left;">
+Oil crops
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c027
+</td>
+<td style="text-align:right;">
+2561
+</td>
+<td style="text-align:left;">
+Sesame seed
+</td>
+<td style="text-align:left;">
+Oil crops
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c028
+</td>
+<td style="text-align:right;">
+254
+</td>
+<td style="text-align:left;">
+Oil, palm fruit
+</td>
+<td style="text-align:left;">
+Oil crops
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c029
+</td>
+<td style="text-align:right;">
+2563
+</td>
+<td style="text-align:left;">
+Olives (including preserved)
+</td>
+<td style="text-align:left;">
+Oil crops
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c030
+</td>
+<td style="text-align:right;">
+2570
+</td>
+<td style="text-align:left;">
+Oilcrops, Other
+</td>
+<td style="text-align:left;">
+Oil crops
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c031
+</td>
+<td style="text-align:right;">
+2601
+</td>
+<td style="text-align:left;">
+Tomatoes and products
+</td>
+<td style="text-align:left;">
+Vegetables, fruit, nuts, pulses, spices
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c032
+</td>
+<td style="text-align:right;">
+2602
+</td>
+<td style="text-align:left;">
+Onions
+</td>
+<td style="text-align:left;">
+Vegetables, fruit, nuts, pulses, spices
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c033
+</td>
+<td style="text-align:right;">
+2605
+</td>
+<td style="text-align:left;">
+Vegetables, Other
+</td>
+<td style="text-align:left;">
+Vegetables, fruit, nuts, pulses, spices
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c034
+</td>
+<td style="text-align:right;">
+2611
+</td>
+<td style="text-align:left;">
+Oranges, Mandarines
+</td>
+<td style="text-align:left;">
+Vegetables, fruit, nuts, pulses, spices
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c035
+</td>
+<td style="text-align:right;">
+2612
+</td>
+<td style="text-align:left;">
+Lemons, Limes and products
+</td>
+<td style="text-align:left;">
+Vegetables, fruit, nuts, pulses, spices
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c036
+</td>
+<td style="text-align:right;">
+2613
+</td>
+<td style="text-align:left;">
+Grapefruit and products
+</td>
+<td style="text-align:left;">
+Vegetables, fruit, nuts, pulses, spices
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c037
+</td>
+<td style="text-align:right;">
+2614
+</td>
+<td style="text-align:left;">
+Citrus, Other
+</td>
+<td style="text-align:left;">
+Vegetables, fruit, nuts, pulses, spices
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c038
+</td>
+<td style="text-align:right;">
+2615
+</td>
+<td style="text-align:left;">
+Bananas
+</td>
+<td style="text-align:left;">
+Vegetables, fruit, nuts, pulses, spices
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c039
+</td>
+<td style="text-align:right;">
+2616
+</td>
+<td style="text-align:left;">
+Plantains
+</td>
+<td style="text-align:left;">
+Vegetables, fruit, nuts, pulses, spices
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c040
+</td>
+<td style="text-align:right;">
+2617
+</td>
+<td style="text-align:left;">
+Apples and products
+</td>
+<td style="text-align:left;">
+Vegetables, fruit, nuts, pulses, spices
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c041
+</td>
+<td style="text-align:right;">
+2618
+</td>
+<td style="text-align:left;">
+Pineapples and products
+</td>
+<td style="text-align:left;">
+Vegetables, fruit, nuts, pulses, spices
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c042
+</td>
+<td style="text-align:right;">
+2619
+</td>
+<td style="text-align:left;">
+Dates
+</td>
+<td style="text-align:left;">
+Vegetables, fruit, nuts, pulses, spices
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c043
+</td>
+<td style="text-align:right;">
+2620
+</td>
+<td style="text-align:left;">
+Grapes and products (excl wine)
+</td>
+<td style="text-align:left;">
+Vegetables, fruit, nuts, pulses, spices
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c044
+</td>
+<td style="text-align:right;">
+2625
+</td>
+<td style="text-align:left;">
+Fruits, Other
+</td>
+<td style="text-align:left;">
+Vegetables, fruit, nuts, pulses, spices
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c045
+</td>
+<td style="text-align:right;">
+2630
+</td>
+<td style="text-align:left;">
+Coffee and products
+</td>
+<td style="text-align:left;">
+Coffee, tea, cocoa
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c046
+</td>
+<td style="text-align:right;">
+2633
+</td>
+<td style="text-align:left;">
+Cocoa Beans and products
+</td>
+<td style="text-align:left;">
+Coffee, tea, cocoa
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c047
+</td>
+<td style="text-align:right;">
+2635
+</td>
+<td style="text-align:left;">
+Tea (including mate)
+</td>
+<td style="text-align:left;">
+Coffee, tea, cocoa
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c048
+</td>
+<td style="text-align:right;">
+677
+</td>
+<td style="text-align:left;">
+Hops
+</td>
+<td style="text-align:left;">
+Vegetables, fruit, nuts, pulses, spices
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c049
+</td>
+<td style="text-align:right;">
+2640
+</td>
+<td style="text-align:left;">
+Pepper
+</td>
+<td style="text-align:left;">
+Vegetables, fruit, nuts, pulses, spices
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c050
+</td>
+<td style="text-align:right;">
+2641
+</td>
+<td style="text-align:left;">
+Pimento
+</td>
+<td style="text-align:left;">
+Vegetables, fruit, nuts, pulses, spices
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c051
+</td>
+<td style="text-align:right;">
+2642
+</td>
+<td style="text-align:left;">
+Cloves
+</td>
+<td style="text-align:left;">
+Vegetables, fruit, nuts, pulses, spices
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c052
+</td>
+<td style="text-align:right;">
+2645
+</td>
+<td style="text-align:left;">
+Spices, Other
+</td>
+<td style="text-align:left;">
+Vegetables, fruit, nuts, pulses, spices
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c053
+</td>
+<td style="text-align:right;">
+2662
+</td>
+<td style="text-align:left;">
+Jute
+</td>
+<td style="text-align:left;">
+Fibre crops
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c054
+</td>
+<td style="text-align:right;">
+2663
+</td>
+<td style="text-align:left;">
+Jute-Like Fibres
+</td>
+<td style="text-align:left;">
+Fibre crops
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c055
+</td>
+<td style="text-align:right;">
+2664
+</td>
+<td style="text-align:left;">
+Soft-Fibres, Other
+</td>
+<td style="text-align:left;">
+Fibre crops
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c056
+</td>
+<td style="text-align:right;">
+2665
+</td>
+<td style="text-align:left;">
+Sisal
+</td>
+<td style="text-align:left;">
+Fibre crops
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c057
+</td>
+<td style="text-align:right;">
+2666
+</td>
+<td style="text-align:left;">
+Abaca
+</td>
+<td style="text-align:left;">
+Fibre crops
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c058
+</td>
+<td style="text-align:right;">
+2667
+</td>
+<td style="text-align:left;">
+Hard Fibres, Other
+</td>
+<td style="text-align:left;">
+Fibre crops
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c059
+</td>
+<td style="text-align:right;">
+2671
+</td>
+<td style="text-align:left;">
+Tobacco
+</td>
+<td style="text-align:left;">
+Tobacco, rubber
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c060
+</td>
+<td style="text-align:right;">
+2672
+</td>
+<td style="text-align:left;">
+Rubber
+</td>
+<td style="text-align:left;">
+Tobacco, rubber
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c061
+</td>
+<td style="text-align:right;">
+2000
+</td>
+<td style="text-align:left;">
+Fodder crops
+</td>
+<td style="text-align:left;">
+Fodder crops, grazing
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c062
+</td>
+<td style="text-align:right;">
+2001
+</td>
+<td style="text-align:left;">
+Grazing
+</td>
+<td style="text-align:left;">
+Fodder crops, grazing
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c063
+</td>
+<td style="text-align:right;">
+2559
+</td>
+<td style="text-align:left;">
+Cottonseed
+</td>
+<td style="text-align:left;">
+Fibre crops
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c064
+</td>
+<td style="text-align:right;">
+2562
+</td>
+<td style="text-align:left;">
+Palm kernels
+</td>
+<td style="text-align:left;">
+Oil crops
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c065
+</td>
+<td style="text-align:right;">
+2541
+</td>
+<td style="text-align:left;">
+Sugar non-centrifugal
+</td>
+<td style="text-align:left;">
+Sugar, sweeteners
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c066
+</td>
+<td style="text-align:right;">
+2544
+</td>
+<td style="text-align:left;">
+Molasses
+</td>
+<td style="text-align:left;">
+Sugar, sweeteners
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c067
+</td>
+<td style="text-align:right;">
+2818
+</td>
+<td style="text-align:left;">
+Sugar, Refined Equiv
+</td>
+<td style="text-align:left;">
+Sugar, sweeteners
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c068
+</td>
+<td style="text-align:right;">
+2543
+</td>
+<td style="text-align:left;">
+Sweeteners, Other
+</td>
+<td style="text-align:left;">
+Sugar, sweeteners
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c069
+</td>
+<td style="text-align:right;">
+2571
+</td>
+<td style="text-align:left;">
+Soyabean Oil
+</td>
+<td style="text-align:left;">
+Vegetable oils
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c070
+</td>
+<td style="text-align:right;">
+2572
+</td>
+<td style="text-align:left;">
+Groundnut Oil
+</td>
+<td style="text-align:left;">
+Vegetable oils
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c071
+</td>
+<td style="text-align:right;">
+2573
+</td>
+<td style="text-align:left;">
+Sunflowerseed Oil
+</td>
+<td style="text-align:left;">
+Vegetable oils
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c072
+</td>
+<td style="text-align:right;">
+2574
+</td>
+<td style="text-align:left;">
+Rape and Mustard Oil
+</td>
+<td style="text-align:left;">
+Vegetable oils
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c073
+</td>
+<td style="text-align:right;">
+2575
+</td>
+<td style="text-align:left;">
+Cottonseed Oil
+</td>
+<td style="text-align:left;">
+Vegetable oils
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c074
+</td>
+<td style="text-align:right;">
+2576
+</td>
+<td style="text-align:left;">
+Palmkernel Oil
+</td>
+<td style="text-align:left;">
+Vegetable oils
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c075
+</td>
+<td style="text-align:right;">
+2577
+</td>
+<td style="text-align:left;">
+Palm Oil
+</td>
+<td style="text-align:left;">
+Vegetable oils
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c076
+</td>
+<td style="text-align:right;">
+2578
+</td>
+<td style="text-align:left;">
+Coconut Oil
+</td>
+<td style="text-align:left;">
+Vegetable oils
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c077
+</td>
+<td style="text-align:right;">
+2579
+</td>
+<td style="text-align:left;">
+Sesameseed Oil
+</td>
+<td style="text-align:left;">
+Vegetable oils
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c078
+</td>
+<td style="text-align:right;">
+2580
+</td>
+<td style="text-align:left;">
+Olive Oil
+</td>
+<td style="text-align:left;">
+Vegetable oils
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c079
+</td>
+<td style="text-align:right;">
+2581
+</td>
+<td style="text-align:left;">
+Ricebran Oil
+</td>
+<td style="text-align:left;">
+Vegetable oils
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c080
+</td>
+<td style="text-align:right;">
+2582
+</td>
+<td style="text-align:left;">
+Maize Germ Oil
+</td>
+<td style="text-align:left;">
+Vegetable oils
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c081
+</td>
+<td style="text-align:right;">
+2586
+</td>
+<td style="text-align:left;">
+Oilcrops Oil, Other
+</td>
+<td style="text-align:left;">
+Vegetable oils
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c082
+</td>
+<td style="text-align:right;">
+2590
+</td>
+<td style="text-align:left;">
+Soyabean Cake
+</td>
+<td style="text-align:left;">
+Oil cakes
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c083
+</td>
+<td style="text-align:right;">
+2591
+</td>
+<td style="text-align:left;">
+Groundnut Cake
+</td>
+<td style="text-align:left;">
+Oil cakes
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c084
+</td>
+<td style="text-align:right;">
+2592
+</td>
+<td style="text-align:left;">
+Sunflowerseed Cake
+</td>
+<td style="text-align:left;">
+Oil cakes
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c085
+</td>
+<td style="text-align:right;">
+2593
+</td>
+<td style="text-align:left;">
+Rape and Mustard Cake
+</td>
+<td style="text-align:left;">
+Oil cakes
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c086
+</td>
+<td style="text-align:right;">
+2594
+</td>
+<td style="text-align:left;">
+Cottonseed Cake
+</td>
+<td style="text-align:left;">
+Oil cakes
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c087
+</td>
+<td style="text-align:right;">
+2595
+</td>
+<td style="text-align:left;">
+Palmkernel Cake
+</td>
+<td style="text-align:left;">
+Oil cakes
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c088
+</td>
+<td style="text-align:right;">
+2596
+</td>
+<td style="text-align:left;">
+Copra Cake
+</td>
+<td style="text-align:left;">
+Oil cakes
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c089
+</td>
+<td style="text-align:right;">
+2597
+</td>
+<td style="text-align:left;">
+Sesameseed Cake
+</td>
+<td style="text-align:left;">
+Oil cakes
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c090
+</td>
+<td style="text-align:right;">
+2598
+</td>
+<td style="text-align:left;">
+Oilseed Cakes, Other
+</td>
+<td style="text-align:left;">
+Oil cakes
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c091
+</td>
+<td style="text-align:right;">
+2655
+</td>
+<td style="text-align:left;">
+Wine
+</td>
+<td style="text-align:left;">
+Alcohol
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c092
+</td>
+<td style="text-align:right;">
+2656
+</td>
+<td style="text-align:left;">
+Beer
+</td>
+<td style="text-align:left;">
+Alcohol
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c093
+</td>
+<td style="text-align:right;">
+2657
+</td>
+<td style="text-align:left;">
+Beverages, Fermented
+</td>
+<td style="text-align:left;">
+Alcohol
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c094
+</td>
+<td style="text-align:right;">
+2658
+</td>
+<td style="text-align:left;">
+Beverages, Alcoholic
+</td>
+<td style="text-align:left;">
+Alcohol
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c095
+</td>
+<td style="text-align:right;">
+2659
+</td>
+<td style="text-align:left;">
+Alcohol, Non-Food
+</td>
+<td style="text-align:left;">
+Ethanol
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c096
+</td>
+<td style="text-align:right;">
+2661
+</td>
+<td style="text-align:left;">
+Cotton lint
+</td>
+<td style="text-align:left;">
+Fibre crops
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c097
+</td>
+<td style="text-align:right;">
+866
+</td>
+<td style="text-align:left;">
+Cattle
+</td>
+<td style="text-align:left;">
+Live animals
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c098
+</td>
+<td style="text-align:right;">
+946
+</td>
+<td style="text-align:left;">
+Buffaloes
+</td>
+<td style="text-align:left;">
+Live animals
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c099
+</td>
+<td style="text-align:right;">
+976
+</td>
+<td style="text-align:left;">
+Sheep
+</td>
+<td style="text-align:left;">
+Live animals
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c100
+</td>
+<td style="text-align:right;">
+1016
+</td>
+<td style="text-align:left;">
+Goats
+</td>
+<td style="text-align:left;">
+Live animals
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c101
+</td>
+<td style="text-align:right;">
+1034
+</td>
+<td style="text-align:left;">
+Pigs
+</td>
+<td style="text-align:left;">
+Live animals
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c102
+</td>
+<td style="text-align:right;">
+2029
+</td>
+<td style="text-align:left;">
+Poultry Birds
+</td>
+<td style="text-align:left;">
+Live animals
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c103
+</td>
+<td style="text-align:right;">
+1096
+</td>
+<td style="text-align:left;">
+Horses
+</td>
+<td style="text-align:left;">
+Live animals
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c104
+</td>
+<td style="text-align:right;">
+1107
+</td>
+<td style="text-align:left;">
+Asses
+</td>
+<td style="text-align:left;">
+Live animals
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c105
+</td>
+<td style="text-align:right;">
+1110
+</td>
+<td style="text-align:left;">
+Mules
+</td>
+<td style="text-align:left;">
+Live animals
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c106
+</td>
+<td style="text-align:right;">
+1126
+</td>
+<td style="text-align:left;">
+Camels
+</td>
+<td style="text-align:left;">
+Live animals
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c107
+</td>
+<td style="text-align:right;">
+1157
+</td>
+<td style="text-align:left;">
+Camelids, other
+</td>
+<td style="text-align:left;">
+Live animals
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c108
+</td>
+<td style="text-align:right;">
+1140
+</td>
+<td style="text-align:left;">
+Rabbits and hares
+</td>
+<td style="text-align:left;">
+Live animals
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c109
+</td>
+<td style="text-align:right;">
+1150
+</td>
+<td style="text-align:left;">
+Rodents, other
+</td>
+<td style="text-align:left;">
+Live animals
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c110
+</td>
+<td style="text-align:right;">
+1171
+</td>
+<td style="text-align:left;">
+Live animals, other
+</td>
+<td style="text-align:left;">
+Live animals
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c111
+</td>
+<td style="text-align:right;">
+2848
+</td>
+<td style="text-align:left;">
+Milk - Excluding Butter
+</td>
+<td style="text-align:left;">
+Milk
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c112
+</td>
+<td style="text-align:right;">
+2740
+</td>
+<td style="text-align:left;">
+Butter, Ghee
+</td>
+<td style="text-align:left;">
+Milk
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c113
+</td>
+<td style="text-align:right;">
+2744
+</td>
+<td style="text-align:left;">
+Eggs
+</td>
+<td style="text-align:left;">
+Eggs
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c114
+</td>
+<td style="text-align:right;">
+2746
+</td>
+<td style="text-align:left;">
+Wool (Clean Eq.)
+</td>
+<td style="text-align:left;">
+Hides, skins, wool
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c115
+</td>
+<td style="text-align:right;">
+2731
+</td>
+<td style="text-align:left;">
+Bovine Meat
+</td>
+<td style="text-align:left;">
+Meat
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c116
+</td>
+<td style="text-align:right;">
+2732
+</td>
+<td style="text-align:left;">
+Mutton &amp; Goat Meat
+</td>
+<td style="text-align:left;">
+Meat
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c117
+</td>
+<td style="text-align:right;">
+2733
+</td>
+<td style="text-align:left;">
+Pigmeat
+</td>
+<td style="text-align:left;">
+Meat
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c118
+</td>
+<td style="text-align:right;">
+2734
+</td>
+<td style="text-align:left;">
+Poultry Meat
+</td>
+<td style="text-align:left;">
+Meat
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c119
+</td>
+<td style="text-align:right;">
+2735
+</td>
+<td style="text-align:left;">
+Meat, Other
+</td>
+<td style="text-align:left;">
+Meat
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c120
+</td>
+<td style="text-align:right;">
+2736
+</td>
+<td style="text-align:left;">
+Offals, Edible
+</td>
+<td style="text-align:left;">
+Meat
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c121
+</td>
+<td style="text-align:right;">
+2737
+</td>
+<td style="text-align:left;">
+Fats, Animals, Raw
+</td>
+<td style="text-align:left;">
+Animal fats
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c122
+</td>
+<td style="text-align:right;">
+2748
+</td>
+<td style="text-align:left;">
+Hides and skins
+</td>
+<td style="text-align:left;">
+Hides, skins, wool
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c123
+</td>
+<td style="text-align:right;">
+2749
+</td>
+<td style="text-align:left;">
+Meat Meal
+</td>
+<td style="text-align:left;">
+Meat
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c124
+</td>
+<td style="text-align:right;">
+843
+</td>
+<td style="text-align:left;">
+Pet food
+</td>
+<td style="text-align:left;">
+Meat
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c125
+</td>
+<td style="text-align:right;">
+2745
+</td>
+<td style="text-align:left;">
+Honey
+</td>
+<td style="text-align:left;">
+Honey
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c126
+</td>
+<td style="text-align:right;">
+2747
+</td>
+<td style="text-align:left;">
+Silk
+</td>
+<td style="text-align:left;">
+Hides, skins, wool
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c127
+</td>
+<td style="text-align:right;">
+2960
+</td>
+<td style="text-align:left;">
+Fish, Seafood
+</td>
+<td style="text-align:left;">
+Fish
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c128
+</td>
+<td style="text-align:right;">
+1864
+</td>
+<td style="text-align:left;">
+Wood fuel
+</td>
+<td style="text-align:left;">
+Wood
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c129
+</td>
+<td style="text-align:right;">
+1866
+</td>
+<td style="text-align:left;">
+Industrial roundwood, coniferous
+</td>
+<td style="text-align:left;">
+Wood
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c130
+</td>
+<td style="text-align:right;">
+1867
+</td>
+<td style="text-align:left;">
+Industrial roundwood, non-coniferous
+</td>
+<td style="text-align:left;">
+Wood
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div style="overflow-x: auto">
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>
+Table 2. List of processes
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Proc.Code
+</th>
+<th style="text-align:left;">
+Process
+</th>
+<th style="text-align:left;">
+Proc.Type
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+p001
+</td>
+<td style="text-align:left;">
+Rice production
+</td>
+<td style="text-align:left;">
+Primary production
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p002
+</td>
+<td style="text-align:left;">
+Wheat production
+</td>
+<td style="text-align:left;">
+Primary production
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p003
+</td>
+<td style="text-align:left;">
+Barley production
+</td>
+<td style="text-align:left;">
+Primary production
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p004
+</td>
+<td style="text-align:left;">
+Maize production
+</td>
+<td style="text-align:left;">
+Primary production
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p005
+</td>
+<td style="text-align:left;">
+Rye production
+</td>
+<td style="text-align:left;">
+Primary production
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p006
+</td>
+<td style="text-align:left;">
+Oat production
+</td>
+<td style="text-align:left;">
+Primary production
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p007
+</td>
+<td style="text-align:left;">
+Millet production
+</td>
+<td style="text-align:left;">
+Primary production
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p008
+</td>
+<td style="text-align:left;">
+Sorghum production
+</td>
+<td style="text-align:left;">
+Primary production
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p009
+</td>
+<td style="text-align:left;">
+Cereals production, Other
+</td>
+<td style="text-align:left;">
+Primary production
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p010
+</td>
+<td style="text-align:left;">
+Potatoes production
+</td>
+<td style="text-align:left;">
+Primary production
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p011
+</td>
+<td style="text-align:left;">
+Cassava production
+</td>
+<td style="text-align:left;">
+Primary production
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p012
+</td>
+<td style="text-align:left;">
+Sweet potatoes production
+</td>
+<td style="text-align:left;">
+Primary production
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p013
+</td>
+<td style="text-align:left;">
+Roots production, Other
+</td>
+<td style="text-align:left;">
+Primary production
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p014
+</td>
+<td style="text-align:left;">
+Yams production
+</td>
+<td style="text-align:left;">
+Primary production
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p015
+</td>
+<td style="text-align:left;">
+Suga cane production
+</td>
+<td style="text-align:left;">
+Primary production
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p016
+</td>
+<td style="text-align:left;">
+Sugar beet production
+</td>
+<td style="text-align:left;">
+Primary production
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p017
+</td>
+<td style="text-align:left;">
+Beans production
+</td>
+<td style="text-align:left;">
+Primary production
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p018
+</td>
+<td style="text-align:left;">
+Peas production
+</td>
+<td style="text-align:left;">
+Primary production
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p019
+</td>
+<td style="text-align:left;">
+Pulses production, Other
+</td>
+<td style="text-align:left;">
+Primary production
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p020
+</td>
+<td style="text-align:left;">
+Nuts production
+</td>
+<td style="text-align:left;">
+Primary production
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p021
+</td>
+<td style="text-align:left;">
+Soyabeans production
+</td>
+<td style="text-align:left;">
+Primary production
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p022
+</td>
+<td style="text-align:left;">
+Groundnuts (Shelled Eq) production
+</td>
+<td style="text-align:left;">
+Primary production
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p023
+</td>
+<td style="text-align:left;">
+Sunflower seed production
+</td>
+<td style="text-align:left;">
+Primary production
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p024
+</td>
+<td style="text-align:left;">
+Rape and Mustardseed production
+</td>
+<td style="text-align:left;">
+Primary production
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p025
+</td>
+<td style="text-align:left;">
+Seed cotton production
+</td>
+<td style="text-align:left;">
+Primary production
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p026
+</td>
+<td style="text-align:left;">
+Coconuts production
+</td>
+<td style="text-align:left;">
+Primary production
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p027
+</td>
+<td style="text-align:left;">
+Sesame seed production
+</td>
+<td style="text-align:left;">
+Primary production
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p028
+</td>
+<td style="text-align:left;">
+Oil palm fruit production
+</td>
+<td style="text-align:left;">
+Primary production
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p029
+</td>
+<td style="text-align:left;">
+Olives production
+</td>
+<td style="text-align:left;">
+Primary production
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p030
+</td>
+<td style="text-align:left;">
+Oilcrops production, Other
+</td>
+<td style="text-align:left;">
+Primary production
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p031
+</td>
+<td style="text-align:left;">
+Tomatoes production
+</td>
+<td style="text-align:left;">
+Primary production
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p032
+</td>
+<td style="text-align:left;">
+Onions production
+</td>
+<td style="text-align:left;">
+Primary production
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p033
+</td>
+<td style="text-align:left;">
+Vegetables production, Other
+</td>
+<td style="text-align:left;">
+Primary production
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p034
+</td>
+<td style="text-align:left;">
+Oranges, Mandarines production
+</td>
+<td style="text-align:left;">
+Primary production
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p035
+</td>
+<td style="text-align:left;">
+Lemons, Limes production
+</td>
+<td style="text-align:left;">
+Primary production
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p036
+</td>
+<td style="text-align:left;">
+Grapefruit production
+</td>
+<td style="text-align:left;">
+Primary production
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p037
+</td>
+<td style="text-align:left;">
+Citrus production, Other
+</td>
+<td style="text-align:left;">
+Primary production
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p038
+</td>
+<td style="text-align:left;">
+Bananas production
+</td>
+<td style="text-align:left;">
+Primary production
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p039
+</td>
+<td style="text-align:left;">
+Plantains production
+</td>
+<td style="text-align:left;">
+Primary production
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p040
+</td>
+<td style="text-align:left;">
+Apples production
+</td>
+<td style="text-align:left;">
+Primary production
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p041
+</td>
+<td style="text-align:left;">
+Pineapples production
+</td>
+<td style="text-align:left;">
+Primary production
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p042
+</td>
+<td style="text-align:left;">
+Dates production
+</td>
+<td style="text-align:left;">
+Primary production
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p043
+</td>
+<td style="text-align:left;">
+Grapes production
+</td>
+<td style="text-align:left;">
+Primary production
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p044
+</td>
+<td style="text-align:left;">
+Fruits production, Other
+</td>
+<td style="text-align:left;">
+Primary production
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p045
+</td>
+<td style="text-align:left;">
+Coffee production
+</td>
+<td style="text-align:left;">
+Primary production
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p046
+</td>
+<td style="text-align:left;">
+Cocoa Beans production
+</td>
+<td style="text-align:left;">
+Primary production
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p047
+</td>
+<td style="text-align:left;">
+Tea production
+</td>
+<td style="text-align:left;">
+Primary production
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p048
+</td>
+<td style="text-align:left;">
+Hops production
+</td>
+<td style="text-align:left;">
+Primary production
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p049
+</td>
+<td style="text-align:left;">
+Pepper production
+</td>
+<td style="text-align:left;">
+Primary production
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p050
+</td>
+<td style="text-align:left;">
+Pimento production
+</td>
+<td style="text-align:left;">
+Primary production
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p051
+</td>
+<td style="text-align:left;">
+Cloves production
+</td>
+<td style="text-align:left;">
+Primary production
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p052
+</td>
+<td style="text-align:left;">
+Spices production, Other
+</td>
+<td style="text-align:left;">
+Primary production
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p053
+</td>
+<td style="text-align:left;">
+Jute production
+</td>
+<td style="text-align:left;">
+Primary production
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p054
+</td>
+<td style="text-align:left;">
+Jute-Like Fibres production
+</td>
+<td style="text-align:left;">
+Primary production
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p055
+</td>
+<td style="text-align:left;">
+Soft-Fibres production, Other
+</td>
+<td style="text-align:left;">
+Primary production
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p056
+</td>
+<td style="text-align:left;">
+Sisal production
+</td>
+<td style="text-align:left;">
+Primary production
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p057
+</td>
+<td style="text-align:left;">
+Abaca production
+</td>
+<td style="text-align:left;">
+Primary production
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p058
+</td>
+<td style="text-align:left;">
+Hard Fibres production, Other
+</td>
+<td style="text-align:left;">
+Primary production
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p059
+</td>
+<td style="text-align:left;">
+Tobacco production
+</td>
+<td style="text-align:left;">
+Primary production
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p060
+</td>
+<td style="text-align:left;">
+Rubber production
+</td>
+<td style="text-align:left;">
+Primary production
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p061
+</td>
+<td style="text-align:left;">
+Fodder crops production
+</td>
+<td style="text-align:left;">
+Primary production
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p062
+</td>
+<td style="text-align:left;">
+Grazing production
+</td>
+<td style="text-align:left;">
+Primary production
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p063
+</td>
+<td style="text-align:left;">
+Cotton production
+</td>
+<td style="text-align:left;">
+Processing
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p064
+</td>
+<td style="text-align:left;">
+Sugar production, non-centrifugal
+</td>
+<td style="text-align:left;">
+Processing
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p065
+</td>
+<td style="text-align:left;">
+Sugar production
+</td>
+<td style="text-align:left;">
+Processing
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p066
+</td>
+<td style="text-align:left;">
+Sweeteners production, Other
+</td>
+<td style="text-align:left;">
+Processing
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p067
+</td>
+<td style="text-align:left;">
+Soyabean Oil extraction
+</td>
+<td style="text-align:left;">
+Processing
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p068
+</td>
+<td style="text-align:left;">
+Groundnut Oil extraction
+</td>
+<td style="text-align:left;">
+Processing
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p069
+</td>
+<td style="text-align:left;">
+Sunflowerseed Oil extraction
+</td>
+<td style="text-align:left;">
+Processing
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p070
+</td>
+<td style="text-align:left;">
+Rape and Mustard Oil extraction
+</td>
+<td style="text-align:left;">
+Processing
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p071
+</td>
+<td style="text-align:left;">
+Cottonseed Oil extraction
+</td>
+<td style="text-align:left;">
+Processing
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p072
+</td>
+<td style="text-align:left;">
+Palmkernel Oil extraction
+</td>
+<td style="text-align:left;">
+Processing
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p073
+</td>
+<td style="text-align:left;">
+Palm Oil production
+</td>
+<td style="text-align:left;">
+Processing
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p074
+</td>
+<td style="text-align:left;">
+Coconut Oil extraction
+</td>
+<td style="text-align:left;">
+Processing
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p075
+</td>
+<td style="text-align:left;">
+Sesameseed Oil extraction
+</td>
+<td style="text-align:left;">
+Processing
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p076
+</td>
+<td style="text-align:left;">
+Olive Oil extraction
+</td>
+<td style="text-align:left;">
+Processing
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p077
+</td>
+<td style="text-align:left;">
+Ricebran Oil extraction
+</td>
+<td style="text-align:left;">
+Processing
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p078
+</td>
+<td style="text-align:left;">
+Maize Germ Oil extraction
+</td>
+<td style="text-align:left;">
+Processing
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p079
+</td>
+<td style="text-align:left;">
+Oilcrops Oil extraction, Other
+</td>
+<td style="text-align:left;">
+Processing
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p080
+</td>
+<td style="text-align:left;">
+Wine production
+</td>
+<td style="text-align:left;">
+Processing
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p081
+</td>
+<td style="text-align:left;">
+Beer production
+</td>
+<td style="text-align:left;">
+Processing
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p082
+</td>
+<td style="text-align:left;">
+Beverages production, Fermented
+</td>
+<td style="text-align:left;">
+Processing
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p083
+</td>
+<td style="text-align:left;">
+Beverages production, Alcoholic
+</td>
+<td style="text-align:left;">
+Processing
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p084
+</td>
+<td style="text-align:left;">
+Alcohol production, Non-Food
+</td>
+<td style="text-align:left;">
+Processing
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p085
+</td>
+<td style="text-align:left;">
+Cattle husbandry
+</td>
+<td style="text-align:left;">
+Primary production
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p086
+</td>
+<td style="text-align:left;">
+Buffaloes husbandry
+</td>
+<td style="text-align:left;">
+Primary production
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p087
+</td>
+<td style="text-align:left;">
+Sheep husbandry
+</td>
+<td style="text-align:left;">
+Primary production
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p088
+</td>
+<td style="text-align:left;">
+Goats husbandry
+</td>
+<td style="text-align:left;">
+Primary production
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p089
+</td>
+<td style="text-align:left;">
+Pigs farming
+</td>
+<td style="text-align:left;">
+Primary production
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p090
+</td>
+<td style="text-align:left;">
+Poultry Birds farming
+</td>
+<td style="text-align:left;">
+Primary production
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p091
+</td>
+<td style="text-align:left;">
+Horses husbandry
+</td>
+<td style="text-align:left;">
+Primary production
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p092
+</td>
+<td style="text-align:left;">
+Asses husbandry
+</td>
+<td style="text-align:left;">
+Primary production
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p093
+</td>
+<td style="text-align:left;">
+Mules husbandry
+</td>
+<td style="text-align:left;">
+Primary production
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p094
+</td>
+<td style="text-align:left;">
+Camels husbandry
+</td>
+<td style="text-align:left;">
+Primary production
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p095
+</td>
+<td style="text-align:left;">
+Camelids husbandry, other
+</td>
+<td style="text-align:left;">
+Primary production
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p096
+</td>
+<td style="text-align:left;">
+Rabbits husbandry
+</td>
+<td style="text-align:left;">
+Primary production
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p097
+</td>
+<td style="text-align:left;">
+Rodents husbandry, other
+</td>
+<td style="text-align:left;">
+Primary production
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p098
+</td>
+<td style="text-align:left;">
+Live animals husbandry, other
+</td>
+<td style="text-align:left;">
+Primary production
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p099
+</td>
+<td style="text-align:left;">
+Dairy cattle husbandry
+</td>
+<td style="text-align:left;">
+Primary production
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p100
+</td>
+<td style="text-align:left;">
+Dairy buffaloes husbandry
+</td>
+<td style="text-align:left;">
+Primary production
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p101
+</td>
+<td style="text-align:left;">
+Dairy sheep husbandry
+</td>
+<td style="text-align:left;">
+Primary production
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p102
+</td>
+<td style="text-align:left;">
+Dairy goats husbandry
+</td>
+<td style="text-align:left;">
+Primary production
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p103
+</td>
+<td style="text-align:left;">
+Dairy camels husbandry
+</td>
+<td style="text-align:left;">
+Primary production
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p104
+</td>
+<td style="text-align:left;">
+Cattle slaughtering
+</td>
+<td style="text-align:left;">
+Processing
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p105
+</td>
+<td style="text-align:left;">
+Buffaloes slaughtering
+</td>
+<td style="text-align:left;">
+Processing
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p106
+</td>
+<td style="text-align:left;">
+Sheep slaughtering
+</td>
+<td style="text-align:left;">
+Processing
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p107
+</td>
+<td style="text-align:left;">
+Goat slaughtering
+</td>
+<td style="text-align:left;">
+Processing
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p108
+</td>
+<td style="text-align:left;">
+Pigs slaughtering
+</td>
+<td style="text-align:left;">
+Processing
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p109
+</td>
+<td style="text-align:left;">
+Poultry slaughtering
+</td>
+<td style="text-align:left;">
+Processing
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p110
+</td>
+<td style="text-align:left;">
+Horses slaughtering
+</td>
+<td style="text-align:left;">
+Processing
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p111
+</td>
+<td style="text-align:left;">
+Asses slaughtering
+</td>
+<td style="text-align:left;">
+Processing
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p112
+</td>
+<td style="text-align:left;">
+Mules slaughtering
+</td>
+<td style="text-align:left;">
+Processing
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p113
+</td>
+<td style="text-align:left;">
+Camels slaughtering
+</td>
+<td style="text-align:left;">
+Processing
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p114
+</td>
+<td style="text-align:left;">
+Camelids slaughtering, other
+</td>
+<td style="text-align:left;">
+Processing
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p115
+</td>
+<td style="text-align:left;">
+Rabbits slaughtering
+</td>
+<td style="text-align:left;">
+Processing
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p116
+</td>
+<td style="text-align:left;">
+Rodents slaughtering, other
+</td>
+<td style="text-align:left;">
+Processing
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p117
+</td>
+<td style="text-align:left;">
+Live animals slaughtering, other
+</td>
+<td style="text-align:left;">
+Processing
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p118
+</td>
+<td style="text-align:left;">
+Beekeeping
+</td>
+<td style="text-align:left;">
+Processing
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p119
+</td>
+<td style="text-align:left;">
+Silkworm breeding
+</td>
+<td style="text-align:left;">
+Processing
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p120
+</td>
+<td style="text-align:left;">
+Fishing
+</td>
+<td style="text-align:left;">
+Processing
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p121
+</td>
+<td style="text-align:left;">
+Forestry
+</td>
+<td style="text-align:left;">
+Primary production
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div style="overflow-x: auto">
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>
+Table 3. List of countries
+</caption>
+<thead>
+<tr>
+<th style="text-align:right;">
+FAO.Code
+</th>
+<th style="text-align:left;">
+Country
+</th>
+<th style="text-align:left;">
+ISO
+</th>
+<th style="text-align:left;">
+Continent
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+Armenia
+</td>
+<td style="text-align:left;">
+ARM
+</td>
+<td style="text-align:left;">
+ASI
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+Afghanistan
+</td>
+<td style="text-align:left;">
+AFG
+</td>
+<td style="text-align:left;">
+ASI
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:left;">
+Albania
+</td>
+<td style="text-align:left;">
+ALB
+</td>
+<td style="text-align:left;">
+EUR
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:left;">
+Algeria
+</td>
+<td style="text-align:left;">
+DZA
+</td>
+<td style="text-align:left;">
+AFR
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:left;">
+Angola
+</td>
+<td style="text-align:left;">
+AGO
+</td>
+<td style="text-align:left;">
+AFR
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:left;">
+Antigua and Barbuda
+</td>
+<td style="text-align:left;">
+ATG
+</td>
+<td style="text-align:left;">
+LAM
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:left;">
+Argentina
+</td>
+<td style="text-align:left;">
+ARG
+</td>
+<td style="text-align:left;">
+LAM
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+Australia
+</td>
+<td style="text-align:left;">
+AUS
+</td>
+<td style="text-align:left;">
+OCE
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+11
+</td>
+<td style="text-align:left;">
+Austria
+</td>
+<td style="text-align:left;">
+AUT
+</td>
+<td style="text-align:left;">
+EU
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:left;">
+Bahamas
+</td>
+<td style="text-align:left;">
+BHS
+</td>
+<td style="text-align:left;">
+LAM
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+13
+</td>
+<td style="text-align:left;">
+Bahrain
+</td>
+<td style="text-align:left;">
+BHR
+</td>
+<td style="text-align:left;">
+ASI
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+14
+</td>
+<td style="text-align:left;">
+Barbados
+</td>
+<td style="text-align:left;">
+BRB
+</td>
+<td style="text-align:left;">
+LAM
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+15
+</td>
+<td style="text-align:left;">
+Belgium-Luxembourg
+</td>
+<td style="text-align:left;">
+BLX
+</td>
+<td style="text-align:left;">
+EU
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+16
+</td>
+<td style="text-align:left;">
+Bangladesh
+</td>
+<td style="text-align:left;">
+BGD
+</td>
+<td style="text-align:left;">
+ASI
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+19
+</td>
+<td style="text-align:left;">
+Bolivia (Plurinational State of)
+</td>
+<td style="text-align:left;">
+BOL
+</td>
+<td style="text-align:left;">
+LAM
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+20
+</td>
+<td style="text-align:left;">
+Botswana
+</td>
+<td style="text-align:left;">
+BWA
+</td>
+<td style="text-align:left;">
+AFR
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+21
+</td>
+<td style="text-align:left;">
+Brazil
+</td>
+<td style="text-align:left;">
+BRA
+</td>
+<td style="text-align:left;">
+LAM
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+23
+</td>
+<td style="text-align:left;">
+Belize
+</td>
+<td style="text-align:left;">
+BLZ
+</td>
+<td style="text-align:left;">
+LAM
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+25
+</td>
+<td style="text-align:left;">
+Solomon Islands
+</td>
+<td style="text-align:left;">
+SLB
+</td>
+<td style="text-align:left;">
+OCE
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+26
+</td>
+<td style="text-align:left;">
+Brunei Darussalam
+</td>
+<td style="text-align:left;">
+BRN
+</td>
+<td style="text-align:left;">
+ASI
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+27
+</td>
+<td style="text-align:left;">
+Bulgaria
+</td>
+<td style="text-align:left;">
+BGR
+</td>
+<td style="text-align:left;">
+EU
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+28
+</td>
+<td style="text-align:left;">
+Myanmar
+</td>
+<td style="text-align:left;">
+MMR
+</td>
+<td style="text-align:left;">
+ASI
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+29
+</td>
+<td style="text-align:left;">
+Burundi
+</td>
+<td style="text-align:left;">
+BDI
+</td>
+<td style="text-align:left;">
+AFR
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+32
+</td>
+<td style="text-align:left;">
+Cameroon
+</td>
+<td style="text-align:left;">
+CMR
+</td>
+<td style="text-align:left;">
+AFR
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+33
+</td>
+<td style="text-align:left;">
+Canada
+</td>
+<td style="text-align:left;">
+CAN
+</td>
+<td style="text-align:left;">
+NAM
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+35
+</td>
+<td style="text-align:left;">
+Cabo Verde
+</td>
+<td style="text-align:left;">
+CPV
+</td>
+<td style="text-align:left;">
+AFR
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+37
+</td>
+<td style="text-align:left;">
+Central African Republic
+</td>
+<td style="text-align:left;">
+CAF
+</td>
+<td style="text-align:left;">
+AFR
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+38
+</td>
+<td style="text-align:left;">
+Sri Lanka
+</td>
+<td style="text-align:left;">
+LKA
+</td>
+<td style="text-align:left;">
+ASI
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+39
+</td>
+<td style="text-align:left;">
+Chad
+</td>
+<td style="text-align:left;">
+TCD
+</td>
+<td style="text-align:left;">
+AFR
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+40
+</td>
+<td style="text-align:left;">
+Chile
+</td>
+<td style="text-align:left;">
+CHL
+</td>
+<td style="text-align:left;">
+LAM
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+41
+</td>
+<td style="text-align:left;">
+China, mainland
+</td>
+<td style="text-align:left;">
+CHN
+</td>
+<td style="text-align:left;">
+ASI
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+44
+</td>
+<td style="text-align:left;">
+Colombia
+</td>
+<td style="text-align:left;">
+COL
+</td>
+<td style="text-align:left;">
+LAM
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+46
+</td>
+<td style="text-align:left;">
+Congo
+</td>
+<td style="text-align:left;">
+COG
+</td>
+<td style="text-align:left;">
+AFR
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+48
+</td>
+<td style="text-align:left;">
+Costa Rica
+</td>
+<td style="text-align:left;">
+CRI
+</td>
+<td style="text-align:left;">
+LAM
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+49
+</td>
+<td style="text-align:left;">
+Cuba
+</td>
+<td style="text-align:left;">
+CUB
+</td>
+<td style="text-align:left;">
+LAM
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+50
+</td>
+<td style="text-align:left;">
+Cyprus
+</td>
+<td style="text-align:left;">
+CYP
+</td>
+<td style="text-align:left;">
+EU
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+51
+</td>
+<td style="text-align:left;">
+Czechoslovakia
+</td>
+<td style="text-align:left;">
+CSK
+</td>
+<td style="text-align:left;">
+EU
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+52
+</td>
+<td style="text-align:left;">
+Azerbaijan
+</td>
+<td style="text-align:left;">
+AZE
+</td>
+<td style="text-align:left;">
+ASI
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+53
+</td>
+<td style="text-align:left;">
+Benin
+</td>
+<td style="text-align:left;">
+BEN
+</td>
+<td style="text-align:left;">
+AFR
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+54
+</td>
+<td style="text-align:left;">
+Denmark
+</td>
+<td style="text-align:left;">
+DNK
+</td>
+<td style="text-align:left;">
+EU
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+55
+</td>
+<td style="text-align:left;">
+Dominica
+</td>
+<td style="text-align:left;">
+DMA
+</td>
+<td style="text-align:left;">
+LAM
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+56
+</td>
+<td style="text-align:left;">
+Dominican Republic
+</td>
+<td style="text-align:left;">
+DOM
+</td>
+<td style="text-align:left;">
+LAM
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+57
+</td>
+<td style="text-align:left;">
+Belarus
+</td>
+<td style="text-align:left;">
+BLR
+</td>
+<td style="text-align:left;">
+EUR
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+58
+</td>
+<td style="text-align:left;">
+Ecuador
+</td>
+<td style="text-align:left;">
+ECU
+</td>
+<td style="text-align:left;">
+LAM
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+59
+</td>
+<td style="text-align:left;">
+Egypt
+</td>
+<td style="text-align:left;">
+EGY
+</td>
+<td style="text-align:left;">
+AFR
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+60
+</td>
+<td style="text-align:left;">
+El Salvador
+</td>
+<td style="text-align:left;">
+SLV
+</td>
+<td style="text-align:left;">
+LAM
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+63
+</td>
+<td style="text-align:left;">
+Estonia
+</td>
+<td style="text-align:left;">
+EST
+</td>
+<td style="text-align:left;">
+EU
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+66
+</td>
+<td style="text-align:left;">
+Fiji
+</td>
+<td style="text-align:left;">
+FJI
+</td>
+<td style="text-align:left;">
+OCE
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+67
+</td>
+<td style="text-align:left;">
+Finland
+</td>
+<td style="text-align:left;">
+FIN
+</td>
+<td style="text-align:left;">
+EU
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+68
+</td>
+<td style="text-align:left;">
+France
+</td>
+<td style="text-align:left;">
+FRA
+</td>
+<td style="text-align:left;">
+EU
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+70
+</td>
+<td style="text-align:left;">
+French Polynesia
+</td>
+<td style="text-align:left;">
+PYF
+</td>
+<td style="text-align:left;">
+OCE
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+72
+</td>
+<td style="text-align:left;">
+Djibouti
+</td>
+<td style="text-align:left;">
+DJI
+</td>
+<td style="text-align:left;">
+AFR
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+73
+</td>
+<td style="text-align:left;">
+Georgia
+</td>
+<td style="text-align:left;">
+GEO
+</td>
+<td style="text-align:left;">
+ASI
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+74
+</td>
+<td style="text-align:left;">
+Gabon
+</td>
+<td style="text-align:left;">
+GAB
+</td>
+<td style="text-align:left;">
+AFR
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+75
+</td>
+<td style="text-align:left;">
+Gambia
+</td>
+<td style="text-align:left;">
+GMB
+</td>
+<td style="text-align:left;">
+AFR
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+79
+</td>
+<td style="text-align:left;">
+Germany
+</td>
+<td style="text-align:left;">
+DEU
+</td>
+<td style="text-align:left;">
+EU
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+80
+</td>
+<td style="text-align:left;">
+Bosnia and Herzegovina
+</td>
+<td style="text-align:left;">
+BIH
+</td>
+<td style="text-align:left;">
+EUR
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+81
+</td>
+<td style="text-align:left;">
+Ghana
+</td>
+<td style="text-align:left;">
+GHA
+</td>
+<td style="text-align:left;">
+AFR
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+83
+</td>
+<td style="text-align:left;">
+Kiribati
+</td>
+<td style="text-align:left;">
+KIR
+</td>
+<td style="text-align:left;">
+OCE
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+84
+</td>
+<td style="text-align:left;">
+Greece
+</td>
+<td style="text-align:left;">
+GRC
+</td>
+<td style="text-align:left;">
+EU
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+86
+</td>
+<td style="text-align:left;">
+Grenada
+</td>
+<td style="text-align:left;">
+GRD
+</td>
+<td style="text-align:left;">
+LAM
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+89
+</td>
+<td style="text-align:left;">
+Guatemala
+</td>
+<td style="text-align:left;">
+GTM
+</td>
+<td style="text-align:left;">
+LAM
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+90
+</td>
+<td style="text-align:left;">
+Guinea
+</td>
+<td style="text-align:left;">
+GIN
+</td>
+<td style="text-align:left;">
+AFR
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+91
+</td>
+<td style="text-align:left;">
+Guyana
+</td>
+<td style="text-align:left;">
+GUY
+</td>
+<td style="text-align:left;">
+LAM
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+93
+</td>
+<td style="text-align:left;">
+Haiti
+</td>
+<td style="text-align:left;">
+HTI
+</td>
+<td style="text-align:left;">
+LAM
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+95
+</td>
+<td style="text-align:left;">
+Honduras
+</td>
+<td style="text-align:left;">
+HND
+</td>
+<td style="text-align:left;">
+LAM
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+96
+</td>
+<td style="text-align:left;">
+China, Hong Kong SAR
+</td>
+<td style="text-align:left;">
+HKG
+</td>
+<td style="text-align:left;">
+ASI
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+97
+</td>
+<td style="text-align:left;">
+Hungary
+</td>
+<td style="text-align:left;">
+HUN
+</td>
+<td style="text-align:left;">
+EU
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+98
+</td>
+<td style="text-align:left;">
+Croatia
+</td>
+<td style="text-align:left;">
+HRV
+</td>
+<td style="text-align:left;">
+EU
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+99
+</td>
+<td style="text-align:left;">
+Iceland
+</td>
+<td style="text-align:left;">
+ISL
+</td>
+<td style="text-align:left;">
+EUR
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+100
+</td>
+<td style="text-align:left;">
+India
+</td>
+<td style="text-align:left;">
+IND
+</td>
+<td style="text-align:left;">
+ASI
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+101
+</td>
+<td style="text-align:left;">
+Indonesia
+</td>
+<td style="text-align:left;">
+IDN
+</td>
+<td style="text-align:left;">
+ASI
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+102
+</td>
+<td style="text-align:left;">
+Iran (Islamic Republic of)
+</td>
+<td style="text-align:left;">
+IRN
+</td>
+<td style="text-align:left;">
+ASI
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+103
+</td>
+<td style="text-align:left;">
+Iraq
+</td>
+<td style="text-align:left;">
+IRQ
+</td>
+<td style="text-align:left;">
+ASI
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+104
+</td>
+<td style="text-align:left;">
+Ireland
+</td>
+<td style="text-align:left;">
+IRL
+</td>
+<td style="text-align:left;">
+EU
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+105
+</td>
+<td style="text-align:left;">
+Israel
+</td>
+<td style="text-align:left;">
+ISR
+</td>
+<td style="text-align:left;">
+ASI
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+106
+</td>
+<td style="text-align:left;">
+Italy
+</td>
+<td style="text-align:left;">
+ITA
+</td>
+<td style="text-align:left;">
+EU
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+107
+</td>
+<td style="text-align:left;">
+CÃ´te d’Ivoire
+</td>
+<td style="text-align:left;">
+CIV
+</td>
+<td style="text-align:left;">
+AFR
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+108
+</td>
+<td style="text-align:left;">
+Kazakhstan
+</td>
+<td style="text-align:left;">
+KAZ
+</td>
+<td style="text-align:left;">
+ASI
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+109
+</td>
+<td style="text-align:left;">
+Jamaica
+</td>
+<td style="text-align:left;">
+JAM
+</td>
+<td style="text-align:left;">
+LAM
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+110
+</td>
+<td style="text-align:left;">
+Japan
+</td>
+<td style="text-align:left;">
+JPN
+</td>
+<td style="text-align:left;">
+ASI
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+112
+</td>
+<td style="text-align:left;">
+Jordan
+</td>
+<td style="text-align:left;">
+JOR
+</td>
+<td style="text-align:left;">
+ASI
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+113
+</td>
+<td style="text-align:left;">
+Kyrgyzstan
+</td>
+<td style="text-align:left;">
+KGZ
+</td>
+<td style="text-align:left;">
+ASI
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+114
+</td>
+<td style="text-align:left;">
+Kenya
+</td>
+<td style="text-align:left;">
+KEN
+</td>
+<td style="text-align:left;">
+AFR
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+115
+</td>
+<td style="text-align:left;">
+Cambodia
+</td>
+<td style="text-align:left;">
+KHM
+</td>
+<td style="text-align:left;">
+ASI
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+116
+</td>
+<td style="text-align:left;">
+Democratic People’s Republic of Korea
+</td>
+<td style="text-align:left;">
+PRK
+</td>
+<td style="text-align:left;">
+ASI
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+117
+</td>
+<td style="text-align:left;">
+Republic of Korea
+</td>
+<td style="text-align:left;">
+KOR
+</td>
+<td style="text-align:left;">
+ASI
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+118
+</td>
+<td style="text-align:left;">
+Kuwait
+</td>
+<td style="text-align:left;">
+KWT
+</td>
+<td style="text-align:left;">
+ASI
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+119
+</td>
+<td style="text-align:left;">
+Latvia
+</td>
+<td style="text-align:left;">
+LVA
+</td>
+<td style="text-align:left;">
+EU
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+120
+</td>
+<td style="text-align:left;">
+Lao People’s Democratic Republic
+</td>
+<td style="text-align:left;">
+LAO
+</td>
+<td style="text-align:left;">
+ASI
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+121
+</td>
+<td style="text-align:left;">
+Lebanon
+</td>
+<td style="text-align:left;">
+LBN
+</td>
+<td style="text-align:left;">
+ASI
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+122
+</td>
+<td style="text-align:left;">
+Lesotho
+</td>
+<td style="text-align:left;">
+LSO
+</td>
+<td style="text-align:left;">
+AFR
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+123
+</td>
+<td style="text-align:left;">
+Liberia
+</td>
+<td style="text-align:left;">
+LBR
+</td>
+<td style="text-align:left;">
+AFR
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+124
+</td>
+<td style="text-align:left;">
+Libya
+</td>
+<td style="text-align:left;">
+LBY
+</td>
+<td style="text-align:left;">
+AFR
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+126
+</td>
+<td style="text-align:left;">
+Lithuania
+</td>
+<td style="text-align:left;">
+LTU
+</td>
+<td style="text-align:left;">
+EU
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+128
+</td>
+<td style="text-align:left;">
+China, Macao SAR
+</td>
+<td style="text-align:left;">
+MAC
+</td>
+<td style="text-align:left;">
+ASI
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+129
+</td>
+<td style="text-align:left;">
+Madagascar
+</td>
+<td style="text-align:left;">
+MDG
+</td>
+<td style="text-align:left;">
+AFR
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+130
+</td>
+<td style="text-align:left;">
+Malawi
+</td>
+<td style="text-align:left;">
+MWI
+</td>
+<td style="text-align:left;">
+AFR
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+131
+</td>
+<td style="text-align:left;">
+Malaysia
+</td>
+<td style="text-align:left;">
+MYS
+</td>
+<td style="text-align:left;">
+ASI
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+132
+</td>
+<td style="text-align:left;">
+Maldives
+</td>
+<td style="text-align:left;">
+MDV
+</td>
+<td style="text-align:left;">
+ASI
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+133
+</td>
+<td style="text-align:left;">
+Mali
+</td>
+<td style="text-align:left;">
+MLI
+</td>
+<td style="text-align:left;">
+AFR
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+134
+</td>
+<td style="text-align:left;">
+Malta
+</td>
+<td style="text-align:left;">
+MLT
+</td>
+<td style="text-align:left;">
+EU
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+136
+</td>
+<td style="text-align:left;">
+Mauritania
+</td>
+<td style="text-align:left;">
+MRT
+</td>
+<td style="text-align:left;">
+AFR
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+137
+</td>
+<td style="text-align:left;">
+Mauritius
+</td>
+<td style="text-align:left;">
+MUS
+</td>
+<td style="text-align:left;">
+AFR
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+138
+</td>
+<td style="text-align:left;">
+Mexico
+</td>
+<td style="text-align:left;">
+MEX
+</td>
+<td style="text-align:left;">
+LAM
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+141
+</td>
+<td style="text-align:left;">
+Mongolia
+</td>
+<td style="text-align:left;">
+MNG
+</td>
+<td style="text-align:left;">
+ASI
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+143
+</td>
+<td style="text-align:left;">
+Morocco
+</td>
+<td style="text-align:left;">
+MAR
+</td>
+<td style="text-align:left;">
+AFR
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+144
+</td>
+<td style="text-align:left;">
+Mozambique
+</td>
+<td style="text-align:left;">
+MOZ
+</td>
+<td style="text-align:left;">
+AFR
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+146
+</td>
+<td style="text-align:left;">
+Republic of Moldova
+</td>
+<td style="text-align:left;">
+MDA
+</td>
+<td style="text-align:left;">
+EUR
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+147
+</td>
+<td style="text-align:left;">
+Namibia
+</td>
+<td style="text-align:left;">
+NAM
+</td>
+<td style="text-align:left;">
+AFR
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+149
+</td>
+<td style="text-align:left;">
+Nepal
+</td>
+<td style="text-align:left;">
+NPL
+</td>
+<td style="text-align:left;">
+ASI
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+150
+</td>
+<td style="text-align:left;">
+Netherlands
+</td>
+<td style="text-align:left;">
+NLD
+</td>
+<td style="text-align:left;">
+EU
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+151
+</td>
+<td style="text-align:left;">
+Netherlands Antilles
+</td>
+<td style="text-align:left;">
+ANT
+</td>
+<td style="text-align:left;">
+LAM
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+153
+</td>
+<td style="text-align:left;">
+New Caledonia
+</td>
+<td style="text-align:left;">
+NCL
+</td>
+<td style="text-align:left;">
+OCE
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+154
+</td>
+<td style="text-align:left;">
+The former Yugoslav Republic of Macedonia
+</td>
+<td style="text-align:left;">
+MKD
+</td>
+<td style="text-align:left;">
+EUR
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+155
+</td>
+<td style="text-align:left;">
+Vanuatu
+</td>
+<td style="text-align:left;">
+VUT
+</td>
+<td style="text-align:left;">
+OCE
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+156
+</td>
+<td style="text-align:left;">
+New Zealand
+</td>
+<td style="text-align:left;">
+NZL
+</td>
+<td style="text-align:left;">
+OCE
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+157
+</td>
+<td style="text-align:left;">
+Nicaragua
+</td>
+<td style="text-align:left;">
+NIC
+</td>
+<td style="text-align:left;">
+LAM
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+158
+</td>
+<td style="text-align:left;">
+Niger
+</td>
+<td style="text-align:left;">
+NER
+</td>
+<td style="text-align:left;">
+AFR
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+159
+</td>
+<td style="text-align:left;">
+Nigeria
+</td>
+<td style="text-align:left;">
+NGA
+</td>
+<td style="text-align:left;">
+AFR
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+162
+</td>
+<td style="text-align:left;">
+Norway
+</td>
+<td style="text-align:left;">
+NOR
+</td>
+<td style="text-align:left;">
+EUR
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+165
+</td>
+<td style="text-align:left;">
+Pakistan
+</td>
+<td style="text-align:left;">
+PAK
+</td>
+<td style="text-align:left;">
+ASI
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+166
+</td>
+<td style="text-align:left;">
+Panama
+</td>
+<td style="text-align:left;">
+PAN
+</td>
+<td style="text-align:left;">
+LAM
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+167
+</td>
+<td style="text-align:left;">
+Czech Republic
+</td>
+<td style="text-align:left;">
+CZE
+</td>
+<td style="text-align:left;">
+EU
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+168
+</td>
+<td style="text-align:left;">
+Papua New Guinea
+</td>
+<td style="text-align:left;">
+PNG
+</td>
+<td style="text-align:left;">
+OCE
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+169
+</td>
+<td style="text-align:left;">
+Paraguay
+</td>
+<td style="text-align:left;">
+PRY
+</td>
+<td style="text-align:left;">
+LAM
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+170
+</td>
+<td style="text-align:left;">
+Peru
+</td>
+<td style="text-align:left;">
+PER
+</td>
+<td style="text-align:left;">
+LAM
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+171
+</td>
+<td style="text-align:left;">
+Philippines
+</td>
+<td style="text-align:left;">
+PHL
+</td>
+<td style="text-align:left;">
+ASI
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+173
+</td>
+<td style="text-align:left;">
+Poland
+</td>
+<td style="text-align:left;">
+POL
+</td>
+<td style="text-align:left;">
+EU
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+174
+</td>
+<td style="text-align:left;">
+Portugal
+</td>
+<td style="text-align:left;">
+PRT
+</td>
+<td style="text-align:left;">
+EU
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+175
+</td>
+<td style="text-align:left;">
+Guinea-Bissau
+</td>
+<td style="text-align:left;">
+GNB
+</td>
+<td style="text-align:left;">
+AFR
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+176
+</td>
+<td style="text-align:left;">
+Timor-Leste
+</td>
+<td style="text-align:left;">
+TLS
+</td>
+<td style="text-align:left;">
+ASI
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+177
+</td>
+<td style="text-align:left;">
+Puerto Rico
+</td>
+<td style="text-align:left;">
+PRI
+</td>
+<td style="text-align:left;">
+LAM
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+178
+</td>
+<td style="text-align:left;">
+Eritrea
+</td>
+<td style="text-align:left;">
+ERI
+</td>
+<td style="text-align:left;">
+AFR
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+179
+</td>
+<td style="text-align:left;">
+Qatar
+</td>
+<td style="text-align:left;">
+QAT
+</td>
+<td style="text-align:left;">
+ASI
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+181
+</td>
+<td style="text-align:left;">
+Zimbabwe
+</td>
+<td style="text-align:left;">
+ZWE
+</td>
+<td style="text-align:left;">
+AFR
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+183
+</td>
+<td style="text-align:left;">
+Romania
+</td>
+<td style="text-align:left;">
+ROU
+</td>
+<td style="text-align:left;">
+EU
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+184
+</td>
+<td style="text-align:left;">
+Rwanda
+</td>
+<td style="text-align:left;">
+RWA
+</td>
+<td style="text-align:left;">
+AFR
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+185
+</td>
+<td style="text-align:left;">
+Russian Federation
+</td>
+<td style="text-align:left;">
+RUS
+</td>
+<td style="text-align:left;">
+ASI
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+186
+</td>
+<td style="text-align:left;">
+Serbia and Montenegro
+</td>
+<td style="text-align:left;">
+SCG
+</td>
+<td style="text-align:left;">
+EUR
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+188
+</td>
+<td style="text-align:left;">
+Saint Kitts and Nevis
+</td>
+<td style="text-align:left;">
+KNA
+</td>
+<td style="text-align:left;">
+LAM
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+189
+</td>
+<td style="text-align:left;">
+Saint Lucia
+</td>
+<td style="text-align:left;">
+LCA
+</td>
+<td style="text-align:left;">
+LAM
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+191
+</td>
+<td style="text-align:left;">
+Saint Vincent and the Grenadines
+</td>
+<td style="text-align:left;">
+VCT
+</td>
+<td style="text-align:left;">
+LAM
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+193
+</td>
+<td style="text-align:left;">
+Sao Tome and Principe
+</td>
+<td style="text-align:left;">
+STP
+</td>
+<td style="text-align:left;">
+AFR
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+194
+</td>
+<td style="text-align:left;">
+Saudi Arabia
+</td>
+<td style="text-align:left;">
+SAU
+</td>
+<td style="text-align:left;">
+ASI
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+195
+</td>
+<td style="text-align:left;">
+Senegal
+</td>
+<td style="text-align:left;">
+SEN
+</td>
+<td style="text-align:left;">
+AFR
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+197
+</td>
+<td style="text-align:left;">
+Sierra Leone
+</td>
+<td style="text-align:left;">
+SLE
+</td>
+<td style="text-align:left;">
+AFR
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+198
+</td>
+<td style="text-align:left;">
+Slovenia
+</td>
+<td style="text-align:left;">
+SVN
+</td>
+<td style="text-align:left;">
+EU
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+199
+</td>
+<td style="text-align:left;">
+Slovakia
+</td>
+<td style="text-align:left;">
+SVK
+</td>
+<td style="text-align:left;">
+EU
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+200
+</td>
+<td style="text-align:left;">
+Singapore
+</td>
+<td style="text-align:left;">
+SGP
+</td>
+<td style="text-align:left;">
+ASI
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+201
+</td>
+<td style="text-align:left;">
+Somalia
+</td>
+<td style="text-align:left;">
+SOM
+</td>
+<td style="text-align:left;">
+AFR
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+202
+</td>
+<td style="text-align:left;">
+South Africa
+</td>
+<td style="text-align:left;">
+ZAF
+</td>
+<td style="text-align:left;">
+AFR
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+203
+</td>
+<td style="text-align:left;">
+Spain
+</td>
+<td style="text-align:left;">
+ESP
+</td>
+<td style="text-align:left;">
+EU
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+207
+</td>
+<td style="text-align:left;">
+Suriname
+</td>
+<td style="text-align:left;">
+SUR
+</td>
+<td style="text-align:left;">
+LAM
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+208
+</td>
+<td style="text-align:left;">
+Tajikistan
+</td>
+<td style="text-align:left;">
+TJK
+</td>
+<td style="text-align:left;">
+ASI
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+209
+</td>
+<td style="text-align:left;">
+Swaziland
+</td>
+<td style="text-align:left;">
+SWZ
+</td>
+<td style="text-align:left;">
+AFR
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+210
+</td>
+<td style="text-align:left;">
+Sweden
+</td>
+<td style="text-align:left;">
+SWE
+</td>
+<td style="text-align:left;">
+EU
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+211
+</td>
+<td style="text-align:left;">
+Switzerland
+</td>
+<td style="text-align:left;">
+CHE
+</td>
+<td style="text-align:left;">
+EUR
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+212
+</td>
+<td style="text-align:left;">
+Syrian Arab Republic
+</td>
+<td style="text-align:left;">
+SYR
+</td>
+<td style="text-align:left;">
+ASI
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+213
+</td>
+<td style="text-align:left;">
+Turkmenistan
+</td>
+<td style="text-align:left;">
+TKM
+</td>
+<td style="text-align:left;">
+ASI
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+214
+</td>
+<td style="text-align:left;">
+China, Taiwan Province of
+</td>
+<td style="text-align:left;">
+TWN
+</td>
+<td style="text-align:left;">
+ASI
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+215
+</td>
+<td style="text-align:left;">
+United Republic of Tanzania
+</td>
+<td style="text-align:left;">
+TZA
+</td>
+<td style="text-align:left;">
+AFR
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+216
+</td>
+<td style="text-align:left;">
+Thailand
+</td>
+<td style="text-align:left;">
+THA
+</td>
+<td style="text-align:left;">
+ASI
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+217
+</td>
+<td style="text-align:left;">
+Togo
+</td>
+<td style="text-align:left;">
+TGO
+</td>
+<td style="text-align:left;">
+AFR
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+220
+</td>
+<td style="text-align:left;">
+Trinidad and Tobago
+</td>
+<td style="text-align:left;">
+TTO
+</td>
+<td style="text-align:left;">
+LAM
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+221
+</td>
+<td style="text-align:left;">
+Oman
+</td>
+<td style="text-align:left;">
+OMN
+</td>
+<td style="text-align:left;">
+ASI
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+222
+</td>
+<td style="text-align:left;">
+Tunisia
+</td>
+<td style="text-align:left;">
+TUN
+</td>
+<td style="text-align:left;">
+AFR
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+223
+</td>
+<td style="text-align:left;">
+Turkey
+</td>
+<td style="text-align:left;">
+TUR
+</td>
+<td style="text-align:left;">
+EUR
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+225
+</td>
+<td style="text-align:left;">
+United Arab Emirates
+</td>
+<td style="text-align:left;">
+ARE
+</td>
+<td style="text-align:left;">
+ASI
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+226
+</td>
+<td style="text-align:left;">
+Uganda
+</td>
+<td style="text-align:left;">
+UGA
+</td>
+<td style="text-align:left;">
+AFR
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+228
+</td>
+<td style="text-align:left;">
+USSR
+</td>
+<td style="text-align:left;">
+SUN
+</td>
+<td style="text-align:left;">
+ASI
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+229
+</td>
+<td style="text-align:left;">
+United Kingdom
+</td>
+<td style="text-align:left;">
+GBR
+</td>
+<td style="text-align:left;">
+EU
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+230
+</td>
+<td style="text-align:left;">
+Ukraine
+</td>
+<td style="text-align:left;">
+UKR
+</td>
+<td style="text-align:left;">
+EUR
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+231
+</td>
+<td style="text-align:left;">
+United States of America
+</td>
+<td style="text-align:left;">
+USA
+</td>
+<td style="text-align:left;">
+NAM
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+233
+</td>
+<td style="text-align:left;">
+Burkina Faso
+</td>
+<td style="text-align:left;">
+BFA
+</td>
+<td style="text-align:left;">
+AFR
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+234
+</td>
+<td style="text-align:left;">
+Uruguay
+</td>
+<td style="text-align:left;">
+URY
+</td>
+<td style="text-align:left;">
+LAM
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+235
+</td>
+<td style="text-align:left;">
+Uzbekistan
+</td>
+<td style="text-align:left;">
+UZB
+</td>
+<td style="text-align:left;">
+ASI
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+236
+</td>
+<td style="text-align:left;">
+Venezuela (Bolivarian Republic of)
+</td>
+<td style="text-align:left;">
+VEN
+</td>
+<td style="text-align:left;">
+LAM
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+237
+</td>
+<td style="text-align:left;">
+Viet Nam
+</td>
+<td style="text-align:left;">
+VNM
+</td>
+<td style="text-align:left;">
+ASI
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+238
+</td>
+<td style="text-align:left;">
+Ethiopia
+</td>
+<td style="text-align:left;">
+ETH
+</td>
+<td style="text-align:left;">
+AFR
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+244
+</td>
+<td style="text-align:left;">
+Samoa
+</td>
+<td style="text-align:left;">
+WSM
+</td>
+<td style="text-align:left;">
+OCE
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+248
+</td>
+<td style="text-align:left;">
+Yugoslav SFR
+</td>
+<td style="text-align:left;">
+YUG
+</td>
+<td style="text-align:left;">
+EUR
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+249
+</td>
+<td style="text-align:left;">
+Yemen
+</td>
+<td style="text-align:left;">
+YEM
+</td>
+<td style="text-align:left;">
+ASI
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+250
+</td>
+<td style="text-align:left;">
+Democratic Republic of the Congo
+</td>
+<td style="text-align:left;">
+COD
+</td>
+<td style="text-align:left;">
+AFR
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+251
+</td>
+<td style="text-align:left;">
+Zambia
+</td>
+<td style="text-align:left;">
+ZMB
+</td>
+<td style="text-align:left;">
+AFR
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+255
+</td>
+<td style="text-align:left;">
+Belgium
+</td>
+<td style="text-align:left;">
+BEL
+</td>
+<td style="text-align:left;">
+EU
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+256
+</td>
+<td style="text-align:left;">
+Luxembourg
+</td>
+<td style="text-align:left;">
+LUX
+</td>
+<td style="text-align:left;">
+EU
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+272
+</td>
+<td style="text-align:left;">
+Serbia
+</td>
+<td style="text-align:left;">
+SRB
+</td>
+<td style="text-align:left;">
+EUR
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+273
+</td>
+<td style="text-align:left;">
+Montenegro
+</td>
+<td style="text-align:left;">
+MNE
+</td>
+<td style="text-align:left;">
+EUR
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+276
+</td>
+<td style="text-align:left;">
+Sudan
+</td>
+<td style="text-align:left;">
+SDN
+</td>
+<td style="text-align:left;">
+AFR
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+277
+</td>
+<td style="text-align:left;">
+South Sudan
+</td>
+<td style="text-align:left;">
+SSD
+</td>
+<td style="text-align:left;">
+AFR
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+999
+</td>
+<td style="text-align:left;">
+RoW
+</td>
+<td style="text-align:left;">
+ROW
+</td>
+<td style="text-align:left;">
+ROW
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>FAO has stopped reporting the seed use in the production domain of FAOSTAT. Thus for future updates seed-production ratios reported in past years or for other countries will be taken.<a href="#fnref1">↩</a></p></li>
+</ol>
+</div>
+
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,258 @@
+Country.Code;Country;ISO;Region.Code;Region
+1;Armenia;ARM;11;Former USSR
+2;Afghanistan;AFG;13;South Asia
+3;Albania;ALB;10;Eastern Europe
+4;Algeria;DZA;5;Northern Africa
+5;American Samoa;ASM;16;Oceania
+6;Andorra;AND;9;OECD Europe
+7;Angola;AGO;8;Southern Africa
+8;Antigua and Barbuda;ATG;3;Central America
+9;Argentina;ARG;4;South America
+10;Australia;AUS;16;Oceania
+11;Austria;AUT;9;OECD Europe
+12;Bahamas;BHS;3;Central America
+13;Bahrain;BHR;12;Middle East
+14;Barbados;BRB;3;Central America
+15;Belgium-Luxembourg;BLX;9;OECD Europe
+16;Bangladesh;BGD;13;South Asia
+17;Bermuda;BMU;3;Central America
+18;Bhutan;BTN;13;South Asia
+19;Bolivia (Plurinational State of);BOL;4;South America
+20;Botswana;BWA;8;Southern Africa
+21;Brazil;BRA;4;South America
+22;Aruba;ABW;3;Central America
+23;Belize;BLZ;3;Central America
+24;British Indian Ocean Territory;IOT;13;South Asia
+25;Solomon Islands;SLB;16;Oceania
+26;Brunei Darussalam;BRN;15;South East Asia
+27;Bulgaria;BGR;10;Eastern Europe
+28;Myanmar;MMR;15;South East Asia
+29;Burundi;BDI;7;Eastern Africa
+30;Antarctica;ATA;19;Antarctica
+31;Bouvet Island;BVT;4;South America
+32;Cameroon;CMR;6;Western Africa
+33;Canada;CAN;1;Canada
+34;Canton and Enderbury Islands;CTE;16;Oceania
+35;Cabo Verde;CPV;6;Western Africa
+36;Cayman Islands;CYM;3;Central America
+37;Central African Republic;CAF;6;Western Africa
+38;Sri Lanka;LKA;13;South Asia
+39;Chad;TCD;6;Western Africa
+40;Chile;CHL;4;South America
+41;China, mainland;CHN;14;East Asia
+42;Christmas Island;CXR;16;Oceania
+43;Cocos (Keeling) Islands;CCK;16;Oceania
+44;Colombia;COL;4;South America
+45;Comoros;COM;7;Eastern Africa
+46;Congo;COG;6;Western Africa
+47;Cook Islands;COK;16;Oceania
+48;Costa Rica;CRI;3;Central America
+49;Cuba;CUB;3;Central America
+50;Cyprus;CYP;12;Middle East
+51;Czechoslovakia;CSK;9;OECD Europe
+52;Azerbaijan;AZE;11;Former USSR
+53;Benin;BEN;6;Western Africa
+54;Denmark;DNK;9;OECD Europe
+55;Dominica;DMA;3;Central America
+56;Dominican Republic;DOM;3;Central America
+57;Belarus;BLR;11;Former USSR
+58;Ecuador;ECU;4;South America
+59;Egypt;EGY;5;Northern Africa
+60;El Salvador;SLV;3;Central America
+61;Equatorial Guinea;GNQ;6;Western Africa
+62;Ethiopia PDR;ETH;7;Eastern Africa
+63;Estonia;EST;11;Former USSR
+64;Faroe Islands;FRO;9;OECD Europe
+65;Falkland Islands (Malvinas);FLK;4;South America
+66;Fiji;FJI;16;Oceania
+67;Finland;FIN;9;OECD Europe
+68;France;FRA;9;OECD Europe
+69;French Guiana;GUF;4;South America
+70;French Polynesia;PYF;16;Oceania
+71;French Southern and Antarctic Territories;ATF;16;Oceania
+72;Djibouti;DJI;7;Eastern Africa
+73;Georgia;GEO;11;Former USSR
+74;Gabon;GAB;6;Western Africa
+75;Gambia;GMB;6;Western Africa
+79;Germany;DEU;9;OECD Europe
+80;Bosnia and Herzegovina;BIH;10;Eastern Europe
+81;Ghana;GHA;6;Western Africa
+82;Gibraltar;GIB;9;OECD Europe
+83;Kiribati;KIR;16;Oceania
+84;Greece;GRC;9;OECD Europe
+85;Greenland;GRL;18;Greenland
+86;Grenada;GRD;3;Central America
+87;Guadeloupe;GLP;3;Central America
+88;Guam;GUM;16;Oceania
+89;Guatemala;GTM;3;Central America
+90;Guinea;GIN;6;Western Africa
+91;Guyana;GUY;4;South America
+92;Heard and McDonald Islands;HMD;16;Oceania
+93;Haiti;HTI;3;Central America
+94;Holy See;VAT;9;OECD Europe
+95;Honduras;HND;3;Central America
+96;China, Hong Kong SAR;HKG;14;East Asia
+97;Hungary;HUN;10;Eastern Europe
+98;Croatia;HRV;10;Eastern Europe
+99;Iceland;ISL;9;OECD Europe
+100;India;IND;13;South Asia
+101;Indonesia;IDN;15;South East Asia
+102;Iran (Islamic Republic of);IRN;12;Middle East
+103;Iraq;IRQ;12;Middle East
+104;Ireland;IRL;9;OECD Europe
+105;Israel;ISR;12;Middle East
+106;Italy;ITA;9;OECD Europe
+107;Côte d'Ivoire;CIV;6;Western Africa
+108;Kazakhstan;KAZ;11;Former USSR
+109;Jamaica;JAM;3;Central America
+110;Japan;JPN;17;Japan
+111;Johnston Island;JTN;16;Oceania
+112;Jordan;JOR;12;Middle East
+113;Kyrgyzstan;KGZ;11;Former USSR
+114;Kenya;KEN;7;Eastern Africa
+115;Cambodia;KHM;15;South East Asia
+116;Democratic People's Republic of Korea;PRK;14;East Asia
+117;Republic of Korea;KOR;14;East Asia
+118;Kuwait;KWT;12;Middle East
+119;Latvia;LVA;11;Former USSR
+120;Lao People's Democratic Republic;LAO;15;South East Asia
+121;Lebanon;LBN;12;Middle East
+122;Lesotho;LSO;8;Southern Africa
+123;Liberia;LBR;6;Western Africa
+124;Libya;LBY;5;Northern Africa
+125;Liechtenstein;LIE;9;OECD Europe
+126;Lithuania;LTU;11;Former USSR
+127;Marshall Islands;MHL;16;Oceania
+128;China, Macao SAR;MAC;14;East Asia
+129;Madagascar;MDG;7;Eastern Africa
+130;Malawi;MWI;8;Southern Africa
+131;Malaysia;MYS;15;South East Asia
+132;Maldives;MDV;13;South Asia
+133;Mali;MLI;6;Western Africa
+134;Malta;MLT;9;OECD Europe
+135;Martinique;MTQ;3;Central America
+136;Mauritania;MRT;6;Western Africa
+137;Mauritius;MUS;7;Eastern Africa
+138;Mexico;MEX;3;Central America
+139;Midway Island;MID;16;Oceania
+140;Monaco;MCO;9;OECD Europe
+141;Mongolia;MNG;14;East Asia
+142;Montserrat;MSR;3;Central America
+143;Morocco;MAR;5;Northern Africa
+144;Mozambique;MOZ;8;Southern Africa
+145;Micronesia (Federated States of);FSM;16;Oceania
+146;Republic of Moldova;MDA;11;Former USSR
+147;Namibia;NAM;8;Southern Africa
+148;Nauru;NRU;16;Oceania
+149;Nepal;NPL;13;South Asia
+150;Netherlands;NLD;9;OECD Europe
+151;Netherlands Antilles;ANT;3;Central America
+152;Neutral Zone;NTZ;12;Middle East
+153;New Caledonia;NCL;16;Oceania
+154;The former Yugoslav Republic of Macedonia;MKD;10;Eastern Europe
+155;Vanuatu;VUT;16;Oceania
+156;New Zealand;NZL;16;Oceania
+157;Nicaragua;NIC;3;Central America
+158;Niger;NER;6;Western Africa
+159;Nigeria;NGA;6;Western Africa
+160;Niue;NIU;16;Oceania
+161;Norfolk Island;NFK;16;Oceania
+162;Norway;NOR;9;OECD Europe
+163;Northern Mariana Islands;MNP;16;Oceania
+164;Pacific Islands Trust Territory;PCI;15;South East Asia
+165;Pakistan;PAK;13;South Asia
+166;Panama;PAN;3;Central America
+167;Czech Republic;CZE;10;Eastern Europe
+168;Papua New Guinea;PNG;16;Oceania
+169;Paraguay;PRY;4;South America
+170;Peru;PER;4;South America
+171;Philippines;PHL;15;South East Asia
+172;Pitcairn Islands;PCN;16;Oceania
+173;Poland;POL;10;Eastern Europe
+174;Portugal;PRT;9;OECD Europe
+175;Guinea-Bissau;GNB;6;Western Africa
+176;Timor-Leste;TLS;15;South East Asia
+177;Puerto Rico;PRI;3;Central America
+178;Eritrea;ERI;7;Eastern Africa
+179;Qatar;QAT;12;Middle East
+180;Palau;PLW;16;Oceania
+181;Zimbabwe;ZWE;8;Southern Africa
+182;Réunion;REU;7;Eastern Africa
+183;Romania;ROU;10;Eastern Europe
+184;Rwanda;RWA;7;Eastern Africa
+185;Russian Federation;RUS;11;Former USSR
+186;Serbia and Montenegro;SCG;9;OECD Europe
+187;Saint Helena, Ascension and Tristan da Cunha;SHN;6;Western Africa
+188;Saint Kitts and Nevis;KNA;3;Central America
+189;Saint Lucia;LCA;3;Central America
+190;Saint Pierre and Miquelon;SPM;2;USA
+191;Saint Vincent and the Grenadines;VCT;3;Central America
+192;San Marino;SMR;9;OECD Europe
+193;Sao Tome and Principe;STP;6;Western Africa
+194;Saudi Arabia;SAU;12;Middle East
+195;Senegal;SEN;6;Western Africa
+196;Seychelles;SYC;7;Eastern Africa
+197;Sierra Leone;SLE;6;Western Africa
+198;Slovenia;SVN;10;Eastern Europe
+199;Slovakia;SVK;10;Eastern Europe
+200;Singapore;SGP;15;South East Asia
+201;Somalia;SOM;7;Eastern Africa
+202;South Africa;ZAF;8;Southern Africa
+203;Spain;ESP;9;OECD Europe
+205;Western Sahara;ESH;5;Northern Africa
+206;Sudan (former);SDN;7;Eastern Africa
+207;Suriname;SUR;4;South America
+208;Tajikistan;TJK;11;Former USSR
+209;Swaziland;SWZ;8;Southern Africa
+210;Sweden;SWE;9;OECD Europe
+211;Switzerland;CHE;9;OECD Europe
+212;Syrian Arab Republic;SYR;12;Middle East
+213;Turkmenistan;TKM;11;Former USSR
+214;China, Taiwan Province of;TWN;14;East Asia
+215;United Republic of Tanzania;TZA;8;Southern Africa
+216;Thailand;THA;15;South East Asia
+217;Togo;TGO;6;Western Africa
+218;Tokelau;TKL;16;Oceania
+219;Tonga;TON;16;Oceania
+220;Trinidad and Tobago;TTO;3;Central America
+221;Oman;OMN;12;Middle East
+222;Tunisia;TUN;5;Northern Africa
+223;Turkey;TUR;12;Middle East
+224;Turks and Caicos Islands;TCA;3;Central America
+225;United Arab Emirates;ARE;12;Middle East
+226;Uganda;UGA;7;Eastern Africa
+227;Tuvalu;TUV;16;Oceania
+228;USSR;SUN;11;Former USSR
+229;United Kingdom;GBR;9;OECD Europe
+230;Ukraine;UKR;11;Former USSR
+231;United States of America;USA;2;USA
+232;US Minor Is.;UMI;2;USA
+233;Burkina Faso;BFA;6;Western Africa
+234;Uruguay;URY;4;South America
+235;Uzbekistan;UZB;11;Former USSR
+236;Venezuela (Bolivarian Republic of);VEN;4;South America
+237;Viet Nam;VNM;15;South East Asia
+238;Ethiopia;ETH;7;Eastern Africa
+239;British Virgin Islands;VGB;3;Central America
+240;United States Virgin Islands;VIR;3;Central America
+242;Wake Island;WAK;16;Oceania
+243;Wallis and Futuna Islands;WLF;16;Oceania
+244;Samoa;WSM;16;Oceania
+248;Yugoslav SFR;YUG;10;Eastern Europe
+249;Yemen;YEM;12;Middle East
+250;Democratic Republic of the Congo;COD;6;Western Africa
+251;Zambia;ZMB;8;Southern Africa
+255;Belgium;BEL;9;OECD Europe
+256;Luxembourg;LUX;9;OECD Europe
+258;Anguilla;AIA;3;Central America
+260;Svalbard and Jan Mayen Islands;SJM;9;OECD Europe
+270;Mayotte;MYT;7;Eastern Africa
+271;South Georgia and the South Sandwich Islands;SGS;4;South America
+272;Serbia;SRB;9;OECD Europe
+273;Montenegro;MNE;9;OECD Europe
+276;Sudan;SDN;7;Eastern Africa
+277;South Sudan;SSD;7;Eastern Africa
+279;Curaçao;CUW;3;Central America
+281;Saint-Martin (French Part);MAF;3;Central America
+299;Occupied Palestinian Territory;PSE;12;Middle East
+351;China;CHN;14;East Asia

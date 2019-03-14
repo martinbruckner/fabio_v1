@@ -1,0 +1,1392 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdftitle={FABIO Documentation},
+            pdfauthor={Martin Bruckner},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{longtable,booktabs}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\providecommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
+\setlength{\droptitle}{-2em}
+
+  \title{FABIO Documentation}
+    \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+    \author{Martin Bruckner}
+    \preauthor{\centering\large\emph}
+  \postauthor{\par}
+      \predate{\centering\large\emph}
+  \postdate{\par}
+    \date{2019-02-20}
+
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage[table]{xcolor}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{colortbl}
+\usepackage{pdflscape}
+\usepackage{tabu}
+\usepackage{threeparttable}
+\usepackage{threeparttablex}
+\usepackage[normalem]{ulem}
+\usepackage{makecell}
+
+\begin{document}
+\maketitle
+
+\sloppy
+
+\subsection{Introduction}\label{introduction}
+
+This documentation describes the scripts of the FABIO model v0.0.1 as
+provided at \url{https://github.com/gru-wu/fabio}. FABIO (Food and
+Agriculture Biomass Input-Output) is a set of multi-regional physical
+supply, use and input-output tables covering global agriculture and food
+industry. The work is based on data from FAOSTAT, IEA, EIA and
+COMTRADE/BACI. FABIO now covers 191 countries, 121 processes and 130
+commodities (see Tables 1-3 in the Annex) for 1986-2013.
+
+All scripts and auxiliary data are distributed under the GNU General
+Public License Version 3.
+
+\subsection{Download data}\label{download-data}
+
+In order to run the scripts, please fork the GitHub repository. Then
+download the following data sets and store them in the folder
+\emph{./fabio\_input/raw data/} of your local copy of the FABIO
+repository.
+
+Most of the data used for constructing the FABIO model are provided by
+FAOSTAT, the Statistical Services of the Food and Agriculture
+Organisation of the United Nations. The website of FAOSTAT is structured
+by data domains (such as \emph{Production} or \emph{Trade}) which each
+contain several data sets. For each of the required data sets, a bulk
+file can be downloaded from the following sources:
+
+\begin{itemize}
+\item
+  Production, Crops:
+  \url{http://fenixservices.fao.org/faostat/static/bulkdownloads/Production_Crops_E_All_Data_(Normalized).zip}
+\item
+  Production, Crops processed:
+  \url{http://fenixservices.fao.org/faostat/static/bulkdownloads/Production_CropsProcessed_E_All_Data_(Normalized).zip}
+\item
+  Production, Live animals:
+  \url{http://fenixservices.fao.org/faostat/static/bulkdownloads/Production_Livestock_E_All_Data_(Normalized).zip}
+\item
+  Production, Livestock primary:
+  \url{http://fenixservices.fao.org/faostat/static/bulkdownloads/Production_LivestockPrimary_E_All_Data_(Normalized).zip}
+\item
+  Production, Livestock processed:
+  \url{http://fenixservices.fao.org/faostat/static/bulkdownloads/Production_LivestockProcessed_E_All_Data_(Normalized).zip}
+\item
+  Trade, Crops and livestock products:
+  \url{http://fenixservices.fao.org/faostat/static/bulkdownloads/Trade_Crops_Livestock_E_All_Data_(Normalized).zip}
+\item
+  Trade, Live animals:
+  \url{http://fenixservices.fao.org/faostat/static/bulkdownloads/Trade_LiveAnimals_E_All_Data_(Normalized).zip}
+\item
+  Trade, Detailed trade matrix:
+  \url{http://fenixservices.fao.org/faostat/static/bulkdownloads/Trade_DetailedTradeMatrix_E_All_Data_(Normalized).zip}
+\item
+  Commodity Balances, Crops Primary Equivalent:
+  \url{http://fenixservices.fao.org/faostat/static/bulkdownloads/CommodityBalances_Crops_E_All_Data_(Normalized).zip}
+\item
+  Commodity Balances, Livestock and Fish Primary Equivalent:
+  \url{http://fenixservices.fao.org/faostat/static/bulkdownloads/CommodityBalances_LivestockFish_E_All_Data_(Normalized).zip}
+\end{itemize}
+
+Additionally, fodder crop production data (part of the aggregated item
+``Crops Primary \textgreater{} (List)'' in the \emph{Production} domain)
+was downloaded from \url{http://www.fao.org/faostat/en/\#data/QC}, but
+is no longer available from the FAOSTAT website. Therefore, in order to
+replicate the FABIO model, it is necessary to request these data from
+FAOSTAT.
+
+Global fishery statistics can be retrieved from FAO's fishery division:
+\url{http://www.fao.org/fishery/statistics/global-production/en}.
+
+COMTRADE, the global trade database of the United Nations Statistical
+Division, provides bilateral trade data, which are downloaded by the
+FABIO scripts directly via an API. Make sure that your computer is
+connected to the internet, when running the script. COMTRADE is free,
+but it requires to register online. You will receive a token which has
+to be copied into the file \emph{./fabio\_input/comtrade\_token.txt}. We
+use the COMTRADE database for data on bilateral fish and ethanol trade
+for 1988 to 1994. Data for all other years are sourced from BACI, a
+reconciled and harmonised version of the COMTRADE database, which is
+available for 1995 to 2016 from
+\url{http://www.cepii.fr/cepii/en/bdd_modele/download.asp?id=1}.
+Download the BACI92 version. Please note that BACI is not free.
+Universities often provide access to the database. Alternatively,
+COMTRADE can be used for the whole time series with some minor
+adaptations of the code.
+
+Production data for ethanol from agricultural sources are reported by
+FAOSTAT under the name \emph{Alcohol, non-food}. However, large data
+gaps forced us to use alternative sources. We downloaded
+ethanol/biogasoline production data in xlsx-format from both EIA and
+IEA:
+
+\begin{itemize}
+\item
+  EIA:
+  \url{https://www.eia.gov/beta/international/data/browser/\#/?pa=000001g\&c=ruvvvvvfvtvnvv1urvvvvfvvvvvvfvvvou20evvvvvvvvvnvvuvo\&ct=0\&tl_id=79-A\&vs=INTL.80-1-AFG-TBPD.A\&vo=0\&v=H\&start=1980\&end=2014}
+\item
+  IEA: \url{http://dx.doi.org/10.1787/data-00550-en}
+\end{itemize}
+
+After downloading all these data, you can start running the script step
+by step.
+
+\subsection{Tidy data}\label{tidy-data}
+
+The first three functions of the package are used to read the raw data
+and harmonize and tidy their data structures, including country and
+commodity names. The final lists of countries, processes and commodities
+are given in the Annex.
+
+The basis for the FABIO model are the Commodity Balance Sheets (CBS)
+from FAOSTAT. The CBS provide data on the supply and utilization of
+agricultural commodities which are balanced in terms of physical
+quantities by matching supply (domestic production and imports) with
+uses (exports, stock changes, and domestic use for food, feed,
+processing, seed, waste, and other uses). Other uses ``refer to
+quantities of commodities used for non-food purposes, e.g.~oil for soap.
+{[}\ldots{}{]} In addition, this variable covers pet food.'' (FAO 1986)
+
+While particularly the use accounts are an indispensable source of
+information for the development of physical supply and use tables
+(PSUT), an unavoidable limitation of these data is that for many cases
+crops and derived products are combined into a single CBS by converting
+products into primary equivalents. For example, the CBS for \emph{wheat
+and products} comprises also trade and consumption of bread and pasta
+measured in wheat equivalents. Disaggregating primary from processed
+products, thus, represents an option for future refinements.
+
+As other domains of FAOSTAT (e.g. \emph{Trade} and \emph{Production})
+give the actual weight of products, units had to be converted into
+primary equivalents where applicable. This was done using country
+specific technical conversion factors (TCF) for 66 products and global
+average TCF for 404 products, which for example give the kg of wheat
+required to produce an average kg of bread (FAO 2003).
+
+Trade data for crops and crop products, livestock and livestock
+products, timber, and fish are organized in different data domains of
+the FAO. We therefore harmonized their data structures and integrated
+them into one bilateral trade database (BTD). In any case, reported
+import data were given preference over reported export data, based on
+the expectations that the importer will rather know the correct origin
+of a traded commodity, than the exporter the correct final destination.
+
+\subsection{Estimate missing data}\label{estimate-missing-data}
+
+Data gaps are a common problem in any heavily data-dependent research
+work. We used several ways to estimate missing data.
+
+\paragraph{Commodity balances}\label{commodity-balances}
+
+Some gaps occur in the time series of the CBS. A certain commodity might
+be reported by a country most of the time, but with a few years missing.
+The same is the case for the forestry statistics. In these cases we do
+linear inter- and extrapolation of the available data.
+
+The CBS database does not cover some of the commodities included in the
+FABIO model, i.e.~live animals, fodder crops (grasses, forages and
+silages), grazing (grasses and hay from grasslands), and timber.
+Therefore, commodity balances had to be built based on alternative
+sources. Production data for all missing commodities as well as trade
+data for live animals and timber are available from FAOSTAT. Fodder
+crops and grasses are assumed not to be traded internationally. Low
+prices and the consequent disproportionate transportation costs support
+this assumption. For simplicity, stock changes, seed use and waste were
+assumed to be zero. Domestic use of live animals is at large assigned to
+food processing (i.e.~animal slaughtering), fodder crops and grazing to
+feed use, and timber to other uses.
+
+The CBS and bilateral trade data for \emph{Alcohol, non-food} were
+updated with production data from IEA and EIA (using the highest value
+respectively) and trade data from COMTRADE/BACI.
+
+For some countries, not included in the CBS domain, all commodity
+balances were estimated based on available production, seed
+use\footnote{FAO has stopped reporting the seed use in the production
+  domain of FAOSTAT. Thus for future updates seed-production ratios
+  reported in past years or for other countries will be taken.} and
+trade data. Processing requirements, e.g.~the rapeseed used for rapeseed
+oil production or the sugar cane used for sugar production, were
+estimated for each commodity based on production data for the derived
+products and the country specific TCF. If we then found data gaps for
+co-products, e.g.~molasses from sugar production, we imputed these data
+using again the respective TCF.
+
+In total, for the case of the year 2013, 15,234 commodity balances were
+reported for the 191 countries included in FABIO, and 4,271 were
+estimated (see Table 4 in the Annex). Countries that needed to be
+estimated entirely include Singapore, Qatar, Democratic Republic of the
+Congo, Bahrain, Syrian Arab Republic, Papua New Guinea, Burundi, Libya,
+Somalia, Eritrea, Timor-Leste, and Puerto Rico.
+
+\paragraph{Bilateral trade}\label{bilateral-trade}
+
+The BTD gives bilateral trade data \(b_{c}^{rs}\) in the format
+countries-by-countries (\(r \times s\)) for each commodity \(c\). It
+reveals significant gaps and discrepancies with the total import and
+export quantities reported in the CBS. We followed a multi-step approach
+to estimate a comprehensive set of bilateral trade data, which is in
+accordance with the CBS:
+
+\begin{itemize}
+\item
+  We first derive a BTD estimate by spreading exports for each commodity
+  over all countries worldwide according to their import shares. The
+  elements of for a specific crop \(c\) and a country pair \(r, s\) are
+  derived by \(b_{c}^{'rs} = imp_{c}^{r}/imp_{c} \cdot exp_{c}^{s}\)
+\item
+  We repeat this procedure, but spreading imports for each commodity
+  over all countries worldwide according to their export shares:
+  \(b_{c}^{''rs} = exp_{c}^{s}/exp_{c} \cdot imp_{c}^{r}\)
+\item
+  We derive the average of the two estimates \(\bar{b}_{c}^{rs}\) and
+  proceed.
+\item
+  We calculate the difference between the total exports of crop \(c\)
+  from country \(r\) documented in the BTD and those reported in the CBS
+  dataset.
+\item
+  We populate the gaps in \(\mathbf{B}\), i.e.~those fields that are
+  \(N/A\), with the corresponding values from \(\mathbf{\bar{B}}\)
+  up-/down-scaling them to meet the target export sum for each commodity
+  and each exporting country as reported in the CBS.
+\item
+  We balance the resulting trade matrices using the RAS technique.
+\end{itemize}
+
+The resulting bilateral trade matrix is in line with the import and
+export totals given by the CBS per country and commodity, while
+diverging from the reported BTD only as little as possible.
+
+\subsection{Populate supply table}\label{populate-supply-table}
+
+We insert the compiled production data for each process-item combination
+into a supply table. Ten livestock commodities are supplied by multiple
+processes. Production values of those have to be divided between the
+respective processes:
+
+\begin{itemize}
+\item
+  Milk and butter from 5 different animal groups are aggregated into one
+  CBS item. At the same time, FAO reports detailed production data for
+  fresh milk by animal type (e.g.~cattle, goats, camels). These are used
+  to split the aggregates over the supplying animal sectors in FABIO.
+\item
+  The same is true for meat, hides and skins, where the CBS provide less
+  detail than the FAO's production statistics. We use the latter to
+  allocate meat supply to the detailed slaughtering processes.
+\item
+  Slaughtering by-products such as edible offals, animal fats, and meat
+  meal are split among the animal categories according to their
+  respective share in overall meat production.
+\end{itemize}
+
+\subsection{Populate use table}\label{populate-use-table}
+
+The FAO Commodity Balance Sheets distinguish the following uses:
+exports, stock changes, food, feed, processing, seed, waste, and other
+uses. Seed and waste are considered an own use of the process where the
+waste occurs and the seed is used. Exports, stock changes, food, and
+other uses are, in a first step, considered final demand categories,
+i.e.~they are put into a final demand table. In the following, we
+describe the allocation of feed and processing use.
+
+\subsubsection{Allocation of processing
+use}\label{allocation-of-processing-use}
+
+Processing uses are allocated to the respective processes.
+
+\begin{itemize}
+\item
+  \textbf{Single-process commodities:} Commodities that are only
+  processed by one single process include oil crops (processed in the
+  respective oil extraction processes), hops (use in beer production),
+  seed cotton (separated into cotton lint and cotton seed in the cotton
+  production process), and live animals (processed by the respective
+  slaughtering sectors). Given processing quantities are directly
+  allocated to the respective processes.
+\item
+  \textbf{Multi-purpose crops:} Crops that are used by several processes
+  are allocated by estimating the input requirements to each process
+  based on technical conversion factors giving the conversion
+  efficiencies for food processing. The use of product \(i\) in process
+  \(p\) is determined by
+  \(u_{i}^{p} = \sum_{j} (s_{j}^{p} \cdot \phi_{ij}^{p})\), where
+  \(s_{j}^{p}\) is the supply of product \(j\) by process \(p\) and
+  \(\phi_{ij}^{p}\) is the conversion efficiency from product \(i\) to
+  product \(j\) in process \(p\). For example, \(\phi_{ij}^{p} = 0.5\)
+  indicates, that process \(p\) converts each ton of product \(i\) into
+  0.5 tons of product \(j\). This approach is used to estimate the use
+  of sugar crops in sugar production, rice in ricebran oil extraction,
+  maize in maize germ oil extraction, and grapes in wine production.
+\item
+  \textbf{Ethanol feedstock:} For Brazil and the US, responsible for
+  over 85 \% of the global ethanol production in 2014 (IEA 2019), the
+  feedstock composition is known. Brazil uses sugar cane, while the
+  ethanol industry of the US is mainly based on maize, with less than 2
+  \% coming from sorghum, barley, cheese whey, sugar cane, wheat, and
+  food and wood wastes (RFA 2010). For all other countries, i.e.~less
+  than 15 \% of global ethanol production, feedstocks are estimated
+  based on the availability of potential feedstock crops and their
+  respective conversion rates.
+\item
+  \textbf{Alcoholic beverages:} Crops are allocated to the processes
+  which supply alcoholic beverages by solving an optimization problem.
+  We have given the national production of beer and other alcoholic
+  beverages \(s_{j}\), the total available feedstock supply \(u_{i}\)
+  which was not allocated already to other processes, and the conversion
+  efficiencies \(\phi_{ij}\), e.g., from barley to beer. With these
+  inputs, we solve the following constrained least-squares optimization
+  problem:
+  \[min\sum \left(\left(\frac{\mathbf{s} - \mathbf{\tilde{s}}}{\mathbf{\bar{\phi}}}\right)^{2} + (\mathbf{u} - \mathbf{\tilde{u}})^{2}\right),\]
+  where
+  \[\tilde{s}_{j} = \sum_{i=1}^{n} \left(\tilde{u}_{ij} \cdot \phi_{ij}\right),\]
+  subject to \[\sum_{j=1}^{m} \tilde{u}_{ij} = u_{i} \pm 0.1.\]
+\end{itemize}
+
+\subsubsection{Allocation of feed use}\label{allocation-of-feed-use}
+
+Feed is allocated to the 19 animal husbandry sectors, which are
+specified in FABIO (see Table 2 in the Annex). For this purpose we
+follow 4 steps:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  \textbf{Feed supply:} Convert feed supply, reported by the FAO in
+  fresh weight, into dry matter (DM).
+\item
+  \textbf{Feed demand:} Calculate feed demand of 19 livestock groups in
+  tons of DM.
+
+  \begin{enumerate}
+  \def\labelenumii{\alph{enumii})}
+  \tightlist
+  \item
+    \textbf{Cattle, pigs, poultry, sheep and goats:} Bouwman et al.
+    (2011) published estimates on the feed demand in kg DM per kg
+    product (e.g.~milk, beef, fat) for 1970, 1995 and 2030,
+    distinguishing 17 regions and 5 feed types, i.e.~animal products,
+    feed crops, grass, residues, and scavenging. We interpolate these
+    feed conversion rates to get year-specific values and multiply them
+    with the production quantities of animal products to get the total
+    feed requirements per product. For this step, it was important to
+    consider trade with live animals in order to correctly assign feed
+    demand to the country, where the animals were raised.
+  \item
+    \textbf{Horses, asses, mules, camels, other camelids, rabbits, other
+    rodents, other live animals:} Krausmann et al. (2008) provide rough
+    feed demand coefficients for the above listed animal groups in kg DM
+    per head, which are multiplied with the livestock numbers to
+    calculate total feed requirements.
+  \end{enumerate}
+\item
+  \textbf{Match supply and demand:} We then balance the generated feed
+  requirement numbers per country to match the reported feed use by
+  proportional up- or downscaling.
+\item
+  \textbf{Allocation to crops:} Finally, we proportionally distribute
+  total feed crop requirements over the available feed crops according
+  to their supply share and convert the numbers into fresh weight.
+\end{enumerate}
+
+\subsection{Trade-linking use tables}\label{trade-linking-use-tables}
+
+Once the supply and use tables for all countries are filled, they are
+linked into multi-regional supply and use tables. The multi-regional
+supply table \(\mathbf{S}\) with the dimensions
+\(\{r,i\} \times \{s,p\}\) contains zeros at the trade blocks (where
+\(r \neq s\)) and is filled with the domestic supply tables where
+\(r = s\).
+
+The national use tables are trade-linked by spreading the use of a
+product \(i\) in a process \(p\) in country \(s\) over the source
+countries \(r\) of that product:
+\(u_{ip}^{rs} = u_{ip}^{s} \cdot h_{i}^{rs}\), where
+\(h_{i}^{rs} = s_{i}^{rs}/s_{i}^{s}\) and \(s_{i}^{rs}\) is the total
+supply of product \(i\) in country \(s\) sourced from country \(r\).
+Finally, we receive a matrix \(\mathbf{U}\) with the dimensions
+\(\{r,i\} \times \{s,p\}\).
+
+\subsection{Construct symmetric IO
+table}\label{construct-symmetric-io-table}
+
+In order to construct a symmetric IO table from the multi-regional
+supply and use tables, we apply the industry technology assumption. We
+first derive the product mix matrix or transformation matrix
+\(\mathbf{T}=\mathbf{\hat{g}}^{-1}\mathbf{S}\), where
+\(\mathbf{\hat{g}}\) is a diagonalized vector with the row sums of
+\(\mathbf{S}\). The input-output table is then calculated by multiplying
+the use and the transformation matrix
+\(\mathbf{Z} = \mathbf{U} \mathbf{T}\).
+
+By converting \(\mathbf{S}\) from tons to US Dollars, we can switch from
+mass to price allocation, i.e.~allocating the inputs of each process to
+its outputs in relation to their value rather than their weight. This is
+particularly relevant for the allocation of inputs between vegetable
+oils and cakes, as well as between meat and other animal products.
+
+\subsection{Calculate footprints}\label{calculate-footprints}
+
+The high similarity in the feed input composition among monogastric as
+well as among ruminant animals results in some degree of linear
+dependency between the columns of the input-output table \(\mathbf{Z}\),
+thus impeding invertibility. We therefore approximate the Leontief
+inverse using the power series expansion up to level eight:
+\(\mathbf{L} = \mathbf{I}+\mathbf{A}+\mathbf{A}^2+\mathbf{A}^3+\mathbf{A}^4+\mathbf{A}^5+\mathbf{A}^6+\mathbf{A}^7+\mathbf{A}^8\),
+where \(\mathbf{I}\) is the identity matrix and \(\mathbf{A}\) is the
+technology matrix, which is generated by the equation
+\(\mathbf{A}=\mathbf{Z}\mathbf{\hat{x}}^{-1}\), where
+\(\mathbf{\hat{x}}\) is the diagonalized vector of total production
+output.
+
+The footprint of a certain country is then calculated by
+\(\mathbf{f}=\mathbf{e}\mathbf{L}\mathbf{y}\), where \(\mathbf{e}\) is a
+vector of environmental pressure per unit of output and \(\mathbf{y}\)
+is a final demand vector.
+
+\subsection{References}\label{references}
+
+\hypertarget{refs}{}
+\hypertarget{ref-Bouwman2011}{}
+Bouwman, Lex, Kees Klein Goldewijk, Van Der Hoek, Klaas W., Arthur H. W.
+Beusen, Detlef P. van Vuuren, Jaap Willems, Mariana C. Rufino, and Elke
+Stehfest. 2011. ``Exploring Global Changes in Nitrogen and Phosphorus
+Cycles in Agriculture Induced by Livestock Production over the
+1900--2050 Period.'' \emph{Proceedings of the National Academy of
+Sciences}.
+doi:\href{https://doi.org/10.1073/pnas.1012878108}{10.1073/pnas.1012878108}.
+
+\hypertarget{ref-FAO1986}{}
+FAO. 1986. ``The Ics Users' Manual. Interlinked Computer Strorage and
+Processing System of Food and Agricultural Commodity Data.'' Rome: FAO.
+
+\hypertarget{ref-FAO2003}{}
+---------. 2003. ``Technical Conversion Factors for Agricultural
+Commodities.'' Report. Food; Agriculture Organization of the United
+Nations.
+
+\hypertarget{ref-IEA2019}{}
+IEA. 2019. \emph{World - Renewable and Waste Energy Supply (Ktoe): IEA
+Renewables Information Statistics (Database)}.
+\url{http://dx.doi.org/10.1787/data-00550-en}.
+
+\hypertarget{ref-Krausmann2008}{}
+Krausmann, F., K. Erb, S. Gingrich, C. Lauk, and H. Haberl. 2008.
+``Global Patterns of Socioeconomic Biomass Flows in the Year 2000: A
+Comprehensive Assessment of Supply, Consumption and Constraints.''
+\emph{Ecological Economics} 65 (3): 471--87.
+doi:\href{https://doi.org/10.1016/j.ecolecon.2007.07.012}{10.1016/j.ecolecon.2007.07.012}.
+
+\hypertarget{ref-RFA2010}{}
+RFA. 2010. ``2010 Ethanol Industry Outlook: Climate of Opportunity.''
+Edited by Renewable Fuels Association. Washington, DC.
+
+\pagebreak
+
+\subsection{Appendix}\label{appendix}
+
+\begin{longtable}[t]{lrll}
+\caption{\label{tab:table1}List of commodities}\\
+\toprule
+Com.Code & FAO.Code & FAO.Name & Com.Group\\
+\midrule
+\endfirsthead
+\caption[]{List of commodities \textit{(continued)}}\\
+\toprule
+Com.Code & FAO.Code & FAO.Name & Com.Group\\
+\midrule
+\endhead
+\
+\endfoot
+\bottomrule
+\endlastfoot
+c001 & 2805 & Rice (Milled Equivalent) & Cereals\\
+c002 & 2511 & Wheat and products & Cereals\\
+c003 & 2513 & Barley and products & Cereals\\
+c004 & 2514 & Maize and products & Cereals\\
+c005 & 2515 & Rye and products & Cereals\\
+\addlinespace
+c006 & 2516 & Oats & Cereals\\
+c007 & 2517 & Millet and products & Cereals\\
+c008 & 2518 & Sorghum and products & Cereals\\
+c009 & 2520 & Cereals, Other & Cereals\\
+c010 & 2531 & Potatoes and products & Roots and tubers\\
+\addlinespace
+c011 & 2532 & Cassava and products & Roots and tubers\\
+c012 & 2533 & Sweet potatoes & Roots and tubers\\
+c013 & 2534 & Roots, Other & Roots and tubers\\
+c014 & 2535 & Yams & Roots and tubers\\
+c015 & 2536 & Sugar cane & Sugar crops\\
+\addlinespace
+c016 & 2537 & Sugar beet & Sugar crops\\
+c017 & 2546 & Beans & Vegetables, fruit, nuts, pulses, spices\\
+c018 & 2547 & Peas & Vegetables, fruit, nuts, pulses, spices\\
+c019 & 2549 & Pulses, Other and products & Vegetables, fruit, nuts, pulses, spices\\
+c020 & 2551 & Nuts and products & Vegetables, fruit, nuts, pulses, spices\\
+\addlinespace
+c021 & 2555 & Soyabeans & Oil crops\\
+c022 & 2556 & Groundnuts (Shelled Eq) & Oil crops\\
+c023 & 2557 & Sunflower seed & Oil crops\\
+c024 & 2558 & Rape and Mustardseed & Oil crops\\
+c025 & 328 & Seed cotton & Oil crops\\
+\addlinespace
+c026 & 2560 & Coconuts - Incl Copra & Oil crops\\
+c027 & 2561 & Sesame seed & Oil crops\\
+c028 & 254 & Oil, palm fruit & Oil crops\\
+c029 & 2563 & Olives (including preserved) & Oil crops\\
+c030 & 2570 & Oilcrops, Other & Oil crops\\
+\addlinespace
+c031 & 2601 & Tomatoes and products & Vegetables, fruit, nuts, pulses, spices\\
+c032 & 2602 & Onions & Vegetables, fruit, nuts, pulses, spices\\
+c033 & 2605 & Vegetables, Other & Vegetables, fruit, nuts, pulses, spices\\
+c034 & 2611 & Oranges, Mandarines & Vegetables, fruit, nuts, pulses, spices\\
+c035 & 2612 & Lemons, Limes and products & Vegetables, fruit, nuts, pulses, spices\\
+\addlinespace
+c036 & 2613 & Grapefruit and products & Vegetables, fruit, nuts, pulses, spices\\
+c037 & 2614 & Citrus, Other & Vegetables, fruit, nuts, pulses, spices\\
+c038 & 2615 & Bananas & Vegetables, fruit, nuts, pulses, spices\\
+c039 & 2616 & Plantains & Vegetables, fruit, nuts, pulses, spices\\
+c040 & 2617 & Apples and products & Vegetables, fruit, nuts, pulses, spices\\
+\addlinespace
+c041 & 2618 & Pineapples and products & Vegetables, fruit, nuts, pulses, spices\\
+c042 & 2619 & Dates & Vegetables, fruit, nuts, pulses, spices\\
+c043 & 2620 & Grapes and products (excl wine) & Vegetables, fruit, nuts, pulses, spices\\
+c044 & 2625 & Fruits, Other & Vegetables, fruit, nuts, pulses, spices\\
+c045 & 2630 & Coffee and products & Coffee, tea, cocoa\\
+\addlinespace
+c046 & 2633 & Cocoa Beans and products & Coffee, tea, cocoa\\
+c047 & 2635 & Tea (including mate) & Coffee, tea, cocoa\\
+c048 & 677 & Hops & Vegetables, fruit, nuts, pulses, spices\\
+c049 & 2640 & Pepper & Vegetables, fruit, nuts, pulses, spices\\
+c050 & 2641 & Pimento & Vegetables, fruit, nuts, pulses, spices\\
+\addlinespace
+c051 & 2642 & Cloves & Vegetables, fruit, nuts, pulses, spices\\
+c052 & 2645 & Spices, Other & Vegetables, fruit, nuts, pulses, spices\\
+c053 & 2662 & Jute & Fibre crops\\
+c054 & 2663 & Jute-Like Fibres & Fibre crops\\
+c055 & 2664 & Soft-Fibres, Other & Fibre crops\\
+\addlinespace
+c056 & 2665 & Sisal & Fibre crops\\
+c057 & 2666 & Abaca & Fibre crops\\
+c058 & 2667 & Hard Fibres, Other & Fibre crops\\
+c059 & 2671 & Tobacco & Tobacco, rubber\\
+c060 & 2672 & Rubber & Tobacco, rubber\\
+\addlinespace
+c061 & 2000 & Fodder crops & Fodder crops, grazing\\
+c062 & 2001 & Grazing & Fodder crops, grazing\\
+c063 & 2559 & Cottonseed & Fibre crops\\
+c064 & 2562 & Palm kernels & Oil crops\\
+c065 & 2541 & Sugar non-centrifugal & Sugar, sweeteners\\
+\addlinespace
+c066 & 2544 & Molasses & Sugar, sweeteners\\
+c067 & 2818 & Sugar, Refined Equiv & Sugar, sweeteners\\
+c068 & 2543 & Sweeteners, Other & Sugar, sweeteners\\
+c069 & 2571 & Soyabean Oil & Vegetable oils\\
+c070 & 2572 & Groundnut Oil & Vegetable oils\\
+\addlinespace
+c071 & 2573 & Sunflowerseed Oil & Vegetable oils\\
+c072 & 2574 & Rape and Mustard Oil & Vegetable oils\\
+c073 & 2575 & Cottonseed Oil & Vegetable oils\\
+c074 & 2576 & Palmkernel Oil & Vegetable oils\\
+c075 & 2577 & Palm Oil & Vegetable oils\\
+\addlinespace
+c076 & 2578 & Coconut Oil & Vegetable oils\\
+c077 & 2579 & Sesameseed Oil & Vegetable oils\\
+c078 & 2580 & Olive Oil & Vegetable oils\\
+c079 & 2581 & Ricebran Oil & Vegetable oils\\
+c080 & 2582 & Maize Germ Oil & Vegetable oils\\
+\addlinespace
+c081 & 2586 & Oilcrops Oil, Other & Vegetable oils\\
+c082 & 2590 & Soyabean Cake & Oil cakes\\
+c083 & 2591 & Groundnut Cake & Oil cakes\\
+c084 & 2592 & Sunflowerseed Cake & Oil cakes\\
+c085 & 2593 & Rape and Mustard Cake & Oil cakes\\
+\addlinespace
+c086 & 2594 & Cottonseed Cake & Oil cakes\\
+c087 & 2595 & Palmkernel Cake & Oil cakes\\
+c088 & 2596 & Copra Cake & Oil cakes\\
+c089 & 2597 & Sesameseed Cake & Oil cakes\\
+c090 & 2598 & Oilseed Cakes, Other & Oil cakes\\
+\addlinespace
+c091 & 2655 & Wine & Alcohol\\
+c092 & 2656 & Beer & Alcohol\\
+c093 & 2657 & Beverages, Fermented & Alcohol\\
+c094 & 2658 & Beverages, Alcoholic & Alcohol\\
+c095 & 2659 & Alcohol, Non-Food & Ethanol\\
+\addlinespace
+c096 & 2661 & Cotton lint & Fibre crops\\
+c097 & 866 & Cattle & Live animals\\
+c098 & 946 & Buffaloes & Live animals\\
+c099 & 976 & Sheep & Live animals\\
+c100 & 1016 & Goats & Live animals\\
+\addlinespace
+c101 & 1034 & Pigs & Live animals\\
+c102 & 2029 & Poultry Birds & Live animals\\
+c103 & 1096 & Horses & Live animals\\
+c104 & 1107 & Asses & Live animals\\
+c105 & 1110 & Mules & Live animals\\
+\addlinespace
+c106 & 1126 & Camels & Live animals\\
+c107 & 1157 & Camelids, other & Live animals\\
+c108 & 1140 & Rabbits and hares & Live animals\\
+c109 & 1150 & Rodents, other & Live animals\\
+c110 & 1171 & Live animals, other & Live animals\\
+\addlinespace
+c111 & 2848 & Milk - Excluding Butter & Milk\\
+c112 & 2740 & Butter, Ghee & Milk\\
+c113 & 2744 & Eggs & Eggs\\
+c114 & 2746 & Wool (Clean Eq.) & Hides, skins, wool\\
+c115 & 2731 & Bovine Meat & Meat\\
+\addlinespace
+c116 & 2732 & Mutton \& Goat Meat & Meat\\
+c117 & 2733 & Pigmeat & Meat\\
+c118 & 2734 & Poultry Meat & Meat\\
+c119 & 2735 & Meat, Other & Meat\\
+c120 & 2736 & Offals, Edible & Meat\\
+\addlinespace
+c121 & 2737 & Fats, Animals, Raw & Animal fats\\
+c122 & 2748 & Hides and skins & Hides, skins, wool\\
+c123 & 2749 & Meat Meal & Meat\\
+c124 & 843 & Pet food & Meat\\
+c125 & 2745 & Honey & Honey\\
+\addlinespace
+c126 & 2747 & Silk & Hides, skins, wool\\
+c127 & 2960 & Fish, Seafood & Fish\\
+c128 & 1864 & Wood fuel & Wood\\
+c129 & 1866 & Industrial roundwood, coniferous & Wood\\
+c130 & 1867 & Industrial roundwood, non-coniferous & Wood\\*
+\end{longtable}
+
+\begin{longtable}[t]{lll}
+\caption{\label{tab:table2}List of processes}\\
+\toprule
+Proc.Code & Process & Proc.Type\\
+\midrule
+\endfirsthead
+\caption[]{List of processes \textit{(continued)}}\\
+\toprule
+Proc.Code & Process & Proc.Type\\
+\midrule
+\endhead
+\
+\endfoot
+\bottomrule
+\endlastfoot
+p001 & Rice production & Primary production\\
+p002 & Wheat production & Primary production\\
+p003 & Barley production & Primary production\\
+p004 & Maize production & Primary production\\
+p005 & Rye production & Primary production\\
+\addlinespace
+p006 & Oat production & Primary production\\
+p007 & Millet production & Primary production\\
+p008 & Sorghum production & Primary production\\
+p009 & Cereals production, Other & Primary production\\
+p010 & Potatoes  production & Primary production\\
+\addlinespace
+p011 & Cassava production & Primary production\\
+p012 & Sweet potatoes production & Primary production\\
+p013 & Roots production, Other & Primary production\\
+p014 & Yams production & Primary production\\
+p015 & Suga cane production & Primary production\\
+\addlinespace
+p016 & Sugar beet production & Primary production\\
+p017 & Beans production & Primary production\\
+p018 & Peas production & Primary production\\
+p019 & Pulses  production, Other & Primary production\\
+p020 & Nuts production & Primary production\\
+\addlinespace
+p021 & Soyabeans production & Primary production\\
+p022 & Groundnuts (Shelled Eq) production & Primary production\\
+p023 & Sunflower seed production & Primary production\\
+p024 & Rape and Mustardseed production & Primary production\\
+p025 & Seed cotton production & Primary production\\
+\addlinespace
+p026 & Coconuts production & Primary production\\
+p027 & Sesame seed production & Primary production\\
+p028 & Oil palm fruit production & Primary production\\
+p029 & Olives production & Primary production\\
+p030 & Oilcrops production, Other & Primary production\\
+\addlinespace
+p031 & Tomatoes production & Primary production\\
+p032 & Onions production & Primary production\\
+p033 & Vegetables production, Other & Primary production\\
+p034 & Oranges, Mandarines production & Primary production\\
+p035 & Lemons, Limes production & Primary production\\
+\addlinespace
+p036 & Grapefruit production & Primary production\\
+p037 & Citrus production, Other & Primary production\\
+p038 & Bananas production & Primary production\\
+p039 & Plantains production & Primary production\\
+p040 & Apples production & Primary production\\
+\addlinespace
+p041 & Pineapples production & Primary production\\
+p042 & Dates production & Primary production\\
+p043 & Grapes production & Primary production\\
+p044 & Fruits production, Other & Primary production\\
+p045 & Coffee production & Primary production\\
+\addlinespace
+p046 & Cocoa Beans production & Primary production\\
+p047 & Tea production & Primary production\\
+p048 & Hops production & Primary production\\
+p049 & Pepper production & Primary production\\
+p050 & Pimento production & Primary production\\
+\addlinespace
+p051 & Cloves production & Primary production\\
+p052 & Spices production, Other & Primary production\\
+p053 & Jute production & Primary production\\
+p054 & Jute-Like Fibres production & Primary production\\
+p055 & Soft-Fibres production, Other & Primary production\\
+\addlinespace
+p056 & Sisal production & Primary production\\
+p057 & Abaca production & Primary production\\
+p058 & Hard Fibres production, Other & Primary production\\
+p059 & Tobacco production & Primary production\\
+p060 & Rubber production & Primary production\\
+\addlinespace
+p061 & Fodder crops production & Primary production\\
+p062 & Grazing production & Primary production\\
+p063 & Cotton production & Processing\\
+p064 & Sugar production, non-centrifugal & Processing\\
+p065 & Sugar production & Processing\\
+\addlinespace
+p066 & Sweeteners production, Other & Processing\\
+p067 & Soyabean Oil extraction & Processing\\
+p068 & Groundnut Oil extraction & Processing\\
+p069 & Sunflowerseed Oil extraction & Processing\\
+p070 & Rape and Mustard Oil extraction & Processing\\
+\addlinespace
+p071 & Cottonseed Oil extraction & Processing\\
+p072 & Palmkernel Oil extraction & Processing\\
+p073 & Palm Oil production & Processing\\
+p074 & Coconut Oil extraction & Processing\\
+p075 & Sesameseed Oil extraction & Processing\\
+\addlinespace
+p076 & Olive Oil extraction & Processing\\
+p077 & Ricebran Oil extraction & Processing\\
+p078 & Maize Germ Oil extraction & Processing\\
+p079 & Oilcrops Oil extraction, Other & Processing\\
+p080 & Wine production & Processing\\
+\addlinespace
+p081 & Beer production & Processing\\
+p082 & Beverages production, Fermented & Processing\\
+p083 & Beverages production, Alcoholic & Processing\\
+p084 & Alcohol production, Non-Food & Processing\\
+p085 & Cattle husbandry & Primary production\\
+\addlinespace
+p086 & Buffaloes husbandry & Primary production\\
+p087 & Sheep husbandry & Primary production\\
+p088 & Goats husbandry & Primary production\\
+p089 & Pigs farming & Primary production\\
+p090 & Poultry Birds farming & Primary production\\
+\addlinespace
+p091 & Horses husbandry & Primary production\\
+p092 & Asses husbandry & Primary production\\
+p093 & Mules husbandry & Primary production\\
+p094 & Camels husbandry & Primary production\\
+p095 & Camelids husbandry, other & Primary production\\
+\addlinespace
+p096 & Rabbits husbandry & Primary production\\
+p097 & Rodents husbandry, other & Primary production\\
+p098 & Live animals husbandry, other & Primary production\\
+p099 & Dairy cattle husbandry & Primary production\\
+p100 & Dairy buffaloes husbandry & Primary production\\
+\addlinespace
+p101 & Dairy sheep husbandry & Primary production\\
+p102 & Dairy goats husbandry & Primary production\\
+p103 & Dairy camels husbandry & Primary production\\
+p104 & Cattle slaughtering & Processing\\
+p105 & Buffaloes slaughtering & Processing\\
+\addlinespace
+p106 & Sheep slaughtering & Processing\\
+p107 & Goat slaughtering & Processing\\
+p108 & Pigs slaughtering & Processing\\
+p109 & Poultry slaughtering & Processing\\
+p110 & Horses slaughtering & Processing\\
+\addlinespace
+p111 & Asses slaughtering & Processing\\
+p112 & Mules slaughtering & Processing\\
+p113 & Camels slaughtering & Processing\\
+p114 & Camelids slaughtering, other & Processing\\
+p115 & Rabbits slaughtering & Processing\\
+\addlinespace
+p116 & Rodents slaughtering, other & Processing\\
+p117 & Live animals slaughtering, other & Processing\\
+p118 & Beekeeping & Processing\\
+p119 & Silkworm breeding & Processing\\
+p120 & Fishing & Processing\\
+p121 & Forestry & Primary production\\*
+\end{longtable}
+
+\begin{longtable}[t]{rlll}
+\caption{\label{tab:table3}List of countries}\\
+\toprule
+FAO.Code & Country & ISO & Continent\\
+\midrule
+\endfirsthead
+\caption[]{List of countries \textit{(continued)}}\\
+\toprule
+FAO.Code & Country & ISO & Continent\\
+\midrule
+\endhead
+\
+\endfoot
+\bottomrule
+\endlastfoot
+1 & Armenia & ARM & ASI\\
+2 & Afghanistan & AFG & ASI\\
+3 & Albania & ALB & EUR\\
+4 & Algeria & DZA & AFR\\
+7 & Angola & AGO & AFR\\
+\addlinespace
+8 & Antigua and Barbuda & ATG & LAM\\
+9 & Argentina & ARG & LAM\\
+10 & Australia & AUS & OCE\\
+11 & Austria & AUT & EU\\
+12 & Bahamas & BHS & LAM\\
+\addlinespace
+13 & Bahrain & BHR & ASI\\
+14 & Barbados & BRB & LAM\\
+15 & Belgium-Luxembourg & BLX & EU\\
+16 & Bangladesh & BGD & ASI\\
+19 & Bolivia (Plurinational State of) & BOL & LAM\\
+\addlinespace
+20 & Botswana & BWA & AFR\\
+21 & Brazil & BRA & LAM\\
+23 & Belize & BLZ & LAM\\
+25 & Solomon Islands & SLB & OCE\\
+26 & Brunei Darussalam & BRN & ASI\\
+\addlinespace
+27 & Bulgaria & BGR & EU\\
+28 & Myanmar & MMR & ASI\\
+29 & Burundi & BDI & AFR\\
+32 & Cameroon & CMR & AFR\\
+33 & Canada & CAN & NAM\\
+\addlinespace
+35 & Cabo Verde & CPV & AFR\\
+37 & Central African Republic & CAF & AFR\\
+38 & Sri Lanka & LKA & ASI\\
+39 & Chad & TCD & AFR\\
+40 & Chile & CHL & LAM\\
+\addlinespace
+41 & China, mainland & CHN & ASI\\
+44 & Colombia & COL & LAM\\
+46 & Congo & COG & AFR\\
+48 & Costa Rica & CRI & LAM\\
+49 & Cuba & CUB & LAM\\
+\addlinespace
+50 & Cyprus & CYP & EU\\
+51 & Czechoslovakia & CSK & EU\\
+52 & Azerbaijan & AZE & ASI\\
+53 & Benin & BEN & AFR\\
+54 & Denmark & DNK & EU\\
+\addlinespace
+55 & Dominica & DMA & LAM\\
+56 & Dominican Republic & DOM & LAM\\
+57 & Belarus & BLR & EUR\\
+58 & Ecuador & ECU & LAM\\
+59 & Egypt & EGY & AFR\\
+\addlinespace
+60 & El Salvador & SLV & LAM\\
+63 & Estonia & EST & EU\\
+66 & Fiji & FJI & OCE\\
+67 & Finland & FIN & EU\\
+68 & France & FRA & EU\\
+\addlinespace
+70 & French Polynesia & PYF & OCE\\
+72 & Djibouti & DJI & AFR\\
+73 & Georgia & GEO & ASI\\
+74 & Gabon & GAB & AFR\\
+75 & Gambia & GMB & AFR\\
+\addlinespace
+79 & Germany & DEU & EU\\
+80 & Bosnia and Herzegovina & BIH & EUR\\
+81 & Ghana & GHA & AFR\\
+83 & Kiribati & KIR & OCE\\
+84 & Greece & GRC & EU\\
+\addlinespace
+86 & Grenada & GRD & LAM\\
+89 & Guatemala & GTM & LAM\\
+90 & Guinea & GIN & AFR\\
+91 & Guyana & GUY & LAM\\
+93 & Haiti & HTI & LAM\\
+\addlinespace
+95 & Honduras & HND & LAM\\
+96 & China, Hong Kong SAR & HKG & ASI\\
+97 & Hungary & HUN & EU\\
+98 & Croatia & HRV & EU\\
+99 & Iceland & ISL & EUR\\
+\addlinespace
+100 & India & IND & ASI\\
+101 & Indonesia & IDN & ASI\\
+102 & Iran (Islamic Republic of) & IRN & ASI\\
+103 & Iraq & IRQ & ASI\\
+104 & Ireland & IRL & EU\\
+\addlinespace
+105 & Israel & ISR & ASI\\
+106 & Italy & ITA & EU\\
+107 & Côte d'Ivoire & CIV & AFR\\
+108 & Kazakhstan & KAZ & ASI\\
+109 & Jamaica & JAM & LAM\\
+\addlinespace
+110 & Japan & JPN & ASI\\
+112 & Jordan & JOR & ASI\\
+113 & Kyrgyzstan & KGZ & ASI\\
+114 & Kenya & KEN & AFR\\
+115 & Cambodia & KHM & ASI\\
+\addlinespace
+116 & Democratic People's Republic of Korea & PRK & ASI\\
+117 & Republic of Korea & KOR & ASI\\
+118 & Kuwait & KWT & ASI\\
+119 & Latvia & LVA & EU\\
+120 & Lao People's Democratic Republic & LAO & ASI\\
+\addlinespace
+121 & Lebanon & LBN & ASI\\
+122 & Lesotho & LSO & AFR\\
+123 & Liberia & LBR & AFR\\
+124 & Libya & LBY & AFR\\
+126 & Lithuania & LTU & EU\\
+\addlinespace
+128 & China, Macao SAR & MAC & ASI\\
+129 & Madagascar & MDG & AFR\\
+130 & Malawi & MWI & AFR\\
+131 & Malaysia & MYS & ASI\\
+132 & Maldives & MDV & ASI\\
+\addlinespace
+133 & Mali & MLI & AFR\\
+134 & Malta & MLT & EU\\
+136 & Mauritania & MRT & AFR\\
+137 & Mauritius & MUS & AFR\\
+138 & Mexico & MEX & LAM\\
+\addlinespace
+141 & Mongolia & MNG & ASI\\
+143 & Morocco & MAR & AFR\\
+144 & Mozambique & MOZ & AFR\\
+146 & Republic of Moldova & MDA & EUR\\
+147 & Namibia & NAM & AFR\\
+\addlinespace
+149 & Nepal & NPL & ASI\\
+150 & Netherlands & NLD & EU\\
+151 & Netherlands Antilles & ANT & LAM\\
+153 & New Caledonia & NCL & OCE\\
+154 & The former Yugoslav Republic of Macedonia & MKD & EUR\\
+\addlinespace
+155 & Vanuatu & VUT & OCE\\
+156 & New Zealand & NZL & OCE\\
+157 & Nicaragua & NIC & LAM\\
+158 & Niger & NER & AFR\\
+159 & Nigeria & NGA & AFR\\
+\addlinespace
+162 & Norway & NOR & EUR\\
+165 & Pakistan & PAK & ASI\\
+166 & Panama & PAN & LAM\\
+167 & Czech Republic & CZE & EU\\
+168 & Papua New Guinea & PNG & OCE\\
+\addlinespace
+169 & Paraguay & PRY & LAM\\
+170 & Peru & PER & LAM\\
+171 & Philippines & PHL & ASI\\
+173 & Poland & POL & EU\\
+174 & Portugal & PRT & EU\\
+\addlinespace
+175 & Guinea-Bissau & GNB & AFR\\
+176 & Timor-Leste & TLS & ASI\\
+177 & Puerto Rico & PRI & LAM\\
+178 & Eritrea & ERI & AFR\\
+179 & Qatar & QAT & ASI\\
+\addlinespace
+181 & Zimbabwe & ZWE & AFR\\
+183 & Romania & ROU & EU\\
+184 & Rwanda & RWA & AFR\\
+185 & Russian Federation & RUS & ASI\\
+186 & Serbia and Montenegro & SCG & EUR\\
+\addlinespace
+188 & Saint Kitts and Nevis & KNA & LAM\\
+189 & Saint Lucia & LCA & LAM\\
+191 & Saint Vincent and the Grenadines & VCT & LAM\\
+193 & Sao Tome and Principe & STP & AFR\\
+194 & Saudi Arabia & SAU & ASI\\
+\addlinespace
+195 & Senegal & SEN & AFR\\
+197 & Sierra Leone & SLE & AFR\\
+198 & Slovenia & SVN & EU\\
+199 & Slovakia & SVK & EU\\
+200 & Singapore & SGP & ASI\\
+\addlinespace
+201 & Somalia & SOM & AFR\\
+202 & South Africa & ZAF & AFR\\
+203 & Spain & ESP & EU\\
+207 & Suriname & SUR & LAM\\
+208 & Tajikistan & TJK & ASI\\
+\addlinespace
+209 & Swaziland & SWZ & AFR\\
+210 & Sweden & SWE & EU\\
+211 & Switzerland & CHE & EUR\\
+212 & Syrian Arab Republic & SYR & ASI\\
+213 & Turkmenistan & TKM & ASI\\
+\addlinespace
+214 & China, Taiwan Province of & TWN & ASI\\
+215 & United Republic of Tanzania & TZA & AFR\\
+216 & Thailand & THA & ASI\\
+217 & Togo & TGO & AFR\\
+220 & Trinidad and Tobago & TTO & LAM\\
+\addlinespace
+221 & Oman & OMN & ASI\\
+222 & Tunisia & TUN & AFR\\
+223 & Turkey & TUR & EUR\\
+225 & United Arab Emirates & ARE & ASI\\
+226 & Uganda & UGA & AFR\\
+\addlinespace
+228 & USSR & SUN & ASI\\
+229 & United Kingdom & GBR & EU\\
+230 & Ukraine & UKR & EUR\\
+231 & United States of America & USA & NAM\\
+233 & Burkina Faso & BFA & AFR\\
+\addlinespace
+234 & Uruguay & URY & LAM\\
+235 & Uzbekistan & UZB & ASI\\
+236 & Venezuela (Bolivarian Republic of) & VEN & LAM\\
+237 & Viet Nam & VNM & ASI\\
+238 & Ethiopia & ETH & AFR\\
+\addlinespace
+244 & Samoa & WSM & OCE\\
+248 & Yugoslav SFR & YUG & EUR\\
+249 & Yemen & YEM & ASI\\
+250 & Democratic Republic of the Congo & COD & AFR\\
+251 & Zambia & ZMB & AFR\\
+\addlinespace
+255 & Belgium & BEL & EU\\
+256 & Luxembourg & LUX & EU\\
+272 & Serbia & SRB & EUR\\
+273 & Montenegro & MNE & EUR\\
+276 & Sudan & SDN & AFR\\
+\addlinespace
+277 & South Sudan & SSD & AFR\\
+999 & RoW & ROW & ROW\\*
+\end{longtable}
+
+\begin{longtable}[t]{lrr}
+\caption{\label{tab:table4}Number of commodity balances reported and estimated for each country in 2013}\\
+\toprule
+Country & reported & estimated\\
+\midrule
+\endfirsthead
+\caption[]{Number of commodity balances reported and estimated for each country in 2013 \textit{(continued)}}\\
+\toprule
+Country & reported & estimated\\
+\midrule
+\endhead
+\
+\endfoot
+\bottomrule
+\endlastfoot
+Singapore & 0 & 115\\
+Qatar & 0 & 112\\
+Democratic Republic of the Congo & 0 & 110\\
+Bahrain & 0 & 109\\
+Syrian Arab Republic & 0 & 103\\
+\addlinespace
+Papua New Guinea & 0 & 100\\
+Burundi & 0 & 94\\
+Libya & 0 & 91\\
+Somalia & 0 & 88\\
+Eritrea & 0 & 63\\
+\addlinespace
+Lesotho & 47 & 54\\
+Democratic People's Republic of Korea & 53 & 39\\
+Turkmenistan & 49 & 39\\
+Lao People's Democratic Republic & 65 & 37\\
+Afghanistan & 62 & 33\\
+\addlinespace
+Viet Nam & 83 & 31\\
+Angola & 81 & 31\\
+Timor-Leste & 47 & 31\\
+South Sudan & 0 & 29\\
+Chad & 63 & 28\\
+\addlinespace
+Tajikistan & 65 & 27\\
+Sao Tome and Principe & 62 & 27\\
+Puerto Rico & 0 & 27\\
+Myanmar & 88 & 25\\
+United States of America & 100 & 24\\
+\addlinespace
+Kuwait & 92 & 24\\
+Mozambique & 92 & 24\\
+Liberia & 67 & 24\\
+Solomon Islands & 63 & 23\\
+China, mainland & 104 & 22\\
+\addlinespace
+Mexico & 103 & 22\\
+Thailand & 103 & 22\\
+Dominican Republic & 87 & 22\\
+Peru & 98 & 21\\
+Egypt & 97 & 21\\
+\addlinespace
+Iraq & 86 & 21\\
+Uzbekistan & 78 & 21\\
+Sierra Leone & 74 & 21\\
+Brazil & 102 & 20\\
+France & 102 & 20\\
+\addlinespace
+Canada & 101 & 20\\
+Germany & 101 & 20\\
+Netherlands & 101 & 20\\
+United Kingdom & 101 & 20\\
+Bulgaria & 99 & 20\\
+\addlinespace
+Spain & 99 & 20\\
+Colombia & 98 & 20\\
+Nepal & 95 & 20\\
+New Zealand & 95 & 20\\
+Côte d'Ivoire & 94 & 20\\
+\addlinespace
+Norway & 94 & 20\\
+Israel & 91 & 20\\
+Bolivia (Plurinational State of) & 91 & 20\\
+Bosnia and Herzegovina & 89 & 20\\
+Congo & 85 & 20\\
+\addlinespace
+Montenegro & 78 & 20\\
+South Africa & 104 & 19\\
+Philippines & 103 & 19\\
+Italy & 102 & 19\\
+Australia & 101 & 19\\
+\addlinespace
+Belgium & 100 & 19\\
+Czech Republic & 100 & 19\\
+Republic of Korea & 100 & 19\\
+Venezuela (Bolivarian Republic of) & 100 & 19\\
+Malaysia & 99 & 19\\
+\addlinespace
+China, Taiwan Province of & 98 & 19\\
+United Arab Emirates & 98 & 19\\
+Austria & 98 & 19\\
+Switzerland & 97 & 19\\
+Kenya & 97 & 19\\
+\addlinespace
+Ethiopia & 95 & 19\\
+Ecuador & 95 & 19\\
+Kazakhstan & 95 & 19\\
+Ghana & 93 & 19\\
+Ukraine & 91 & 19\\
+\addlinespace
+Serbia & 89 & 19\\
+Algeria & 87 & 19\\
+Brunei Darussalam & 84 & 19\\
+Cabo Verde & 76 & 19\\
+Mongolia & 70 & 19\\
+\addlinespace
+Samoa & 64 & 19\\
+Kiribati & 53 & 19\\
+Ireland & 100 & 18\\
+India & 100 & 18\\
+Indonesia & 100 & 18\\
+\addlinespace
+Poland & 99 & 18\\
+Greece & 97 & 18\\
+Guatemala & 97 & 18\\
+Romania & 97 & 18\\
+Russian Federation & 96 & 18\\
+\addlinespace
+Honduras & 95 & 18\\
+Nicaragua & 95 & 18\\
+Slovakia & 95 & 18\\
+Panama & 93 & 18\\
+Senegal & 93 & 18\\
+\addlinespace
+Uganda & 92 & 18\\
+Argentina & 92 & 18\\
+China, Hong Kong SAR & 91 & 18\\
+Iran (Islamic Republic of) & 90 & 18\\
+Albania & 89 & 18\\
+\addlinespace
+Burkina Faso & 88 & 18\\
+Rwanda & 85 & 18\\
+Niger & 84 & 18\\
+Bahamas & 82 & 18\\
+Gambia & 80 & 18\\
+\addlinespace
+Guinea-Bissau & 65 & 18\\
+Vanuatu & 64 & 18\\
+Japan & 103 & 17\\
+United Republic of Tanzania & 103 & 17\\
+Portugal & 102 & 17\\
+\addlinespace
+Pakistan & 101 & 17\\
+Nigeria & 98 & 17\\
+Hungary & 97 & 17\\
+Zambia & 97 & 17\\
+Madagascar & 95 & 17\\
+\addlinespace
+Morocco & 95 & 17\\
+Croatia & 92 & 17\\
+Uruguay & 92 & 17\\
+Botswana & 92 & 17\\
+Belarus & 91 & 17\\
+\addlinespace
+Swaziland & 90 & 17\\
+Jordan & 90 & 17\\
+Zimbabwe & 90 & 17\\
+Saudi Arabia & 90 & 17\\
+Tunisia & 87 & 17\\
+\addlinespace
+Guinea & 86 & 17\\
+Cuba & 84 & 17\\
+Kyrgyzstan & 82 & 17\\
+French Polynesia & 79 & 17\\
+Haiti & 79 & 17\\
+\addlinespace
+Denmark & 98 & 16\\
+Oman & 98 & 16\\
+Chile & 97 & 16\\
+Turkey & 97 & 16\\
+Costa Rica & 96 & 16\\
+\addlinespace
+Sweden & 96 & 16\\
+Mauritius & 89 & 16\\
+Malta & 88 & 16\\
+The former Yugoslav Republic of Macedonia & 88 & 16\\
+Trinidad and Tobago & 87 & 16\\
+\addlinespace
+New Caledonia & 86 & 16\\
+Azerbaijan & 86 & 16\\
+Malawi & 86 & 16\\
+Fiji & 85 & 16\\
+Republic of Moldova & 84 & 16\\
+\addlinespace
+Gabon & 81 & 16\\
+Antigua and Barbuda & 80 & 16\\
+Suriname & 80 & 16\\
+Maldives & 78 & 16\\
+Belize & 75 & 16\\
+\addlinespace
+Djibouti & 67 & 16\\
+Dominica & 66 & 16\\
+Saint Vincent and the Grenadines & 66 & 16\\
+Slovenia & 96 & 15\\
+Sri Lanka & 96 & 15\\
+\addlinespace
+Lebanon & 95 & 15\\
+Cameroon & 93 & 15\\
+Bangladesh & 92 & 15\\
+Namibia & 92 & 15\\
+Luxembourg & 92 & 15\\
+\addlinespace
+Finland & 91 & 15\\
+Latvia & 91 & 15\\
+Estonia & 90 & 15\\
+Jamaica & 88 & 15\\
+Cambodia & 87 & 15\\
+\addlinespace
+Benin & 86 & 15\\
+Georgia & 86 & 15\\
+Paraguay & 86 & 15\\
+Iceland & 85 & 15\\
+Mali & 84 & 15\\
+\addlinespace
+Barbados & 81 & 15\\
+Guyana & 80 & 15\\
+El Salvador & 94 & 14\\
+Lithuania & 93 & 14\\
+Cyprus & 90 & 14\\
+\addlinespace
+Togo & 87 & 14\\
+Central African Republic & 66 & 14\\
+Armenia & 86 & 13\\
+Mauritania & 77 & 13\\
+Saint Lucia & 71 & 13\\
+\addlinespace
+China, Macao SAR & 68 & 13\\
+Yemen & 83 & 12\\
+Saint Kitts and Nevis & 69 & 12\\
+Grenada & 73 & 10\\
+Netherlands Antilles & 52 & 8\\
+\addlinespace
+Sudan & 92 & 4\\
+Belgium-Luxembourg & 0 & 0\\
+Czechoslovakia & 0 & 0\\
+Serbia and Montenegro & 0 & 0\\
+USSR & 0 & 0\\
+Yugoslav SFR & 0 & 0\\*
+\end{longtable}
+
+
+\end{document}

@@ -1,0 +1,190 @@
+---
+title: "FABIO Documentation"
+author: "Martin Bruckner"
+date: "`r Sys.Date()`"
+output: 
+  rmarkdown::pdf_document:
+        fig_caption: yes
+        keep_tex: true
+  # rmarkdown::html_vignette: 
+bibliography: refs.bib
+vignette: >
+  %\VignetteIndexEntry{FABIO Documentation}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteDepends{captioner,stargazer,kableExtra}
+  %\VignetteEngine{knitr::rmarkdown}
+tables: true
+---
+
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+\sloppy
+
+## Introduction
+
+This document provides a documentation of the scripts of the FABIO model as provided at <https://github.com/gru-wu/fabio>.
+FABIO (Food and Agriculture Biomass Input-Output) is a set of multi-regional physical supply, use and input-output tables covering global agriculture and forestry. The work is based on data from FAOSTAT, IEA, EIA and COMTRADE/BACI. FABIO now covers 191 countries, 121 processes and 130 commodities for 1986-2013.
+
+All scripts and auxiliary data are distributed under the GNU General Public License Version 3.
+
+
+## Download data
+
+In order to run the scripts, please fork the GitHub repository. Then download the following data sets and store them in the folder *./fabio_input/raw data/* of your local copy of the FABIO repository.
+
+Most of the data used for constructing the FABIO model are provided by FAOSTAT, the Statistical Services of the Food and Agriculture Organisation of the United Nations. The website of FAOSTAT is structured by data domains (such as *Production* or *Trade*) which each contain several data sets. For each of the required data sets, a bulk file can be downloaded from the following sources:
+
+* Production, Crops: <http://fenixservices.fao.org/faostat/static/bulkdownloads/Production_Crops_E_All_Data_(Normalized).zip> 
+
+* Production, Crops processed: <http://fenixservices.fao.org/faostat/static/bulkdownloads/Production_CropsProcessed_E_All_Data_(Normalized).zip> 
+
+* Production, Live animals: <http://fenixservices.fao.org/faostat/static/bulkdownloads/Production_Livestock_E_All_Data_(Normalized).zip> 
+
+* Production, Livestock primary: <http://fenixservices.fao.org/faostat/static/bulkdownloads/Production_LivestockPrimary_E_All_Data_(Normalized).zip>
+
+* Production, Livestock processed: <http://fenixservices.fao.org/faostat/static/bulkdownloads/Production_LivestockProcessed_E_All_Data_(Normalized).zip>
+
+* Trade, Crops and livestock products: <http://fenixservices.fao.org/faostat/static/bulkdownloads/Trade_Crops_Livestock_E_All_Data_(Normalized).zip>
+
+* Trade, Live animals: <http://fenixservices.fao.org/faostat/static/bulkdownloads/Trade_LiveAnimals_E_All_Data_(Normalized).zip>
+
+* Trade, Detailed trade matrix: <http://fenixservices.fao.org/faostat/static/bulkdownloads/Trade_DetailedTradeMatrix_E_All_Data_(Normalized).zip>
+
+* Commodity Balances, Crops Primary Equivalent: <http://fenixservices.fao.org/faostat/static/bulkdownloads/CommodityBalances_Crops_E_All_Data_(Normalized).zip>
+
+* Commodity Balances, Livestock and Fish Primary Equivalent:  <http://fenixservices.fao.org/faostat/static/bulkdownloads/CommodityBalances_LivestockFish_E_All_Data_(Normalized).zip>
+
+Additionally, fodder crop production data (part of the aggregated item "Crops Primary > (List)" in the *Production* domain) was downloaded from <http://www.fao.org/faostat/en/#data/QC>, but is no longer available from the FAOSTAT website. Therefore, in order to replicate the FABIO model, it is necessary to request these data from FAOSTAT.
+
+Global fishery statistics can be retrieved from FAO's fishery division: <http://www.fao.org/fishery/statistics/global-production/en>.
+
+COMTRADE, the global trade database of the United Nations Statistical Division, provides bilateral trade data, which are downloaded by the FABIO scripts directly via an API. Make sure that your computer is connected to the internet, when running the script. COMTRADE is free, but to use the web services it requires to register online. You will receive a token which has to be copied into the file *./fabio_input/comtrade_token.txt*. We use the COMTRADE database for data on bilateral fish and ethanol trade for 1988 to 1994. Data for all other years are sourced from BACI, a reconciled and harmonised version of the COMTRADE database, which is available for 1995 to 2016 from <http://www.cepii.fr/cepii/en/bdd_modele/download.asp?id=1>. Download the BACI92 version. Please note that BACI is not free. Universities often provide access to the database. Alternatively, COMTRADE can be used for the whole time series with some minor adaptations of the code.
+
+Production data for ethanol from agricultural sources are reported by FAOSTAT under the name *Alcohol, non-food*. However, large data gaps forced us to use alternative sources. We downloaded ethanol/biogasoline production data in xlsx-format from both EIA and IEA:
+
+* EIA: <https://www.eia.gov/beta/international/data/browser/#/?pa=000001g&c=ruvvvvvfvtvnvv1urvvvvfvvvvvvfvvvou20evvvvvvvvvnvvuvo&ct=0&tl_id=79-A&vs=INTL.80-1-AFG-TBPD.A&vo=0&v=H&start=1980&end=2014>
+
+* IEA: <http://dx.doi.org/10.1787/data-00550-en>
+
+After downloading all these data, you can start running the script step by step.
+
+
+## Tidy data
+
+The first three functions of the package are used to read the raw data and harmonize and tidy their data structures, including country and commodity names. The final lists of countries, processes and commodities are given in the Annex.
+
+The basis for the FABIO model are the Commodity Balance Sheets (CBS) from FAOSTAT. The CBS provide data on the supply and utilization of agricultural commodities which are balanced in terms of physical quantities by matching supply (domestic production and imports) with uses (exports, stock changes, and domestic use for food, feed, processing, seed, waste, and other uses). 
+
+While particularly the use accounts are an indispensable source of information for the development of physical supply and use tables (PSUT), an unavoidable limitation of these data is that for many cases crops and derived products are combined into a single CBS by converting products into primary equivalents. For example, the CBS for *wheat and products* comprises also trade and consumption of bread and pasta measured in wheat equivalents. This simplification significantly reduces the level of detail of the resulting PSUT and impedes a clear distinction of agriculture and food manufacturing.
+
+As other domains of FAOSTAT (e.g. *Trade* and *Production*) give the actual product weights, units had to be converted into primary equivalents where applicable. This was done using country specific technical conversion factors (TCF) published by the @FAO2003, which for example give the kg of wheat required to produce an average kg of bread.
+
+Trade data for crops and crop products, livestock and livestock products, timber, and fish are organized in different data domains of the FAO. We therefore harmonized their data structures and integrated them into one bilateral trade database (BTD). In any case, reported import data were given preference over reported export data, based on the expectations that the importer will rather know the correct origin of a traded commodity, than the exporter the correct final destination.
+
+
+## Estimate missing data
+
+Data gaps are a common problem in any heavily data-dependent research work. We used several ways to estimate missing data.
+
+#### Commodity balances
+Some gaps occur in the time series of the CBS. A certain commodity might be reported by a country most of the time, but with a few years missing. The same is the case for the forestry statistics. In these cases we inter- and extrapolate the available data.
+
+The CBS database does not cover some of the commodities included in the FABIO model, i.e. live animals, fodder crops (grasses, forages and silages), grazing (grasses and hay from grasslands), and timber. Therefore, commodity balances had to be built based on alternative sources. Production data for all missing commodities as well as trade data for live animals and timber are available from FAOSTAT. Fodder crops and grasses are assumed not to be traded internationally. Low prices and the consequent disproportionate transportation costs support this assumption. For simplicity, stock changes, seed use and waste were assumed to be zero. Domestic use of live animals is at large assigned to food processing (i.e. animal slaughtering), fodder crops and grazing to feed use, and timber to other uses.
+
+The CBS and bilateral trade data for *Alcohol, non-food* were updated with production data from IEA and EIA (using the highest value respectively) and trade data from COMTRADE/BACI.
+
+For some countries, not included in the CBS domain, all commodity balances were estimated based on available production, seed use^[FAO has stopped reporting the seed use in the production domain of FAOSTAT. Thus for future updates seed-production ratios reported in past years or for other countries will be taken.] and trade data. Processing requirements, e.g. the rapeseed used for rapeseed oil production or the sugar cane used for sugar production, were estimated for each commodity based on production data for the derived products and the country specific TCF. If we then found data gaps for co-products, e.g. molasses from sugar production, we imputed these data using again the respective TCF.
+
+#### Bilateral trade
+The BTD gives bilateral trade data $b_{c}^{rs}$ in the format countries-by-countries ($r \times s$) for each commodity $c$. It reveals significant gaps and mismatch with the total import and export quantities reported in the CBS. We followed a multi-step approach to estimate a comprehensive set of bilateral trade data, which is in accordance with the CBS:
+
+* We first derive a BTD estimate by spreading exports for each commodity over all countries worldwide according to their import shares. The elements of for a specific crop $c$ and a country pair $r, s$ are derived by $b_{c}^{'rs} = imp_{c}^{r}/imp_{c} \cdot exp_{c}^{s}$
+
+* We repeat this procedure, but spreading imports for each commodity over all countries worldwide according to their export shares: $b_{c}^{''rs} = exp_{c}^{s}/exp_{c} \cdot imp_{c}^{r}$
+
+* We derive the average of the two estimates $\bar{b}_{c}^{rs}$ and proceed.
+
+* We calculate the difference between the total exports of crop $c$ from country $r$ documented in the BTD and those reported in the CBS dataset.
+
+* We populate the gaps in $\mathbf{B}$, i.e. those fields that are $N/A$, with the corresponding values from $\mathbf{\bar{B}}$ up-/down-scaling them to meet the target export sum for each commodity and each exporting country as reported in the CBS.
+
+* We balance the resulting trade matrices using the RAS technique.
+
+The resulting bilateral trade matrix is in line with the import and export totals given by the CBS per country and commodity, while diverging from the reported BTD only as little as possible.
+
+
+## Populate supply table
+
+We insert the compiled production data for each process-item combination into a supply table. Some commodities are supplied by various processes. Production values of those have to be divided between the respective processes:
+
+* Milk and butter from different animal groups are aggregated into one CBS item. At the same time, FAO reports detailed production data for fresh milk by animal type (e.g. cattle, goats, camels). These are used to split the aggregates over the supplying animal sectors in FABIO.
+
+* The same is true for meat and hides and skins, where the CBS provide less detail than the FAO's production statistics. We use the latter to allocate meat supply to the detailed slaughtering processes.
+
+* Slaughtering by-products such as edible offals, animal fats, and meat meal are split among the animal categories according to their respective share in overall meat production.
+
+
+## Populate use table
+
+The FAO Commodity Balance Sheets distinguish the following uses: exports, stock changes, food, feed, processing, seed, waste, and other uses. Seed and waste are considered an own use of the process where the waste occurs and the seed is used. Exports, stock changes, food, and other uses are, in a first step, considered final demand categories, i.e. they are put into a final demand table. In the following, we describe the allocation of feed and processing use.
+
+### Allocation of processing use
+Processing uses are allocated to the respective processes.
+
+* **Single-process commodities:** Commodities that are only processed by one single process include oil crops (processed in the respective oil extraction processes), hops (use in beer production), seed cotton (separated into cotton lint and cotton seed in the cotton production process), and live animals (processed by the respective slaughtering sectors). Given processing quantities are directly allocated to the respective processes.
+
+* **Multi-purpose crops:** Crops that are used by several processes are allocated by estimating the input requirements to each process based on technical conversion factors giving the conversion efficiencies for food processing. The use of product $i$ in process $p$ is determined by $u_{i}^{p} = \sum_{j} (s_{j}^{p} \cdot \phi_{ij}^{p})$, where $s_{j}^{p}$ is the supply of product $j$ by process $p$ and $\phi_{ij}^{p}$ is the conversion efficiency from product $i$ to product $j$ in process $p$. For example, $\phi_{ij}^{p} = 0.5$ indicates, that process $p$ converts each ton of product $i$ into 0.5 tons of product $j$. This approach is used to estimate the use of sugar crops in sugar production, rice in ricebran oil extraction, maize in maize germ oil extraction, and grapes in wine production.
+
+* **Ethanol feedstock:** For Brazil and the US, responsible for over 85 % of the global ethanol production in 2014 [@IEA2019], the feedstock composition is known. Brazil uses sugar cane, while the ethanol industry of the US is mainly based on maize, with less than 2 % coming from sorghum, barley, cheese whey, sugar cane, wheat, and food and wood wastes [@RFA2010]. For all other countries, i.e. less than 15 % of global ethanol production, feedstocks are estimated based on the availability of potential feedstock crops and their respective conversion rates.
+
+* **Alcoholic beverages:** Crops are allocated to the processes which supply alcoholic beverages by solving an optimization problem. We have given the national production of beer and other alcoholic beverages $s_{j}$, the total available feedstock supply $u_{i}$ which was not allocated already to other processes, and the conversion efficiencies $\phi_{ij}$, e.g., from barley to beer. With these inputs, we solve the following constrained least-squares optimization problem:
+$$min\sum \left(\left(\frac{\mathbf{s} - \mathbf{\tilde{s}}}{\mathbf{\bar{\phi}}}\right)^{2} + (\mathbf{u} - \mathbf{\tilde{u}})^{2}\right),$$
+where $$\tilde{s}_{j} = \sum_{i=1}^{n} \left(\tilde{u}_{ij} \cdot \phi_{ij}\right),$$
+subject to $$\sum_{j=1}^{m} \tilde{u}_{ij} = u_{i} \pm 0.1.$$
+
+
+### Allocation of feed use
+Feed is allocated to the 19 animal husbandry sectors, which are specified in FABIO (see Table 2 in the Annex). For this purpose we follow 4 steps:
+
+1. **Feed supply:** Convert feed supply, reported by the FAO in fresh weight, into dry matter (DM).
+
+2. **Feed demand:** Calculate feed demand of 19 livestock groups in tons of DM.
+    a) **Cattle, pigs, poultry, sheep and goats:** @Bouwman2011 published estimates on the feed demand in kg DM per kg product (e.g. milk, beef, fat) for 1970, 1995 and 2030, distinguishing 17 regions and 5 feed types, i.e. animal products, feed crops, grass, residues, and scavenging. We interpolate these feed conversion rates to get year-specific values and multiply them with the production quantities of animal products to get the total feed requirements per product. For this step, it was important to consider trade with live animals in order to correctly assign feed demand to the country, where the animals were raised.
+    b) **Horses, asses, mules, camels, other camelids, rabbits, other rodents, other live animals:** @Krausmann2008 provide rough feed demand coefficients for the above listed animal groups in kg DM per head, which are multiplied with the livestock numbers to calculate total feed requirements.
+    
+3. **Match supply and demand:** We then balance the generated feed requirement numbers per country to match the reported feed use.
+
+4. **Allocation to crops:** Finally, we proportionally distribute total feed crop requirements over the available feed crops according to their supply share and convert the numbers into fresh weight. 
+
+## Trade-linking use tables
+Once the supply and use tables for all countries are filled, they are linked into multi-regional supply and use tables. The multi-regional supply table $\mathbf{S}$ with the dimensions $\{r,i\} \times \{s,p\}$ contains zeros at the off-diagonal blocks (where $r \neq s$) and is filled with the national supply tables where $r = s$.
+
+The national use tables are trade-linked by spreading the use of a product $i$ in a process $p$ in country $s$ over the source countries $r$ of that product: $u_{ip}^{rs} = u_{ip}^{s} \cdot h_{i}^{rs}$, where $h_{i}^{rs} = s_{i}^{rs}/s_{i}^{s}$ and $s_{i}^{rs}$ is the total supply of product $i$ in country $s$ sourced from country $r$. Finally, we receive a matrix $\mathbf{U}$ with the dimensions $\{r,i\} \times \{s,p\}$.
+
+## Construct symmetric IO table
+In order to construct a symmetric IO table from the multi-regional supply and use tables, we apply the industry technology assumption: $\mathbf{Z} = \mathbf{U} (\mathbf{S}\mathbf{\hat{g}}^{-1})$, where $\mathbf{\hat{g}}$ is a diagonalized vector with the row sums of $\mathbf{S}$.
+
+We first derive the product mix matrix or transformation matrix $\mathbf{T}=\mathbf{S}\mathbf{\hat{g}}^{-1}$, where $\mathbf{\hat{g}}$ is a diagonalized vector with the row sums of $\mathbf{S}$. The input-output table is calculated by multiplying the use and the transformation matrix $\mathbf{Z} = \mathbf{U} \mathbf{T}$. 
+
+By converting $\mathbf{S}$ from tons to US Dollars, we can switch from mass to price allocation, i.e. allocating the inputs of each process to its outputs in relation to their value rather than their weight. This is particularly relevant for the allocation of inputs between vegetable oils and cakes, as well as between meat and other animal products.
+
+## Calculate footprints
+Due to high similarity in the feed input composition among monogastric as well as among ruminant animals, the resulting input-output table is not invertible. We therefore approximate the Leontief inverse using the power series expansion up to level eight: $\mathbf{L} = \mathbf{I}+\mathbf{A}+\mathbf{A}^2+\mathbf{A}^3+\mathbf{A}^4+\mathbf{A}^5+\mathbf{A}^6+\mathbf{A}^7+\mathbf{A}^8$, where $\mathbf{I}$ is the identity matrix and $\mathbf{A}$ is the technology matrix, which is generated by the equation $\mathbf{A}=\mathbf{Z}\mathbf{\hat{x}}^{-1}$, where $\mathbf{\hat{x}}$ is the diagonalized vector of total production output.
+
+The land footprint of a certain country is then calculated by $\mathbf{f}=\mathbf{e}\mathbf{L}\mathbf{y}$, where $\mathbf{e}$ is a vector of land use per unit of output and $\mathbf{y}$ is a final demand vector.
+
+
+## References
+
+
+<div id="refs"></div>
+\pagebreak
+
+```{r, child = "appendix.Rmd"}
+```
