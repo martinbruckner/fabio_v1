@@ -13,22 +13,22 @@ rm(list=ls()); gc()
 # Make intitial settings
 ##########################################################################
 # read region classification
-reg <- read.csv(file="Regions_all.csv", header=TRUE, sep=";")
+reg <- read.csv(file="./inst/fabio_input/Regions_all.csv", header=TRUE, sep=";")
 # read commodity classification
-items <- read.csv(file="Items.csv", header=TRUE, sep=";")
+items <- read.csv(file="./inst/fabio_input/Items.csv", header=TRUE, sep=";")
 
 # Read data
-load(file="data/CBS.RData")
-load(file="data/BTD.RData")
-load(file="data/Forestry.RData")
-load(file="data/ForTrade.RData")   # 1997-2013
-load(file="data/Prod.RData")
-load(file="data/Lvst.RData")
-load(file="data/Prod_lvst.RData")
-load(file="data/ProdEthanol.RData")
-load(file="data/FishProd.RData")   # 1950-2015
-load(file="data/comtrade.RData")   # 1988-1994
-load(file="data/BACI.RData")       # 1995-2015
+load(file="/mnt/nfs_fineprint/tmp/fabio/data/CBS.RData")
+load(file="/mnt/nfs_fineprint/tmp/fabio/data/BTD.RData")
+load(file="/mnt/nfs_fineprint/tmp/fabio/data/Forestry.RData")
+load(file="/mnt/nfs_fineprint/tmp/fabio/data/ForTrade.RData")   # 1997-2013
+load(file="/mnt/nfs_fineprint/tmp/fabio/data/Prod.RData")
+load(file="/mnt/nfs_fineprint/tmp/fabio/data/Lvst.RData")
+load(file="/mnt/nfs_fineprint/tmp/fabio/data/Prod_lvst.RData")
+load(file="/mnt/nfs_fineprint/tmp/fabio/data/ProdEthanol.RData")
+load(file="/mnt/nfs_fineprint/tmp/fabio/data/FishProd.RData")   # 1950-2015
+load(file="/mnt/nfs_fineprint/tmp/fabio/data/comtrade.RData")   # 1988-1994
+load(file="/mnt/nfs_fineprint/tmp/fabio/data/BACI.RData")       # 1995-2015
 
 CBS_all <- CBS
 BTD_all <- BTD
@@ -360,7 +360,7 @@ for(year in 1986:2013){
   }
   BTD <- rbind(BTD, BTDFish)
   rm(BTDFish)
-  save(BTD, file = paste0("data/yearly/",year,"_BTD.RData"))
+  save(BTD, file = paste0("/mnt/nfs_fineprint/tmp/fabio/data/yearly/",year,"_BTD.RData"))
   
   
   ##########################################################################
@@ -579,7 +579,7 @@ for(year in 1986:2013){
   CBS <- CBS[!CBS$Item.Code==2659,]
   CBS <- rbind(CBS, ethanolCBS)
   rm(ethanolCBS, ProdEthanol, imports, exports)
-  save(CBS, file = paste0("data/yearly/",year,"_CBS.RData"))
+  save(CBS, file = paste0("/mnt/nfs_fineprint/tmp/fabio/data/yearly/",year,"_CBS.RData"))
   gc()
 }
 

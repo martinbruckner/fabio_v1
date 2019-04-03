@@ -12,13 +12,13 @@ rm(list=ls()); gc()
 # Make intitial settings
 ##########################################################################
 # read region classification
-regions <- read.csv(file="Regions.csv", header=TRUE, sep=";")
+regions <- read.csv(file="./inst/fabio_input/Regions.csv", header=TRUE, sep=";")
 # read commodity classification
-items <- read.csv(file="Items.csv", header=TRUE, sep=";")
+items <- read.csv(file="./inst/fabio_input/Items.csv", header=TRUE, sep=";")
 # read supply share items
-share_items <- read.csv(file="Items_supply-shares.csv", header=TRUE, sep=";")
+share_items <- read.csv(file="./inst/fabio_input/Items_supply-shares.csv", header=TRUE, sep=";")
 # read primary livestock product data
-load(file="data/Prod_lvst.RData")
+load(file="/mnt/nfs_fineprint/tmp/fabio/data/Prod_lvst.RData")
 # exclude unused items
 Prod_lvst <- Prod_lvst[Prod_lvst$Item.Code %in% share_items$Basis.Code,]
 Prod_lvst_all <- Prod_lvst
@@ -28,17 +28,18 @@ Prod_lvst_all <- Prod_lvst
 # Start loop for a series of years
 ##########################################################################
 # year=1986
-year=2013
-for(year in 1986:2013){
+# year=2013
+# for(year in 1986:2013){
+fabio_supply <- function(year, Prod_lvst_all, regions, items, share_items){
   print(year)
   ##########################################################################
   # Read data
   #-------------------------------------------------------------------------
-  load(file=paste0("data/yearly/",year,"_CBS_balanced.RData"))
-  load(file=paste0("data/yearly/",year,"_BTD.RData"))
+  load(file=paste0("/mnt/nfs_fineprint/tmp/fabio/data/yearly/",year,"_CBS_balanced.RData"))
+  load(file=paste0("/mnt/nfs_fineprint/tmp/fabio/data/yearly/",year,"_BTD.RData"))
   Prod_lvst <- Prod_lvst_all[Prod_lvst_all$Year==year,]
   # read supply structure
-  sup <- read.csv(file="Items_supply.csv", header=TRUE, sep=";")
+  sup <- read.csv(file="./inst/fabio_input/Items_supply.csv", header=TRUE, sep=";")
   sup[,as.character(regions$ISO)] <- 0
   ##########################################################################
   
@@ -58,8 +59,8 @@ for(year in 1986:2013){
   # calculate supply shares for meat, hides&skins and milk
   shares <- merge(share_items[share_items$Source=="Prod_lvst",], Prod_lvst[Prod_lvst$Element=="Production",c(1:3,9)], 
                   by.x = "Basis.Code", by.y = "Item.Code", all.x = TRUE)
-  shares <- aggregate(Value ~ Country.Code + Country + Proc.Code + Process + Com.Code + Item.Code + Item, shares, sum)
-  basis <- aggregate(Value ~ Country.Code + Country + Com.Code + Item.Code + Item, shares, sum)
+  shares <- stats::aggregate(Value ~ Country.Code + Country + Proc.Code + Process + Com.Code + Item.Code + Item, shares, sum)
+  basis <- stats::aggregate(Value ~ Country.Code + Country + Com.Code + Item.Code + Item, shares, sum)
   names(basis)[6] <- "Total"
   shares <- merge(shares, basis, by=c("Country.Code", "Country", "Com.Code", "Item.Code", "Item"), all.x = TRUE)
   shares$shares <- shares$Value / shares$Total
@@ -120,11 +121,11 @@ for(year in 1986:2013){
   sup_usd$ID <- paste(sup_usd$Proc.Code,sup_usd$Item.Code,sep = ".")
   
   # get commodity prices from BTD
-  prices <- aggregate(cbind(tHead,tonnes,tUSD) ~ From.Country.Code + From.Country + Item.Code + Item, BTD, sum)
+  prices <- stats::aggregate(cbind(tHead,tonnes,tUSD) ~ From.Country.Code + From.Country + Item.Code + Item, BTD, sum)
   prices$price <- prices$tUSD / prices$tonnes
   prices$price[prices$tHead>0] <- prices$tUSD[prices$tHead>0] / prices$tHead[prices$tHead>0]
   prices$price[!is.finite(prices$price)] <- 0
-  worldprices <- aggregate(cbind(tHead,tonnes,tUSD) ~ Item.Code + Item, prices, sum)
+  worldprices <- stats::aggregate(cbind(tHead,tonnes,tUSD) ~ Item.Code + Item, prices, sum)
   worldprices$price <- worldprices$tUSD / worldprices$tonnes
   worldprices$price[worldprices$tHead>0] <- worldprices$tUSD[worldprices$tHead>0] / worldprices$tHead[worldprices$tHead>0]
   worldprices$price[!is.finite(worldprices$price)] <- 0
@@ -161,34 +162,22 @@ for(year in 1986:2013){
   sup$ID <- NULL
   
   
-  # #------------------------------------------------------
-  # # separate imported and domestic supply
-  # #------------------------------------------------------
-  # sup_dom <- sup
-  # sup_imp <- sup
-  # sup_usd_dom <- sup_usd
-  # sup_usd_imp <- sup_usd
-  # # region=2
-  # for(region in 1:nrow(regions)){
-  #   region.code <- regions$Country.Code[regions$ISO==colnames(sup[region+5])]
-  #   origin <- data.frame(Item.Code = sup$Item.Code, Item = sup$Item,
-  #                        dom = CBS$Production[CBS$Country.Code==region.code][match(sup$Item.Code,CBS$Item.Code[CBS$Country.Code==region.code])],
-  #                        imp = CBS$Imports[CBS$Country.Code==region.code][match(sup$Item.Code,CBS$Item.Code[CBS$Country.Code==region.code])])
-  #   origin[is.na(origin)] <- 0
-  #   origin$total <- origin$dom + origin$imp
-  #   origin$dom <- origin$dom / origin$total
-  #   origin$imp <- origin$imp / origin$total
-  #   origin[is.na(origin)] <- 0
-  #   sup_dom[,region+5] <- sup_dom[,region+5] * origin$dom
-  #   sup_imp[,region+5] <- sup_imp[,region+5] * origin$imp
-  #   sup_usd_dom[,region+5] <- sup_usd_dom[,region+5] * origin$dom
-  #   sup_usd_imp[,region+5] <- sup_usd_imp[,region+5] * origin$imp
-  # }
-  
-  
   # save results
-  save(sup, file=paste0("data/yearly/",year,"_sup.RData"))
-  save(sup_usd, file=paste0("data/yearly/",year,"_sup_usd.RData"))
+  save(sup, file=paste0("/mnt/nfs_fineprint/tmp/fabio/data/yearly/",year,"_sup.RData"))
+  save(sup_usd, file=paste0("/mnt/nfs_fineprint/tmp/fabio/data/yearly/",year,"_sup_usd.RData"))
   
+  return(year)
 }
 
+
+library(parallel)
+# Calculate the number of cores
+no_cores <- detectCores() - 1
+# Initiate cluster
+cl <- makeCluster(no_cores)
+# Years to run
+years <- 1986:2013
+# start parallel
+parLapply(cl, years, fabio_supply, Prod_lvst_all=Prod_lvst_all, regions=regions, items=items, share_items=share_items)
+# stop cluster
+stopCluster(cl)

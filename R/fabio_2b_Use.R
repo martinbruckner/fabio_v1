@@ -10,19 +10,18 @@ library(data.table)
 
 rm(list=ls()); gc()
 
-is.finite.data.frame <- function(x) do.call(cbind, lapply(x, is.finite))
 ##########################################################################
 # Make intitial settings
 ##########################################################################
 # read region classification
-regions <- read.csv(file="Regions.csv", header=TRUE, sep=";")
+regions <- read.csv(file="./inst/fabio_input/Regions.csv", header=TRUE, sep=";")
 # read commodity classification
-items <- read.csv(file="Items.csv", header=TRUE, sep=";")
+items <- read.csv(file="./inst/fabio_input/Items.csv", header=TRUE, sep=";")
 # read technical conversion factors (TCF)
-TCF <- read.csv(file="TCF_use.csv", header=TRUE, sep=";")
+TCF <- read.csv(file="./inst/fabio_input/TCF_use.csv", header=TRUE, sep=";")
 # read livestock data
-load(file = "data/Lvst.RData")
-load(file="data/Prod_lvst.RData")
+load(file = "/mnt/nfs_fineprint/tmp/fabio/data/Lvst.RData")
+load(file="/mnt/nfs_fineprint/tmp/fabio/data/Prod_lvst.RData")
 Lvst_all <- Lvst
 Prod_lvst_all <- Prod_lvst
 
@@ -31,18 +30,20 @@ Prod_lvst_all <- Prod_lvst
 # Start loop for a series of years
 ##########################################################################
 # year=1986
-year=2013
-for(year in 1986:2013){
+# year=2013
+# for(year in 1986:2013){
+fabio_use <- function(year, Prod_lvst_all, Lvst, regions, items, TCF){
   print(year)
+  is.finite.data.frame <- function(x) do.call(cbind, lapply(x, is.finite))
   #-------------------------------------------------------------------------
   # Read data
   #-------------------------------------------------------------------------
-  load(file=paste0("data/yearly/",year,"_CBS_balanced.RData"))
-  load(file=paste0("data/yearly/",year,"_sup.RData"))
-  load(file=paste0("data/yearly/",year,"_sup_usd.RData"))
-  load(file=paste0("data/yearly/",year,"_BTD_balanced.RData"))
+  load(file=paste0("/mnt/nfs_fineprint/tmp/fabio/data/yearly/",year,"_CBS_balanced.RData"))
+  load(file=paste0("/mnt/nfs_fineprint/tmp/fabio/data/yearly/",year,"_sup.RData"))
+  load(file=paste0("/mnt/nfs_fineprint/tmp/fabio/data/yearly/",year,"_sup_usd.RData"))
+  load(file=paste0("/mnt/nfs_fineprint/tmp/fabio/data/yearly/",year,"_BTD_balanced.RData"))
   # read use structure
-  use <- read.csv(file="Items_use.csv", header=TRUE, sep=";")
+  use <- read.csv(file="./inst/fabio_input/Items_use.csv", header=TRUE, sep=";")
   use[,as.character(regions$ISO)] <- 0
   
   
@@ -183,8 +184,8 @@ for(year in 1986:2013){
   feedstocks$pot.ethanol.p <- feedstocks$Processing * feedstocks$TCF
   feedstocks$pot.ethanol.o[feedstocks$pot.ethanol.o<0] <- 0
   feedstocks$pot.ethanol.p[feedstocks$pot.ethanol.p<0] <- 0
-  pot.total.o <- aggregate(pot.ethanol.o ~ Country.Code, feedstocks[,c("Country.Code","pot.ethanol.o")], sum)
-  pot.total.p <- aggregate(pot.ethanol.p ~ Country.Code, feedstocks[,c("Country.Code","pot.ethanol.p")], sum)
+  pot.total.o <- stats::aggregate(pot.ethanol.o ~ Country.Code, feedstocks[,c("Country.Code","pot.ethanol.o")], sum)
+  pot.total.p <- stats::aggregate(pot.ethanol.p ~ Country.Code, feedstocks[,c("Country.Code","pot.ethanol.p")], sum)
   names(pot.total.o)[2] <- "pot.total.o"
   names(pot.total.p)[2] <- "pot.total.p"
   feedstocks <- merge(feedstocks, pot.total.o, by="Country.Code", all.x=TRUE)
@@ -310,7 +311,7 @@ for(year in 1986:2013){
   # estimate feed for cattle et al. (based on Bouwman et al. 2013)
   #--------------------------------------------------------------------
   # read conversion rates
-  conversion_B <- read.csv(file="Feed conversion rates_Bouwman.csv", header=TRUE, sep=";", stringsAsFactors = F)
+  conversion_B <- read.csv(file="./inst/fabio_input/Feed conversion rates_Bouwman.csv", header=TRUE, sep=";", stringsAsFactors = F)
   # find closest higher and lower years in conversion in relation to the current year 
   closest<-function(xv,sv){
     unique(xv[which(abs(xv-sv)==min(abs(xv-sv)))]) }
@@ -335,11 +336,11 @@ for(year in 1986:2013){
   
   # calculate feed demand for domestically produced meat and milk reduced by imported animals plus exported animals
   feedrequ_B <- sup[sup$Item.Code %in% c(2848,2731,2732,2733,2734,2735,2736,2737,2748,2749,843), ]
-  feedrequ_B <- melt(feedrequ_B, id=c("Proc.Code","Process","Com.Code","Item.Code","Item"), variable.name = "ISO", value.name = "Value")
+  feedrequ_B <- reshape2::melt(feedrequ_B, id=c("Proc.Code","Process","Com.Code","Item.Code","Item"), variable.name = "ISO", value.name = "Value")
   feedrequ_B <- merge(feedrequ_B, regions[,c(1,3)], all.x = T)
-  reg_feed <- read.csv(file="Regions_feed_Bouwman.csv", header=TRUE, sep=";")
+  reg_feed <- read.csv(file="./inst/fabio_input/Regions_feed_Bouwman.csv", header=TRUE, sep=";")
   feedrequ_B <- merge(feedrequ_B, reg_feed[,c(1,4)], all.x = TRUE)
-  concordance <- data.frame(       Proc.Code=c("p099","p100","p101","p102","p103","p104","p105","p106","p107","p108","p109"),
+  concordance <- data.frame(Proc.Code=c("p099","p100","p101","p102","p103","p104","p105","p106","p107","p108","p109"),
                             Target.Proc.Code=c("p099","p100","p101","p102","p103","p085","p086","p087","p088","p089","p090"),
                             stringsAsFactors = F)
   feedrequ_B$Target.Proc.Code <- concordance$Target.Proc.Code[match(feedrequ_B$Proc.Code, concordance$Proc.Code)]
@@ -363,7 +364,7 @@ for(year in 1986:2013){
   temp <- temp[!is.na(temp$Item.Code),]
   temp <- temp[,c(2,10,7,12,9)]
   
-  exp <- aggregate(Value ~ From.Country.Code + Item.Code + Year, BTD[BTD$Item.Code %in% concordance$Item.Code,], sum)
+  exp <- stats::aggregate(Value ~ From.Country.Code + Item.Code + Year, BTD[BTD$Item.Code %in% concordance$Item.Code,], sum)
   exp <- exp[!exp$Value==0,]
   exp <- merge(exp, concordance[,c(3,5)], all.x = T)
   exp <- exp[,c(2,1,3,5,4)]
@@ -424,7 +425,7 @@ for(year in 1986:2013){
   feedrequ_B$Item <- "all"
   
   # aggregate over countries and animal groups (i.e. husbandry processes)
-  feedrequ_B <- aggregate(. ~ Country.Code + ISO + Proc.Code + Item.Code + Item, feedrequ_B, sum)
+  feedrequ_B <- stats::aggregate(. ~ Country.Code + ISO + Proc.Code + Item.Code + Item, feedrequ_B, sum)
   
   # integrate Krausmann and Bouwman feed balances
   feedrequ <- rbind(feedrequ_K, feedrequ_B)
@@ -553,8 +554,8 @@ for(year in 1986:2013){
   grazing <- feeduse[feeduse$Item=="Grazing",]
   sup[sup$Item=="Grazing",-(1:5)] <- colSums(grazing[,-(1:6)])
   sup_usd[sup_usd$Item=="Grazing",-(1:5)] <- colSums(grazing[,-(1:6)])
-  data <- as.data.frame(melt(as.data.table(grazing), id=1:6, variable.name = "ISO"))
-  data <- aggregate(value ~ ISO, data, sum)
+  data <- as.data.frame(reshape2::melt(data.table::as.data.table(grazing), id=1:6, variable.name = "ISO"))
+  data <- stats::aggregate(value ~ ISO, data, sum)
   CBS$ISO <- regions$ISO[match(CBS$Country.Code,regions$Country.Code)]
   CBS$Production[CBS$Item=="Grazing"] <- data$value[match(CBS$ISO[CBS$Item=="Grazing"],data$ISO)]
   CBS$TotalSupply <- CBS$Production + CBS$Imports
@@ -566,7 +567,7 @@ for(year in 1986:2013){
   # Prepare I & O for optimization for all countries
   # I = Processing use for 25 selected commodities reduced by pre-allocated processing uses
   # O = Domestic production for 5 selected commodities
-  TCF <- read.csv(file="TCF_optim.csv", header=TRUE, sep=";")
+  TCF <- read.csv(file="./inst/fabio_input/TCF_optim.csv", header=TRUE, sep=";")
   IN <- data.frame(Item.Code=c(2511,2513,2514,2515,2516,2517,2518,2520,2531,2532,2533,2536,2537,2541,2543,2544,2615,2616,2617,2619,2620,2625,2655,2804,2818),
                    Item=c("Wheat and products","Barley and products","Maize and products","Rye and products","Oats","Millet and products",
                           "Sorghum and products","Cereals, Other","Potatoes and products","Cassava and products","Sweet potatoes","Sugar cane",
@@ -601,7 +602,7 @@ for(year in 1986:2013){
     # Technical conversion factors (sigma)
     TCF_ij <- cbind(TCF[,1:4],TCF=TCF[,iso])
     TCF_ij <- TCF_ij[is.finite(TCF_ij$TCF),]
-    output_weights <- data.frame(Item.Code=c(2543,2656,2657,2658,2659), weight = aggregate(TCF ~ Output.Code, TCF_ij, mean)[,2])
+    output_weights <- data.frame(Item.Code=c(2543,2656,2657,2658,2659), weight = stats::aggregate(TCF ~ Output.Code, TCF_ij, mean)[,2])
     TCF_ij <- TCF_ij[TCF_ij$Input.Code %in% input$Item.Code & TCF_ij$Output.Code %in% output$Item.Code,]
 
     # Remove inputs and outputs, where no TCF is available
@@ -616,16 +617,16 @@ for(year in 1986:2013){
       # Optimization function
       fun <- function(input_ijt){
         input_it <- as.data.frame(cbind(input_ijt,TCF_ij$Input.Code))
-        input_it <- as.vector(aggregate(. ~ V2, input_it, sum)[,2])
+        input_it <- as.vector(stats::aggregate(. ~ V2, input_it, sum)[,2])
         output_ijt <- input_ijt*TCF_ij$TCF
         output_jt <-  as.data.frame(cbind(output_ijt,TCF_ij$Output.Code))
-        output_jt <- as.vector(aggregate(. ~ V2, output_jt, sum)[,2])
+        output_jt <- as.vector(stats::aggregate(. ~ V2, output_jt, sum)[,2])
         # output error is weighted according to input-output ratio, in order not to give higher weight to beer just because of the big amount of water in it
         ((sum(((output$Production-output_jt)/output_weights[2])^2)) + (sum((input$Processing-input_it)^2)))
       }
 
       # run optimization with initial values = 0
-      result <- optim(par = rep(0,nrow(TCF_ij)), fn = fun, method = "L-BFGS-B", lower = 0)
+      result <- stats::optim(par = rep(0,nrow(TCF_ij)), fn = fun, method = "L-BFGS-B", lower = 0)
       # run optimization with initial values from file Param.csv
       # result <- optim(par = read.csv(file="Param.csv", header=TRUE, sep=";")[,5], fn = fun, method = "L-BFGS-B", lower = 0)
 
@@ -638,9 +639,8 @@ for(year in 1986:2013){
   }
   print("End optim")
 
-  save(results, file = paste0("data/yearly/",year,"_Optim.RData"))
-
-  load(file = paste0("data/yearly/",year,"_Optim.RData"))
+  # save(results, file = paste0("/mnt/nfs_fineprint/tmp/fabio/data/yearly/",year,"_Optim.RData"))
+  # load(file = paste0("/mnt/nfs_fineprint/tmp/fabio/data/yearly/",year,"_Optim.RData"))
   
   # region=231
   for(region in regions$Country.Code){
@@ -649,7 +649,7 @@ for(year in 1986:2013){
       res <- results[[region]]
       if(length(res)>0){
         # Downscale in-flows to the available processing quantities, where these are exceeded by the optimization algorithm
-        resIn <- aggregate(resultIN ~ Input.Code + Input, res, sum)
+        resIn <- stats::aggregate(resultIN ~ Input.Code + Input, res, sum)
         input <- merge(IN, CBS[CBS$Country.Code==region & CBS$Item.Code %in% IN$Item.Code & CBS$Year==year,c(3,13)], by="Item.Code", all.x=TRUE)
         input$Processing[! is.finite(input$Processing)] <- 0
         # input <- input[input$Processing > 0,]
@@ -665,7 +665,7 @@ for(year in 1986:2013){
         }
         res$error <- NULL
         # Downscale out-flows to the reported production quantities, where these are exceeded by the optimization algorithm
-        resOut <- aggregate(resultOUT ~ Output.Code + Output, res, sum)
+        resOut <- stats::aggregate(resultOUT ~ Output.Code + Output, res, sum)
         output <- merge(OUT, CBS[CBS$Country.Code==region & CBS$Item.Code %in% OUT$Item.Code & CBS$Year==year,c(3,6)], by="Item.Code", all.x=TRUE)
         output$Production[! is.finite(output$Production)] <- 0
         # output <- output[output$Production > 0,]
@@ -710,10 +710,11 @@ for(year in 1986:2013){
   # Allocation of seed and waste
   #-------------------------------------------------------------------------
   seedwaste <- CBS[(CBS$Waste+CBS$Seed)>0,c(1:4,14,15)]
-  seedwaste$seedwaste <- seedwaste$Seed + seedwaste$Waste
-  supply <- melt(sup, id=c("Proc.Code","Process","Com.Code","Item.Code","Item"), variable.name = "ISO", value.name = "Value")
+  # waste is now excluded, i.e. only seed is considered an own use
+  seedwaste$seedwaste <- seedwaste$Seed # + seedwaste$Waste
+  supply <- reshape2::melt(sup, id=c("Proc.Code","Process","Com.Code","Item.Code","Item"), variable.name = "ISO", value.name = "Value")
   # supply$share <- 0
-  sums <- aggregate(Value ~ ISO + Item.Code, supply, sum)
+  sums <- stats::aggregate(Value ~ ISO + Item.Code, supply, sum)
   names(sums)[3] <- "total"
   supply <- merge(supply, sums, all.x = T)
   supply$share <- supply$Value / supply$total
@@ -722,7 +723,7 @@ for(year in 1986:2013){
   supply <- merge(supply, seedwaste[,c(1,3,7)], all.x = T)
   supply$seedwaste[!is.finite(supply$seedwaste)] <- 0
   supply$share <- supply$share * supply$seedwaste
-  supply <- aggregate(share ~ Proc.Code + Item.Code + ISO, supply, sum)
+  supply <- stats::aggregate(share ~ Proc.Code + Item.Code + ISO, supply, sum)
   supply <- supply[supply$share>0,]
   
   # Allocation of seed and waste to use table
@@ -747,7 +748,7 @@ for(year in 1986:2013){
   # allocation of final demand from CBS to use_fd
   #-------------------------------------------------------------------------
   # define use_fd structure
-  use_FD <- data.table(Com.Code = items$Com.Code,
+  use_FD <- data.table::data.table(Com.Code = items$Com.Code,
                        Item.Code = items$Item.Code,
                        Item = items$Item)
   fdcolumns <- apply(cbind(rep(as.character(regions$ISO), each = 4), rep(c("Food", "OtherUses", "StockVariation", "Balancing"), nrow(regions))), 1, paste, collapse="_")
@@ -764,13 +765,23 @@ for(year in 1986:2013){
   
   
   # save results
-  save(CBS, file=paste0("data/yearly/",year,"_CBS_balanced_postuseallocation.RData"))
-  save(sup, file=paste0("data/yearly/",year,"_sup.RData"))
-  save(sup_usd, file=paste0("data/yearly/",year,"_sup_usd.RData"))
-  save(use, use_FD, file=paste0("data/yearly/",year,"_use.RData"))
-  # fwrite(use, file=paste0("data/yearly/csv/",year,"_use.csv"), sep=";")
+  save(CBS, file=paste0("/mnt/nfs_fineprint/tmp/fabio/data/yearly/",year,"_CBS_balanced_postuseallocation.RData"))
+  save(sup, file=paste0("/mnt/nfs_fineprint/tmp/fabio/data/yearly/",year,"_sup.RData"))
+  save(sup_usd, file=paste0("/mnt/nfs_fineprint/tmp/fabio/data/yearly/",year,"_sup_usd.RData"))
+  save(use, use_FD, file=paste0("/mnt/nfs_fineprint/tmp/fabio/data/yearly/",year,"_use.RData"))
+  
+  return(year)
 }
 
-library(xlsx)
-write.xlsx(use, file = "check-use_neu.xlsx")
-# write.xlsx(CBS[CBS$Item=="Sorghum and products",], file = "cbs sorghum.xlsx")
+
+library(parallel)
+# Calculate the number of cores
+no_cores <- detectCores() - 1
+# Initiate cluster
+cl <- makeCluster(no_cores)
+# Years to run
+years <- 1986:2013
+# start parallel
+parLapply(cl, years, fabio_use, Prod_lvst_all=Prod_lvst_all, Lvst=Lvst, regions=regions, items=items, TCF=TCF)
+# stop cluster
+stopCluster(cl)

@@ -13,9 +13,9 @@ rm(list=ls()); gc()
 # Make intitial settings
 ##########################################################################
 # read region classification
-reg <- read.csv(file="Regions.csv", header=TRUE, sep=";")
+reg <- read.csv(file="./inst/fabio_input/Regions.csv", header=TRUE, sep=";")
 # read commodity classification
-items <- read.csv(file="Items.csv", header=TRUE, sep=";")
+items <- read.csv(file="./inst/fabio_input/Items.csv", header=TRUE, sep=";")
 
 
 ##########################################################################
@@ -28,8 +28,8 @@ for(year in 1986:2013){
   ##########################################################################
   # Read data
   #-------------------------------------------------------------------------
-  load(file=paste0("data/yearly/",year,"_CBS_est.RData"))
-  load(file=paste0("data/yearly/",year,"_BTD.RData"))
+  load(file=paste0("/mnt/nfs_fineprint/tmp/fabio/data/yearly/",year,"_CBS_est.RData"))
+  load(file=paste0("/mnt/nfs_fineprint/tmp/fabio/data/yearly/",year,"_BTD.RData"))
   
   # aggregate countries that are not in the region list to RoW
   temp <- CBS[!CBS$Country.Code %in% reg$Country.Code,]
@@ -101,8 +101,8 @@ for(year in 1986:2013){
   # test$imp <- round(test$BTDimp / test$Imports,2)
   
   # write files
-  save(CBS, file = paste0("data/yearly/",year,"_CBS_cons.RData"))
-  save(BTD, file = paste0("data/yearly/",year,"_BTD_cons.RData"))
+  save(CBS, file = paste0("/mnt/nfs_fineprint/tmp/fabio/data/yearly/",year,"_CBS_cons.RData"))
+  save(BTD, file = paste0("/mnt/nfs_fineprint/tmp/fabio/data/yearly/",year,"_BTD_cons.RData"))
   
   # write csv files for balancing in GAMS
   # write.table(CBS[,c(1:5,7,10)], file = paste0("C:/Users/mbruckne/Dropbox/FAOMRIO data/",year,"_CBS_trade.csv"), sep = ";", row.names = FALSE)

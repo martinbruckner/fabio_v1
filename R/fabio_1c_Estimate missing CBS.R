@@ -13,16 +13,16 @@ rm(list=ls()); gc()
 # Make intitial settings
 ##########################################################################
 # read region classification
-reg <- read.csv(file="Regions_all.csv", header=TRUE, sep=";")
+reg <- read.csv(file="./inst/fabio_input/Regions_all.csv", header=TRUE, sep=";")
 # read commodity classification
-items <- read.csv(file="Items.csv", header=TRUE, sep=";")
+items <- read.csv(file="./inst/fabio_input/Items.csv", header=TRUE, sep=";")
 
 
 ##########################################################################
 # Start loop for a series of years
 ##########################################################################
-load(file="data/Prod.RData")
-load(file="data/Prod_lvst.RData")
+load(file="/mnt/nfs_fineprint/tmp/fabio/data/Prod.RData")
+load(file="/mnt/nfs_fineprint/tmp/fabio/data/Prod_lvst.RData")
 Prod_crop_all <- Prod
 Prod_lvst_all <- Prod_lvst
 
@@ -33,8 +33,8 @@ for(year in 1986:2013){
   ##########################################################################
   # Read data
   #-------------------------------------------------------------------------
-  load(file=paste0("data/yearly/",year,"_CBS.RData"))
-  load(file=paste0("data/yearly/",year,"_BTD.RData"))
+  load(file=paste0("/mnt/nfs_fineprint/tmp/fabio/data/yearly/",year,"_CBS.RData"))
+  load(file=paste0("/mnt/nfs_fineprint/tmp/fabio/data/yearly/",year,"_BTD.RData"))
   ##########################################################################
   # start loop over all countries
   #-------------------------------------------------------------------------
@@ -96,7 +96,7 @@ for(year in 1986:2013){
       #---#---#---#---#---#---#---#---#---#---#---#---#---#---#---#---
       # for processed products: estimate required processing inputs
       #---#---#---#---#---#---#---#---#---#---#---#---#---#---#---#---
-      TCF <- read.table(file = "TCF_prod.csv", sep = ";", header = T)
+      TCF <- read.table(file = "./inst/fabio_input/TCF_prod.csv", sep = ";", header = T)
       TCF$Processing <- 0
       TCF$Production <- 0
       # item = "Beer"
@@ -274,5 +274,5 @@ for(year in 1986:2013){
   # remove duplicated rows (i.e. palm oil, oil palm fruit and seed cotton, which were already included in the CBS in step 1b)
   CBS <- CBS[!duplicated(CBS[,1:5]),]
   
-  save(CBS, file = paste0("data/yearly/",year,"_CBS_est.RData"))
+  save(CBS, file = paste0("/mnt/nfs_fineprint/tmp/fabio/data/yearly/",year,"_CBS_est.RData"))
 }

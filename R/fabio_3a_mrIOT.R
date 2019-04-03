@@ -26,16 +26,61 @@ for(year in 1986:2013){
   #-------------------------------------------------------------------------
   is.finite.data.frame <- function(x) do.call(cbind, lapply(x, is.finite))
   # read region classification
-  regions <- read.csv(file="Regions.csv", header=TRUE, sep=";")
+  regions <- read.csv(file="./inst/fabio_input/Regions.csv", header=TRUE, sep=";")
   # read commodity classification
-  items <- read.csv(file="Items.csv", header=TRUE, sep=";")
+  items <- read.csv(file="./inst/fabio_input/Items.csv", header=TRUE, sep=";")
   # load supply and use tables
-  load(file=paste0("data/yearly/",year,"_mr_sup.RData"))
-  load(file=paste0("data/yearly/",year,"_mr_sup_usd.RData"))
-  load(file=paste0("data/yearly/",year,"_mr_use.RData"))
+  load(file=paste0("/mnt/nfs_fineprint/tmp/fabio/data/yearly/",year,"_mr_sup.RData"))
+  load(file=paste0("/mnt/nfs_fineprint/tmp/fabio/data/yearly/",year,"_mr_sup_usd.RData"))
+  load(file=paste0("/mnt/nfs_fineprint/tmp/fabio/data/yearly/",year,"_mr_use.RData"))
   nrreg <- nrow(regions)
   nrproc <- ncol(mr_use) / nrreg
   nrcom <- nrow(mr_use) / nrreg
+  
+  
+  #----------------------------------
+  # derive Z based on price allocation
+  #----------------------------------
+  # calculate product mix matrix or Transformation matrix (T)
+  g <- rowSums(mr_sup_usd)
+  Trans <- as.matrix(mr_sup_usd) / g
+  rm(mr_sup_usd, g); gc()
+  Trans[!is.finite(Trans)] <- 0
+  gc()
+  
+  # calculate Z matrix (U * T)
+  Z <- mr_use %*% Trans
+  
+  # save results
+  saveRDS(Z, file=paste0("/mnt/nfs_fineprint/tmp/fabio/",year,"_Z_price.rds"))
+  
+  
+  #----------------------------------
+  # derive Z based on mass allocation
+  #----------------------------------
+  g <- rowSums(mr_sup)
+  Trans <- as.matrix(mr_sup) / g
+  rm(mr_sup, g); gc()
+  Trans[!is.finite(Trans)] <- 0
+  gc()
+  
+  # calculate Z matrix (U * T)
+  Z <- mr_use %*% Trans
+  Y <- mr_use_fd
+  X <- rowSums(Z) + rowSums(Y)
+  
+  # save results
+  saveRDS(Z, file=paste0("/mnt/nfs_fineprint/tmp/fabio/",year,"_Z_mass.rds"))
+  saveRDS(Y, file=paste0("/mnt/nfs_fineprint/tmp/fabio/",year,"_Y.rds"))
+  saveRDS(X, file=paste0("/mnt/nfs_fineprint/tmp/fabio/",year,"_X.rds"))
+  
+  rm(list=ls()); gc()
+  
+  
+  
+  #----------------------------------
+  # alternative approaches
+  #----------------------------------
   
   # # calculate input coefficient matrix
   # q <- rowSums(mr_use) + rowSums(mr_use_fd)
@@ -45,22 +90,6 @@ for(year in 1986:2013){
   
   # # calculate Z matrix (B * V)
   # Z <- B %*% mr_sup  # or multiply with mr_sup_usd
-  
-  # calculate product mix matrix or Transformation matrix (T)
-  g <- rowSums(mr_sup_usd)
-  Trans <- as.matrix(mr_sup_usd) / g
-  rm(mr_sup, mr_sup_usd, g); gc()
-  Trans[!is.finite(Trans)] <- 0
-  gc()
-  
-  # calculate Z matrix (U * T)
-  a <- Sys.time()
-  Z <- mr_use %*% Trans
-  print(Sys.time() - a)
-  
-  Y <- mr_use_fd
-  
-  X <- rowSums(Z) + rowSums(Y)
   
   # # calculate Industry-output-proportions matrix
   # C_usd <- t(mr_sup_usd / rowSums(mr_sup_usd))
@@ -73,14 +102,6 @@ for(year in 1986:2013){
   # V_usd_inv <- ginv(t(as.matrix(mr_sup_usd)))
   # 
   # T2_usd <- V_usd_inv %*% diag(q)
-  
-  
-  # save results
-  save(Z, file=paste0("data/yearly/",year,"_Z.RData"))
-  save(Y, file=paste0("data/yearly/",year,"_Y.RData"))
-  save(X, file=paste0("data/yearly/",year,"_X.RData"))
-  
-  rm(list=ls()); gc()
   
 }
 

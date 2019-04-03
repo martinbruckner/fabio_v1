@@ -10,21 +10,21 @@ library(data.table)
 
 rm(list=ls()); gc()
 
-is.finite.data.frame <- function(x) do.call(cbind, lapply(x, is.finite))
-
 ##########################################################################
 # Start loop for a series of years
 ##########################################################################
 # year=1988
-year=2013
-for(year in 1986:2013){
+# year=2013
+# for(year in 1986:2013){
+fabio_BTD_balancing <- function(year){
   print(year)
+  is.finite.data.frame <- function(x) do.call(cbind, lapply(x, is.finite))
   ##########################################################################
   # Read data
   #-------------------------------------------------------------------------
-  load(file = paste0("data/yearly/",year,"_BTD_original.RData"))
-  load(file = paste0("data/yearly/",year,"_BTD_est.RData"))
-  load(file=paste0("data/yearly/",year,"_CBS_cons.RData"))
+  load(file = paste0("/mnt/nfs_fineprint/tmp/fabio/data/yearly/",year,"_BTD_original.RData"))
+  load(file = paste0("/mnt/nfs_fineprint/tmp/fabio/data/yearly/",year,"_BTD_est.RData"))
+  load(file=paste0("/mnt/nfs_fineprint/tmp/fabio/data/yearly/",year,"_CBS_cons.RData"))
   
   BTD_est$Year <- year
   BTD_original$Year <- year
@@ -36,8 +36,8 @@ for(year in 1986:2013){
   # 1. Integrate original and estimated BTD values
   #-------------------------------------------------------------------------------------------
   # compile data set with total imports and exports per region according to BTD (Actual) and CBS (Target)
-  exp <- data.frame(as.data.table(BTD_original[,c(1,2,5,6,7,8)])[,list(val = sum(Value)), by = 'From.Country.Code,From.Country,Item.Code,Item,Year'])
-  imp <- data.frame(as.data.table(BTD_original[,c(3,4,5,6,7,8)])[,list(val = sum(Value)), by = 'To.Country.Code,To.Country,Item.Code,Item,Year'])
+  exp <- data.frame(data.table::as.data.table(BTD_original[,c(1,2,5,6,7,8)])[,list(val = sum(Value)), by = 'From.Country.Code,From.Country,Item.Code,Item,Year'])
+  imp <- data.frame(data.table::as.data.table(BTD_original[,c(3,4,5,6,7,8)])[,list(val = sum(Value)), by = 'To.Country.Code,To.Country,Item.Code,Item,Year'])
   names(exp) <- c("Country.Code", "Country","Item.Code","Item","Year","Actual")
   names(imp) <- c("Country.Code", "Country","Item.Code","Item","Year","Actual")
   exp$ID <- paste(exp$Country.Code,exp$Item.Code,exp$Year, sep = ".")
@@ -80,7 +80,7 @@ for(year in 1986:2013){
   BTD_bal$Value[BTD_bal$From.Country.Code==999 & BTD_bal$Value==0] <- 1
   BTD_bal$Value[BTD_bal$To.Country.Code==999 & BTD_bal$Value==0] <- 1
   # cast list into matrix
-  BTD_bal <- dcast(as.data.table(BTD_bal), From.Country.Code + From.Country + Item.Code + Item + Year ~ To.Country.Code + To.Country, fun=sum, value.var = "Value")
+  BTD_bal <- data.table::dcast(data.table::as.data.table(BTD_bal), From.Country.Code + From.Country + Item.Code + Item + Year ~ To.Country.Code + To.Country, fun=sum, value.var = "Value")
   BTD_bal <- as.data.frame(BTD_bal)
   BTD_bal[,-(1:5)][! is.finite(BTD_bal[,-(1:5)])] <- 0
   BTD_bal$ID <- paste(BTD_bal$From.Country.Code,BTD_bal$Item.Code,BTD_bal$Year, sep = ".")
@@ -90,7 +90,7 @@ for(year in 1986:2013){
   # Integrate target imports into BTD_est
   BTD_est <- rbind(BTD_est[,1:9], temp)
   # cast list into matrix
-  BTD_est <- dcast(as.data.table(BTD_est), From.Country.Code + From.Country + Item.Code + Item + Year ~ To.Country.Code + To.Country, fun=sum, value.var = "Value")
+  BTD_est <- data.table::dcast(data.table::as.data.table(BTD_est), From.Country.Code + From.Country + Item.Code + Item + Year ~ To.Country.Code + To.Country, fun=sum, value.var = "Value")
   BTD_est <- as.data.frame(BTD_est)
   BTD_est[,-(1:5)][! is.finite(BTD_est[,-(1:5)])] <- 0
   BTD_est$ID <- paste(BTD_est$From.Country.Code,BTD_est$Item.Code,BTD_est$Year, sep = ".")
@@ -163,73 +163,39 @@ for(year in 1986:2013){
   check$residue <- check$end / check$start * 100
   print("end RAS")
   
-  # a <- BTD_bal
-  # b <- BTD_bal
-  # c <- BTD_bal
-  # d <- BTD_bal
-  # e <- BTD_bal
-  # 
-  # ab <- a
-  # ab[, -c(1:5,198,199)] <- ab[, -c(1:5,198,199)] - b[, -c(1:5,198,199)]
-  # bc <- b
-  # bc[, -c(1:5,198,199)] <- bc[, -c(1:5,198,199)] - c[, -c(1:5,198,199)]
-  # cd <- c
-  # cd[, -c(1:5,198,199)] <- cd[, -c(1:5,198,199)] - d[, -c(1:5,198,199)]
-  # de <- d
-  # de[, -c(1:5,198,199)] <- de[, -c(1:5,198,199)] - e[, -c(1:5,198,199)]
-  # 
-  # max(ab[, -c(1:5,198,199)])
-  # min(ab[, -c(1:5,198,199)])
-  # max(bc[, -c(1:5,198,199)])
-  # min(bc[, -c(1:5,198,199)])
-  # max(cd[, -c(1:5,198,199)])
-  # min(cd[, -c(1:5,198,199)])
-  # max(de[, -c(1:5,198,199)])
-  # min(de[, -c(1:5,198,199)])
-  # 
-  # ab <- a
-  # ab[, -c(1:5,198,199)] <- (ab[, -c(1:5,198,199)] - b[, -c(1:5,198,199)]) / ab[, -c(1:5,198,199)]
-  # ab[!is.finite(ab)] <- 0
-  # bc <- b
-  # bc[, -c(1:5,198,199)] <- (bc[, -c(1:5,198,199)] - c[, -c(1:5,198,199)]) / bc[, -c(1:5,198,199)]
-  # bc[!is.finite(bc)] <- 0
-  # cd <- c
-  # cd[, -c(1:5,198,199)] <- (cd[, -c(1:5,198,199)] - d[, -c(1:5,198,199)]) / cd[, -c(1:5,198,199)]
-  # cd[!is.finite(cd)] <- 0
-  # de <- d
-  # de[, -c(1:5,198,199)] <- (de[, -c(1:5,198,199)] - e[, -c(1:5,198,199)]) / de[, -c(1:5,198,199)]
-  # de[!is.finite(de)] <- 0
-  # 
-  # max(ab[, -c(1:5,198,199)])
-  # min(ab[, -c(1:5,198,199)])
-  # max(bc[, -c(1:5,198,199)])
-  # min(bc[, -c(1:5,198,199)])
-  # max(cd[, -c(1:5,198,199)])
-  # min(cd[, -c(1:5,198,199)])
-  # max(de[, -c(1:5,198,199)])
-  # min(de[, -c(1:5,198,199)])
   
   #-------------------------------------------------------------------------------------------
   # 3. Convert the balanced trade matrix into list
   #-------------------------------------------------------------------------------------------
-  BTD <- melt(BTD_bal[,1:(ncol(BTD_bal)-2)], id=c("From.Country.Code","From.Country","Item.Code","Item","Year"), variable.name="To.Country", value.name = "Value")
+  regions <- read.csv2("./inst/fabio_input/Regions_all.csv")
+  BTD <- reshape2::melt(BTD_bal[,1:(ncol(BTD_bal)-2)], id=c("From.Country.Code","From.Country","Item.Code","Item","Year"), variable.name="To.Country", value.name = "Value")
   BTD$Value <- as.numeric(BTD$Value)
   BTD$Item <- as.character(BTD$Item)
   BTD$To.Country <- as.character(BTD$To.Country)
   BTD$To.Country.Code <- substr(BTD$To.Country,1,unlist(gregexpr("_",BTD$To.Country))-1)
   BTD$To.Country.Code <- as.numeric(BTD$To.Country.Code)
-  BTD$To.Country <- substr(BTD$To.Country,unlist(gregexpr("_",BTD$To.Country))+1,999)
+  BTD$To.Country <- regions$Country[match(BTD$To.Country.Code,regions$Country.Code)]
   BTD <- BTD[,c(1,2,8,6,3,4,5,7)]
   BTD$ID <- paste(BTD$From.Country.Code,BTD$To.Country.Code,BTD$Item.Code, sep = ".")
   BTD <- BTD[! BTD$From.Country=="Target",]
   
-  # write.table(data,file = "data.csv", sep = ";", row.names = F)
-  # write.table(targetimp,file = "targetimp.csv", sep = ";", row.names = F)
-  # write.table(targetexp,file = "targetexp.csv", sep = ";", row.names = F)
-  
-  
   # save results
-  save(BTD, file = paste0("data/yearly/",year,"_BTD_balanced.RData"))
-  save(CBS, file = paste0("data/yearly/",year,"_CBS_balanced.RData"))
+  save(BTD, file = paste0("/mnt/nfs_fineprint/tmp/fabio/data/yearly/",year,"_BTD_balanced.RData"))
+  save(CBS, file = paste0("/mnt/nfs_fineprint/tmp/fabio/data/yearly/",year,"_CBS_balanced.RData"))
   
+  return(year)
 }
+
+
+library(parallel)
+# Calculate the number of cores
+no_cores <- detectCores() - 1
+# Initiate cluster
+cl <- makeCluster(no_cores)
+# Years to run
+years <- 1986:2013
+# start parallel
+parLapply(cl, years, fabio_BTD_balancing)
+# stop cluster
+stopCluster(cl)
+

@@ -12,13 +12,13 @@ library(dplyr)
 
 rm(list=ls()); gc()
 
-regions <- read.csv2(file = "Regions_all.csv")
+regions <- read.csv2(file = "./inst/fabio_input/Regions_all.csv")
 years <- 1986:2013
 
 ##########################################################################
 # Prepare COMMODITY BALANCE SHEETS (CBS)
 ##########################################################################
-load(file="data/raw data/CBS_raw.RData")
+load(file="/mnt/nfs_fineprint/tmp/fabio/raw/CBS_raw.RData")
 # Transform raw data to pivot table
 # Note: without Item.Code this line asks for a fun.aggregate, because there is one element ('eggs') which is included twice in the data set with two different item codes
 names(CBS_raw)[1:2] <- c("Country.Code","Country")
@@ -80,7 +80,7 @@ for(region in unique(missing$Country.Code)){
     }
   }
 }
-save(CBS, file="data/CBS.RData")
+save(CBS, file="/mnt/nfs_fineprint/tmp/fabio/data/CBS.RData")
 rm(CBS_raw)
 gc()  # releases memory
 
@@ -88,7 +88,7 @@ gc()  # releases memory
 ##########################################################################
 # Prepare BILATERAL TRADE DATA (BTD)
 ##########################################################################
-load(file="data/raw data/BTD_raw.RData")
+load(file="/mnt/nfs_fineprint/tmp/fabio/raw/BTD_raw.RData")
 # exclude items: "Waters,ice etc", "Cotton waste", "Vitamins", "Hair, goat, coarse", "Beehives", "Beewax", 
 #                "Hair fine", "Crude materials", "Waxes vegetable"
 # and delete rows with 0 values
@@ -106,7 +106,7 @@ gc()  # releases memory
 #-----------------------------
 # convert tonnes to primary equivalents
 #-----------------------------
-TCF <- read.csv(file="TCF_Trade.csv", header=TRUE, sep=";")
+TCF <- read.csv(file="./inst/fabio_input/TCF_Trade.csv", header=TRUE, sep=";")
 BTD.tonnes <- BTD[BTD$Unit=="tonnes",]
 BTD.rest <- BTD[! BTD$Unit=="tonnes",]
 # BTD.tonnes <- merge(BTD.tonnes, TCF, by="Item.Code")
@@ -120,7 +120,7 @@ rm(BTD.tonnes,BTD.rest,TCF)
 #-----------------------------
 # Aggregate to CBS items
 #-----------------------------
-Items <- read.csv(file="Items_BTD-CBS.csv", header=TRUE, sep=";")[,1:3]
+Items <- read.csv(file="./inst/fabio_input/Items_BTD-CBS.csv", header=TRUE, sep=";")[,1:3]
 # BTD <- merge(BTD, Item.Code, by="Item.Code")
 # BTD <- merge(data.table(BTD, key="Item.Code"), data.table(Item.Code, key="Item.Code"))
 BTD$Item.Code <- Items$CBS.Item.Code[match(BTD$Item.Code,Items$Item.Code)]
@@ -163,14 +163,14 @@ BTD$Reporter.Country[BTD$Reporter.Country.Code==151] <- "Netherlands Antilles"
 BTD$Partner.Country[BTD$Partner.Country.Code==151] <- "Netherlands Antilles"
 # BTD$Partner.Country <- as.factor(BTD$Partner.Country)
 
-save(BTD, file="data/BTD.RData")
+save(BTD, file="/mnt/nfs_fineprint/tmp/fabio/data/BTD.RData")
 gc()  # releases memory
 
 
 ##########################################################################
 # Prepare FORESTRY DATA
 ##########################################################################
-load(file="data/raw data/Forestry_raw.RData")
+load(file="/mnt/nfs_fineprint/tmp/fabio/raw/Forestry_raw.RData")
 names(Forestry_raw)[1:2] <- c("Country.Code","Country")
 Forestry <- Forestry_raw[! Forestry_raw$Value==0,] # delete rows with 0 values
 # exclude all items except 1864 Wood Fuel and 1866 Industrial Roundwood(C) and 1867 Industrial Roundwood(NC)
@@ -233,13 +233,13 @@ for(region in unique(missing$Country.Code)){
     }
   }
 }
-save(Forestry, file="data/Forestry.RData")
+save(Forestry, file="/mnt/nfs_fineprint/tmp/fabio/data/Forestry.RData")
 
 
 ##########################################################################
 # Prepare FORESTRY TRADE DATA
 ##########################################################################
-load(file="data/raw data/ForTrade_raw.RData")
+load(file="/mnt/nfs_fineprint/tmp/fabio/raw/ForTrade_raw.RData")
 ForTrade <- ForTrade_raw[! ForTrade_raw$Value==0,] # delete rows with 0 values
 # exclude all items except 1651  Ind Rwd Wir (C), 1657  Ind Rwd Wir (NC) Tropica, 1670  Ind Rwd Wir (NC) Other
 ForTrade <- ForTrade[ForTrade$Item.Code %in% c(1651,1657,1670) & ForTrade$Reporter.Country.Code<5000 & ForTrade$Partner.Country.Code<5000,]
@@ -285,14 +285,14 @@ ForTrade$Partner.Country.Code[ForTrade$Partner.Country.Code==62] <- 238
 ForTrade$Reporter.Countries[ForTrade$Reporter.Country.Code==151] <- "Netherlands Antilles"
 ForTrade$Partner.Countries[ForTrade$Partner.Country.Code==151] <- "Netherlands Antilles"
 
-save(ForTrade, file="data/ForTrade.RData")
+save(ForTrade, file="/mnt/nfs_fineprint/tmp/fabio/data/ForTrade.RData")
 
 
 
 ##########################################################################
 # Prepare CROP PRODUCTION DATA
 ##########################################################################
-load(file="data/raw data/Prod_raw.RData")
+load(file="/mnt/nfs_fineprint/tmp/fabio/raw/Prod_raw.RData")
 names(Prod_raw)[1:2] <- c("Country.Code","Country")
 Prod_raw <- Prod_raw[is.finite(Prod_raw$Value),]
 # delete rows with 0 values and countries with Code >= 5000 (= country groups, e.g. 'Africa')
@@ -301,7 +301,7 @@ Prod <- Prod_raw[,c(1,2,3,4,5,6,8,9,10)]
 rm(Prod_raw)
 names(Prod)[c(3,4)] <- c("Prod.Code","Prod")
 # convert to CBS item codes and aggregate Fodder crops
-cropcom <- read.csv2(file="Items_Prod-CBS.csv")
+cropcom <- read.csv2(file="./inst/fabio_input/Items_Prod-CBS.csv")
 # merg data.tables -> much faster than merging data.frames
 # Prod <- merge(Prod, cropcom[,c(1,3,4)], by="Prod.Code", all.x=TRUE)
 Prod <- merge(data.table(Prod, key="Prod.Code"), data.table(cropcom[,c(1,3,4,5)], key="Prod.Code"))
@@ -314,7 +314,7 @@ Prod <- data.frame(Prod[,list(val = sum(Value)), by = 'Country.Code,Country,Elem
 names(Prod)[9] <- "Value"
 Prod <- Prod[,c(1:2,7:8,3:6,9)]
 # add fodder crops
-load(file="data/raw data/Primary_raw.RData")
+load(file="/mnt/nfs_fineprint/tmp/fabio/raw/Primary_raw.RData")
 foddercrops <- data.frame(Item.Code=c(rep(2000,16)),
                           Item=c(rep("Fodder crops",16)),
                           Prod.Code=c(636,637,638,639,640,641,642,643,644,645,646,647,648,649,651,655), 
@@ -339,8 +339,8 @@ rm(Fodder,foddercrops,Primary_raw)
 ##########################################################################
 # Prepare PROCESSING PRODUCTION DATA
 ##########################################################################
-load(file="data/raw data/Proc_crop_raw.RData")
-load(file="data/raw data/Proc_lvst_raw.RData")
+load(file="/mnt/nfs_fineprint/tmp/fabio/raw/Proc_crop_raw.RData")
+load(file="/mnt/nfs_fineprint/tmp/fabio/raw/Proc_lvst_raw.RData")
 Proc_raw <- rbind(Proc_crop_raw, Proc_lvst_raw)
 rm(Proc_crop_raw,Proc_lvst_raw)
 names(Proc_raw)[1:2] <- c("Country.Code","Country")
@@ -351,7 +351,7 @@ Proc <- Proc_raw[,c(1:6,8:10)]
 rm(Proc_raw)
 names(Proc)[c(3,4)] <- c("Prod.Code","Prod")
 # convert to CBS item codes and aggregate Fodder crops
-cropcom <- read.csv2(file="Items_Proc-CBS.csv")
+cropcom <- read.csv2(file="./inst/fabio_input/Items_Proc-CBS.csv")
 # merg data.tables -> much faster than merging data.frames
 # Prod <- merge(Prod, cropcom[,c(1,3,4)], by="Prod.Code", all.x=TRUE)
 Proc <- merge(data.table(Proc, key="Prod.Code"), data.table(cropcom[,c(1,3,4,5)], key="Prod.Code"))
@@ -381,13 +381,13 @@ Prod$Country.Code[Prod$Country.Code==62] <- 238
 Prod <- Prod[!Prod$Country.Code==351,]
 Butter <- Prod[Prod$Item=="Butter, Ghee",]
 Prod <- Prod[!Prod$Item=="Butter, Ghee",]
-save(Prod, file="data/Prod.RData")
+save(Prod, file="/mnt/nfs_fineprint/tmp/fabio/data/Prod.RData")
 
 
 ##########################################################################
 # Prepare LVST PRODUCTION DATA
 ##########################################################################
-load(file="data/raw data/Lvst_raw.RData")
+load(file="/mnt/nfs_fineprint/tmp/fabio/raw/Lvst_raw.RData")
 names(Lvst_raw)[1:2] <- c("Country.Code","Country")
 # delete rows with 0 values & country groups
 Lvst <- Lvst_raw[! Lvst_raw$Value==0 & ! is.na(Lvst_raw$Value) & Lvst_raw$Country.Code<5000,]
@@ -410,13 +410,13 @@ Lvst$Country.Code[Lvst$Country.Code==62] <- 238
 # exclude China to avoid double counting with China mainland, Taiwan, etc.
 Lvst <- Lvst[!Lvst$Country.Code==351,]
 
-save(Lvst, file="data/Lvst.RData")
+save(Lvst, file="/mnt/nfs_fineprint/tmp/fabio/data/Lvst.RData")
 
 
 ##########################################################################
 # Prepare LVST PRIMARY PRODUCTION DATA
 ##########################################################################
-load(file="data/raw data/LvstPrimary_raw.RData")
+load(file="/mnt/nfs_fineprint/tmp/fabio/raw/LvstPrimary_raw.RData")
 names(LvstPrimary_raw)[1:2] <- c("Country.Code","Country")
 # delete rows with 0 values & country groups
 Prod_lvst <- LvstPrimary_raw[! LvstPrimary_raw$Value==0 & ! is.na(LvstPrimary_raw$Value) & LvstPrimary_raw$Country.Code<5000,]
@@ -434,14 +434,14 @@ Prod_lvst$Country.Code[Prod_lvst$Country.Code==62] <- 238
 # exclude China to avoid double counting with China mainland, Taiwan, etc.
 Prod_lvst <- Prod_lvst[!Prod_lvst$Country.Code==351,]
 Prod_lvst <- rbind(Prod_lvst,Butter)
-save(Prod_lvst, file="data/Prod_lvst.RData")
+save(Prod_lvst, file="/mnt/nfs_fineprint/tmp/fabio/data/Prod_lvst.RData")
 
 
 
 ##########################################################################
 # Bio-Ethanol production data
 ##########################################################################
-load(file="data/raw data/ProdEthanol_raw.RData")
+load(file="/mnt/nfs_fineprint/tmp/fabio/raw/ProdEthanol_raw.RData")
 # prepare IEA data
 ProdEthanol_IEA <- ProdEthanol_IEA[-1,-2]
 names(ProdEthanol_IEA)[1] <- "Country.IEA"
@@ -449,7 +449,7 @@ ProdEthanol_IEA <- melt(ProdEthanol_IEA, "Country.IEA", variable.names="Year", v
 ProdEthanol_IEA$Production <- as.numeric(ProdEthanol_IEA$Production)
 ProdEthanol_IEA <- ProdEthanol_IEA[is.finite(ProdEthanol_IEA$Production) & ProdEthanol_IEA$Production > 0,]
 names(ProdEthanol_IEA)[2] <- "Year"
-regfit <- read.csv(file="Regions_IEA-FAO.csv", sep=";")
+regfit <- read.csv(file="./inst/fabio_input/Regions_IEA-FAO.csv", sep=";")
 # reg <- read.csv(file="Regions.csv", sep=";")
 ProdEthanol_IEA$Country <- regfit$Country[match(ProdEthanol_IEA$Country.IEA, regfit$Country.IEA)]
 ProdEthanol_IEA$Country <- as.character(ProdEthanol_IEA$Country)
@@ -466,7 +466,7 @@ ProdEthanol_EIA <- melt(ProdEthanol_EIA, "Country.EIA", variable.names="Year", v
 ProdEthanol_EIA$Production <- as.numeric(ProdEthanol_EIA$Production)
 ProdEthanol_EIA <- ProdEthanol_EIA[is.finite(ProdEthanol_EIA$Production),]
 names(ProdEthanol_EIA)[2] <- "Year"
-regfit <- read.csv(file="Regions_EIA-FAO.csv", sep=";")
+regfit <- read.csv(file="./inst/fabio_input/Regions_EIA-FAO.csv", sep=";")
 # reg <- read.csv(file="Regions.csv", sep=";")
 ProdEthanol_EIA$Country <- regfit$Country[match(ProdEthanol_EIA$Country.EIA, regfit$Country.EIA)]
 ProdEthanol_EIA$Country <- as.character(ProdEthanol_EIA$Country)
@@ -496,13 +496,13 @@ ProdEthanol$Country.Code[ProdEthanol$Country.Code==206] <- 276
 ProdEthanol$Country[ProdEthanol$Country.Code==62] <- "Ethiopia"
 ProdEthanol$Country.Code[ProdEthanol$Country.Code==62] <- 238
 
-save(ProdEthanol, file="data/ProdEthanol.RData")
+save(ProdEthanol, file="/mnt/nfs_fineprint/tmp/fabio/data/ProdEthanol.RData")
 
 
 ##########################################################################
 # Comtrade bilateral trade data (Bio-Ethanol and Fish)
 ##########################################################################
-load(file="data/raw data/comtrade_raw.RData")
+load(file="/mnt/nfs_fineprint/tmp/fabio/raw/comtrade_raw.RData")
 comtrade$netweight_kg[is.na(comtrade$netweight_kg)] <- 0
 #------------------------------
 # trade flows with nes-regions (2.5% of all reported netweight_kg) are neglected:
@@ -528,7 +528,7 @@ comtrade %<>%
   dplyr::select(year, trade_flow, reporter_iso, partner_iso, commodity_code, commodity, qty_unit, qty, netweight_kg, trade_value_usd)
 # comtrade <- comtrade[,c(2,8,11,14,22,23,25,28,30,32)]
 # regfit <- read.csv(file="Regions_Comtrade-FAO.csv", sep=";")
-regfit <- read.csv(file="Regions_ISO3Comtrade-FAO.csv", sep=";")
+regfit <- read.csv(file="./inst/fabio_input/Regions_ISO3Comtrade-FAO.csv", sep=";")
 comtrade <- merge(comtrade, regfit, by.x="reporter_iso", by.y="ISO3")
 comtrade <- merge(comtrade, regfit, by.x="partner_iso", by.y="ISO3")
 comtrade <- comtrade[,c(11:14,3:10)]
@@ -557,7 +557,7 @@ comtrade$Reporter.Country.Code[comtrade$Reporter.Country.Code==62] <- 238
 comtrade$Partner.Country[comtrade$Partner.Country.Code==62] <- "Ethiopia"
 comtrade$Partner.Country.Code[comtrade$Partner.Country.Code==62] <- 238
 
-save(comtrade, file="data/comtrade.RData")
+save(comtrade, file="/mnt/nfs_fineprint/tmp/fabio/data/comtrade.RData")
 
 
 ##########################################################################
@@ -565,8 +565,8 @@ save(comtrade, file="data/comtrade.RData")
 # data structure: value of trade (v, in thousands of US dollars), quantity (q, in tons), exporter (i), importer (j), 
 #                 product category (k), year (t)
 ##########################################################################
-load(file="data/Raw data/BACI_selected.RData")
-regfit <- read.csv(file="Regions_BACI-FAO.csv", sep=";")
+load(file="/mnt/nfs_fineprint/tmp/fabio/raw/BACI_selected.RData")
+regfit <- read.csv(file="./inst/fabio_input/Regions_BACI-FAO.csv", sep=";")
 BACI <- merge(BACI, regfit, by.x="i", by.y="Baci.Code")
 BACI <- merge(BACI, regfit, by.x="j", by.y="Baci.Code")
 BACI <- BACI[,c(7:10,3:6)]
@@ -585,7 +585,7 @@ BACI$From.Country.Code[BACI$From.Country.Code==62] <- 238
 BACI$To.Country[BACI$To.Country.Code==62] <- "Ethiopia"
 BACI$To.Country.Code[BACI$To.Country.Code==62] <- 238
 
-save(BACI, file="data/BACI.RData")
+save(BACI, file="/mnt/nfs_fineprint/tmp/fabio/data/BACI.RData")
 
 
 ##########################################################################
@@ -593,9 +593,9 @@ save(BACI, file="data/BACI.RData")
 ##########################################################################
 # read and prepare fish production data
 #-----------------------------
-load(file="data/raw data/FishProd_raw.RData")
+load(file="/mnt/nfs_fineprint/tmp/fabio/raw/FishProd_raw.RData")
 names(FishProd_raw)[1] <- "Fish.Code"
-regfit <- read.csv(file="Regions_FISH-FAO.csv", sep=";")
+regfit <- read.csv(file="./inst/fabio_input/Regions_FISH-FAO.csv", sep=";")
 # reg <- read.csv(file="Regions.csv", sep=";")
 FishProd <- merge(FishProd_raw, regfit)
 FishProd <- FishProd[,c(8,9,5,6,3)]
@@ -612,6 +612,6 @@ FishProd$Country[FishProd$Country.Code==206] <- "Sudan"
 FishProd$Country.Code[FishProd$Country.Code==206] <- 276
 FishProd$Country[FishProd$Country.Code==62] <- "Ethiopia"
 FishProd$Country.Code[FishProd$Country.Code==62] <- 238
-save(FishProd, file="data/FishProd.RData")
+save(FishProd, file="/mnt/nfs_fineprint/tmp/fabio/data/FishProd.RData")
 ##########################################################################
 

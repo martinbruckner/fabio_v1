@@ -13,14 +13,15 @@ rm(list=ls()); gc()
 # Start loop for a series of years
 ##########################################################################
 # year=1988
-year=2013
-for(year in 1986:2013){
+# year=2013
+# for(year in 1986:2013){
+fabio_BTD_start <- function(year){
   print(year)
   ##########################################################################
   # Read data
   #-------------------------------------------------------------------------
-  load(file=paste0("data/yearly/",year,"_CBS_cons.RData"))
-  load(file=paste0("data/yearly/",year,"_BTD_cons.RData"))
+  load(file=paste0("/mnt/nfs_fineprint/tmp/fabio/data/yearly/",year,"_CBS_cons.RData"))
+  load(file=paste0("/mnt/nfs_fineprint/tmp/fabio/data/yearly/",year,"_BTD_cons.RData"))
   
   BTD$Value <- BTD$tonnes + BTD$tHead
   BTD <- BTD[,c(1:7,12)]
@@ -65,8 +66,8 @@ for(year in 1986:2013){
   BTD_est_ex <- BTD_start
   BTD_est_im <- BTD_start
   
-  imp <- dcast(CBS[,-7], Item.Code + Item + Year ~ Country.Code, value.var = "Imports")
-  exp <- dcast(CBS[,-6], Item.Code + Item + Year ~ Country.Code, value.var = "Exports")
+  imp <- reshape2::dcast(CBS[,-7], Item.Code + Item + Year ~ Country.Code, value.var = "Imports")
+  exp <- reshape2::dcast(CBS[,-6], Item.Code + Item + Year ~ Country.Code, value.var = "Exports")
   
   # estimate BTD
   region=231
@@ -75,7 +76,7 @@ for(year in 1986:2013){
     temp <- imp
     temp[,as.character(region)] <- 0
     temp[,-(1:3)] <- temp[,-(1:3)] / rowSums(temp[,-(1:3)]) * exp[,as.character(region)]
-    temp <- melt(as.data.table(temp), id=1:3, measure=4:ncol(temp))
+    temp <- data.table::melt(data.table::as.data.table(temp), id=1:3, measure=4:ncol(temp))
     temp$ID <- paste(region,temp$variable,temp$Item.Code, sep = ".")
     BTD_est_ex$Value[BTD_est_im$From.Country.Code==region] <- 
       temp$value[match(BTD_est_ex$ID[BTD_est_im$From.Country.Code==region], temp$ID)]
@@ -84,7 +85,7 @@ for(year in 1986:2013){
     temp <- exp
     temp[,as.character(region)] <- 0
     temp[,-(1:3)] <- temp[,-(1:3)] / rowSums(temp[,-(1:3)]) * imp[,as.character(region)]
-    temp <- melt(as.data.table(temp), id=1:3, measure=4:ncol(temp))
+    temp <- data.table::melt(data.table::as.data.table(temp), id=1:3, measure=4:ncol(temp))
     temp$ID <- paste(temp$variable,region,temp$Item.Code, sep = ".")
     BTD_est_im$Value[BTD_est_im$To.Country.Code==region] <- 
       temp$value[match(BTD_est_im$ID[BTD_est_im$To.Country.Code==region], temp$ID)]
@@ -97,17 +98,22 @@ for(year in 1986:2013){
   BTD_est$Value <- (BTD_est_ex$Value + BTD_est_im$Value) / 2
   
   # write files
-  save(BTD_original, file = paste0("data/yearly/",year,"_BTD_original.RData"))
-  save(BTD_est, file = paste0("data/yearly/",year,"_BTD_est.RData"))
+  save(BTD_original, file = paste0("/mnt/nfs_fineprint/tmp/fabio/data/yearly/",year,"_BTD_original.RData"))
+  save(BTD_est, file = paste0("/mnt/nfs_fineprint/tmp/fabio/data/yearly/",year,"_BTD_est.RData"))
   
-  # # write csv files for balancing in GAMS
-  # # fwrite is much faster than write.table
-  # fwrite(BTD_original[,-9], file = paste0("C:/Users/mbruckne/Dropbox/FAOMRIO data/",year,"_BTD_original.csv"), sep = ";", row.names = FALSE)
-  # fwrite(BTD_est[,1:8], file = paste0("C:/Users/mbruckne/Dropbox/FAOMRIO data/",year,"_BTD_est.csv"), sep = ";", row.names = FALSE)
-  
-  
-  # write.table(BTD_original[,-9], file = paste0("C:/Users/mbruckne/Dropbox/FAOMRIO data/",year,"_BTD_original.csv"), sep = ";", row.names = FALSE)
-  # write.table(BTD_est[,1:8], file = paste0("C:/Users/mbruckne/Dropbox/FAOMRIO data/",year,"_BTD_est.csv"), sep = ";", row.names = FALSE)
-  # write.table(BTD_original[,c(1:7,10)], file = paste0("C:/Users/mbruckne/Dropbox/FAOMRIO data/",year,"_BTD_indicator.csv"), sep = ";", row.names = FALSE)
-  
+  return(year)
 }
+
+
+library(parallel)
+# Calculate the number of cores
+no_cores <- detectCores() - 1
+# Initiate cluster
+cl <- makeCluster(no_cores)
+# Years to run
+years <- 1986:2013
+# start parallel
+parLapply(cl, years, fabio_BTD_start)
+# stop cluster
+stopCluster(cl)
+
