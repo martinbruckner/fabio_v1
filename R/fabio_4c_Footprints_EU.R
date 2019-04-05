@@ -18,24 +18,15 @@ rm(list=ls()); gc()
 
 is.finite.data.frame <- function(x) do.call(cbind, lapply(x, is.finite))
 
-refill_matrix <- function(x,y){
-  id <- 1:length(y)
-  id <- id[y!=0]
-  filled <- matrix(0,length(y),length(y))
-  filled[id,id] <- x
-  rownames(filled) <- names(y)
-  return(filled)
-}
-
 ##########################################################################
 # Make intitial settings
 ##########################################################################
 # read region classification
-regions <- read.csv(file="Regions.csv", header=TRUE, sep=";")
+regions <- read.csv(file="./inst/fabio_input/Regions.csv", header=TRUE, sep=";")
 # read commodity classification
-items <- read.csv(file="Items.csv", header=TRUE, sep=";")
+items <- read.csv(file="./inst/fabio_input/Items.csv", header=TRUE, sep=";")
 # load production data with yields
-load(file=paste0("./data/Prod.RData"))
+load(file=paste0("/mnt/nfs_fineprint/tmp/fabio/data/Prod.RData"))
 Prod <- Prod[Prod$Element %in% c("Area harvested","Production"),]
 # aggregate RoW
 Prod$Country[! Prod$Country.Code %in% regions$Country.Code] <- "RoW"
@@ -62,38 +53,21 @@ print(year)
 #-------------------------------------------------------------------------
 # h5ls(paste0("FABIO matlab/",year,"_L.mat"))
 # L <- h5read(paste0("./FABIO matlab/",year,"_L.mat"), "L")
-load(file=paste0("./data/yearly/",year,"_L.RData"))
-load(file=paste0("./data/yearly/",year,"_X.RData"))
-load(file=paste0("./data/yearly/",year,"_Y.RData"))
+L <- readRDS(file=paste0("/mnt/nfs_fineprint/tmp/fabio/120/",year,"_L_price.rds"))
+X <- readRDS(file=paste0("/mnt/nfs_fineprint/tmp/fabio/120/",year,"_X.rds"))
+Y <- readRDS(file=paste0("/mnt/nfs_fineprint/tmp/fabio/120/",year,"_Y.rds"))
+E <- readRDS(file=paste0("/mnt/nfs_fineprint/tmp/fabio/120/",year,"_E.rds"))
 Landuse <- Prod[Prod$Unit=="ha" & Prod$Year==year,]
 nrreg <- nrow(regions)
 nrcom <- nrow(Y) / nrreg
-
-L <- refill_matrix(L,X)
-
-#-------------------------------------------------------------------------
-# Prepare Extension
-#-------------------------------------------------------------------------
-ext <- data.frame(Country.Code = rep(regions$Country.Code, each = nrcom),
-                  Country = rep(regions$Country, each = nrcom),
-                  Item.Code = rep(items$Item.Code, nrreg),
-                  Item = rep(items$Item, nrreg),
-                  Com.Code = rep(items$Com.Code, nrreg),
-                  Group = rep(items$Group, nrreg),
-                  Value = 0)
-# ext$Value[!items$Group=="Primary crops"] <- 0
-ext$ID <- paste(ext$Country.Code,ext$Item.Code,sep="_")
-ext$Value <- Landuse$Value[match(ext$ID,Landuse$ID)]
-ext$Value[!is.finite(ext$Value)] <- 0
 
 
 #-------------------------------------------------------------------------
 # Prepare Multipliers
 #-------------------------------------------------------------------------
-MP <- as.vector(ext$Value) / X
-MP[!is.finite(MP)] <- 0
-MP <- MP * L   # is identical with L * MP
-rm(L); gc()
+ext <- as.vector(E$Landuse) / X
+ext[!is.finite(ext)] <- 0
+MP <- ext * L   # is identical with L * MP
 
 # aggregate multipliers A) by country of origin
 MP <- as.data.frame(MP)
@@ -125,13 +99,13 @@ Yreg <- rowSums(t(Y[Y$Continent=="EU", -(1:2)]))
 FP <- as.data.table(t((t(MP_A) * as.vector(Yreg))))
 # Rearrange results as list
 f <- FP
-colnames(f) <- rep(as.character(items$Com.Code), nrreg)
+colnames(f) <- rep(as.character(items$Item[items$X120]), nrreg)
 f$From.Country.Code <- regions$Country.Code
 f$From.Country <- regions$Country
 f$From.ISO <- regions$ISO
 f <- melt(f, id.vars = c("From.Country.Code","From.Country","From.ISO"), variable.name = "Com.Code")
 f <- aggregate(value ~ ., f, sum)
-fwrite(f, file=paste0("results/",year,"_FP_EU_Total_2018-04-24.csv"), sep=";")
+fwrite(f, file=paste0("./output/",year,"_FP_EU_Total_2019-04-05.csv"), sep=";")
 
 
 for(fd in unique(Y$FD)){
