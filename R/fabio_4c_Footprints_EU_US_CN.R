@@ -10,11 +10,8 @@ library(tidyverse)
 rm(list=ls()); gc()
 
 is.finite.data.frame <- function(x) do.call(cbind, lapply(x, is.finite))
-agg <- function(x)
-{
-  x <- as.matrix(x) %*% sapply(unique(colnames(x)),"==",colnames(x))
-  return(x)
-}
+agg <- function(x) { x <- as.matrix(x) %*% sapply(unique(colnames(x)),"==",colnames(x));  return(x) }
+
 footprint <- function(region = character(), Y = matrix(), year=integer(), MP = matrix(), type=character()){
   FP <- Y[,1:2] * colSums(MP)
   FP[FP<0] <- 0     # filter negative values
@@ -169,7 +166,10 @@ data.table::fwrite(imports, file="./output/FABIO_paper_imports.csv", sep=";")
 # Plot results
 #-------------------------------------------------------------------------
 results <- data.table::fread(file="./output/FABIO_paper_results.csv", sep=";")
-results <- as_tibble(results) 
+results <- as_tibble(results)
+results$region[results$region=="CN"] <- "China"
+results$region[results$region=="EU"] <- "EU-28"
+results$region[results$region=="US"] <- "USA"
 
 diff_results <- results %>% 
   dplyr::filter(Var1 %in% c("Food", "OtherUses")) %>%
@@ -179,7 +179,7 @@ diff_results <- results %>%
   tidyr::spread(key = type, value = value) %>% 
   dplyr::mutate(diff = price - mass) %>% 
   dplyr::select(-Var1, -Var2, -price) %>% 
-  tidyr::gather(key = type, value = value, -year, -region, -var) 
+  tidyr::gather(key = type, value = value, -year, -region, -var)
 # dplyr::mutate(region = paste(region, type, sep = "-")) 
 # dplyr::mutate(region = factor(region, c("CN-mass","EU-mass","US-mass","CN-diff","EU-diff","US-diff"),
 #                               c("CN-mass","EU-mass","US-mass","CN-diff","EU-diff","US-diff")))
@@ -188,28 +188,34 @@ diff_results <- results %>%
 p <- diff_results %>%
   dplyr::filter(type == "mass") %>% 
   ggplot() +
-  facet_wrap(~region, ncol = 3) +
+  facet_wrap(~region, ncol = 3) + 
+  theme(panel.background = element_rect(fill = 'white', linetype = "solid", colour = 'grey'), 
+        panel.grid.major = element_line(colour = "lightgrey", size = 0.1, linetype = "solid"), 
+        panel.grid.minor = element_line(colour = "lightgrey", size = 0.1, linetype = "solid"), 
+        legend.position = "none") +
   geom_area(mapping = aes(x = year, y = value, group = var, fill = var)) + 
   xlab("") + 
-  ylab("Cropland area in hectares") + 
-  viridis::scale_fill_viridis(discrete = TRUE) + 
-  theme(legend.position = "none")
+  ylab("Cropland area (hectares)") + 
+  viridis::scale_fill_viridis(discrete = TRUE)
 
 ggplot2::ggsave(paste0("results_a.png"), plot = p, device = "png", path = "./output/",
-                scale = 1, width = 300, height = 120, units = "mm", dpi = 300)
+                scale = 1, width = 200, height = 80, units = "mm", dpi = 300)
 
 p <- diff_results %>% 
   dplyr::filter(type == "diff") %>% 
   ggplot() +
   facet_wrap(~region, ncol = 3) +
+  theme(panel.background = element_rect(fill = 'white', linetype = "solid", colour = 'grey'), 
+        panel.grid.major = element_line(colour = "lightgrey", size = 0.1, linetype = "solid"), 
+        panel.grid.minor = element_line(colour = "lightgrey", size = 0.1, linetype = "solid"), 
+        legend.position = "bottom", legend.title = element_blank()) +
   geom_area(mapping = aes(x = year, y = value, group = var, fill = var)) + 
   xlab("") + 
-  ylab("Cropland area in hectares") + 
-  viridis::scale_fill_viridis(discrete = TRUE) + 
-  theme(legend.position = "bottom", legend.title = element_blank())
+  ylab("Cropland area (hectares)") + 
+  viridis::scale_fill_viridis(discrete = TRUE)
 
 ggplot2::ggsave(paste0("results_b.png"), plot = p, device = "png", path = "./output/",
-                scale = 1, width = 300, height = 120, units = "mm", dpi = 300)
+                scale = 1, width = 200, height = 80, units = "mm", dpi = 300)
 
 # diff_results %>% 
 #   dplyr::filter(region == "CN") %>% 
@@ -223,9 +229,16 @@ ggplot2::ggsave(paste0("results_b.png"), plot = p, device = "png", path = "./out
 
 
 imports <- data.table::fread(file="./output/FABIO_paper_imports.csv", sep=";")
-imports <- as_tibble(imports) 
+imports <- as_tibble(imports)
+imports$region[imports$region=="CN"] <- "China"
+imports$region[imports$region=="EU"] <- "EU-28"
+imports$region[imports$region=="US"] <- "USA"
+
 results <- data.table::fread(file="./output/FABIO_paper_results.csv", sep=";")
 results <- as_tibble(results) 
+results$region[results$region=="CN"] <- "China"
+results$region[results$region=="EU"] <- "EU-28"
+results$region[results$region=="US"] <- "USA"
 
 results <- results %>% 
   dplyr::filter(Var1 %in% c("Food", "OtherUses")) %>%
@@ -251,16 +264,19 @@ p <- imports %>%
   dplyr::mutate(value = value / results$value * 100) %>% 
   dplyr::filter(type == "mass") %>% 
   ggplot(mapping = aes(x = year, y = value, group = var, color = var)) +
-  facet_wrap(~region, ncol = 3) +
+  facet_wrap(~region, ncol = 3) + 
+  theme(panel.background = element_rect(fill = 'white', linetype = "solid", colour = 'grey'), 
+        panel.grid.major = element_line(colour = "lightgrey", size = 0.1, linetype = "solid"), 
+        panel.grid.minor = element_line(colour = "lightgrey", size = 0.1, linetype = "solid"), 
+        legend.position = "bottom", legend.title = element_blank()) +
   geom_line() + 
   geom_point(size = 1) + 
   xlab("") + 
   ylab("Import share (percentages)") + 
-  viridis::scale_color_viridis(discrete = TRUE) + 
-  theme(legend.position = "bottom", legend.title = element_blank())
+  viridis::scale_color_viridis(discrete = TRUE)
 
 ggplot2::ggsave(paste0("results_c.png"), plot = p, device = "png", path = "./output/",
-                scale = 1, width = 300, height = 120, units = "mm", dpi = 300)
+                scale = 1, width = 200, height = 80, units = "mm", dpi = 300)
 
 
 #########################################################################
@@ -268,11 +284,7 @@ ggplot2::ggsave(paste0("results_c.png"), plot = p, device = "png", path = "./out
 #########################################################################
 rm(list=ls()); gc()
 
-agg <- function(x)
-{
-  x <- as.matrix(x) %*% sapply(unique(colnames(x)),"==",colnames(x))
-  return(x)
-}
+agg <- function(x) { x <- as.matrix(x) %*% sapply(unique(colnames(x)),"==",colnames(x)); return(x) }
 
 #-------------------------------------------------------------------------
 # Make intitial settings
@@ -397,8 +409,11 @@ p <- data %>%
   geom_bar(stat="identity", aes(fill=colour))+
   viridis::scale_fill_viridis(discrete = TRUE) +
   # theme_minimal() +
+  theme(panel.background = element_rect(fill = 'white', linetype = "solid", colour = 'grey'), 
+        panel.grid.major = element_line(colour = "lightgrey", size = 0.1, linetype = "solid"), 
+        panel.grid.minor = element_line(colour = "lightgrey", size = 0.1, linetype = "solid")) +
   xlab("") + 
-  ylab("Cropland area in hectares") + 
+  ylab("Cropland area (hectares)") + 
   labs(fill = "Accounting unit")
 
 ggplot2::ggsave(paste0("china_nettrade.png"), plot = p, device = "png", path = "./output/",

@@ -1,0 +1,192 @@
+Country;estimated;reported;sum;Continent
+Afghanistan;49;67;116;ASI
+Albania;14;97;111;EUR
+Algeria;13;98;111;AFR
+Angola;28;84;112;AFR
+Antigua and Barbuda;32;83;115;LAM
+Argentina;11;99;110;LAM
+Armenia;27;88;115;ASI
+Australia;8;102;110;OCE
+Austria;7;102;109;EU
+Azerbaijan;22;91;113;ASI
+Bahamas;27;87;114;LAM
+Bahrain;115;0;115;ASI
+Bangladesh;12;102;114;ASI
+Barbados;24;90;114;LAM
+Belarus;23;90;113;EUR
+Belgium;8;102;110;EU
+Belgium-Luxembourg;130;0;130;EU
+Belize;32;82;114;LAM
+Benin;20;93;113;AFR
+Bolivia (Plurinational State of);13;96;109;LAM
+Bosnia and Herzegovina;24;89;113;EUR
+Botswana;12;99;111;AFR
+Brazil;6;103;109;LAM
+Brunei Darussalam;14;98;112;ASI
+Bulgaria;10;99;109;EU
+Burkina Faso;18;94;112;AFR
+Burundi;114;0;114;AFR
+Côte d'Ivoire;14;97;111;AFR
+Cabo Verde;34;80;114;AFR
+Cambodia;24;91;115;ASI
+Cameroon;18;95;113;AFR
+Canada;8;101;109;NAM
+Central African Republic;32;86;118;AFR
+Chad;44;69;113;AFR
+Chile;14;98;112;LAM
+China, Hong Kong SAR;12;100;112;ASI
+China, Macao SAR;31;86;117;ASI
+China, mainland;3;104;107;ASI
+China, Taiwan Province of;10;101;111;ASI
+Colombia;5;103;108;LAM
+Congo;25;89;114;AFR
+Costa Rica;12;100;112;LAM
+Croatia;17;95;112;EU
+Cuba;21;93;114;LAM
+Cyprus;14;100;114;EU
+Czech Republic;9;101;110;EU
+Czechoslovakia;130;0;130;EU
+Democratic People's Republic of Korea;48;66;114;ASI
+Democratic Republic of the Congo;113;0;113;AFR
+Denmark;11;101;112;EU
+Djibouti;39;79;118;AFR
+Dominica;48;70;118;LAM
+Dominican Republic;24;90;114;LAM
+Ecuador;9;100;109;LAM
+Egypt;10;99;109;AFR
+El Salvador;12;102;114;LAM
+Eritrea;119;0;119;AFR
+Estonia;17;97;114;EU
+Ethiopia;14;97;111;AFR
+Fiji;24;92;116;OCE
+Finland;12;101;113;EU
+France;7;102;109;EU
+French Polynesia;31;84;115;OCE
+Gabon;24;89;113;AFR
+Gambia;24;90;114;AFR
+Georgia;19;94;113;ASI
+Germany;6;103;109;EU
+Ghana;13;98;111;AFR
+Greece;10;100;110;EU
+Grenada;37;82;119;LAM
+Guatemala;8;102;110;LAM
+Guinea;24;90;114;AFR
+Guinea-Bissau;47;70;117;AFR
+Guyana;23;91;114;LAM
+Haiti;31;84;115;LAM
+Honduras;10;100;110;LAM
+Hungary;13;99;112;EU
+Iceland;27;89;116;EUR
+India;5;105;110;ASI
+Indonesia;6;104;110;ASI
+Iran (Islamic Republic of);11;101;112;ASI
+Iraq;26;89;115;ASI
+Ireland;9;102;111;EU
+Israel;12;98;110;ASI
+Italy;6;103;109;EU
+Jamaica;21;94;115;LAM
+Japan;7;104;111;ASI
+Jordan;12;100;112;ASI
+Kazakhstan;12;97;109;ASI
+Kenya;6;103;109;AFR
+Kiribati;58;63;121;OCE
+Kuwait;20;91;111;ASI
+Kyrgyzstan;22;91;113;ASI
+Lao People's Democratic Republic;48;67;115;ASI
+Latvia;16;97;113;EU
+Lebanon;14;99;113;ASI
+Lesotho;68;46;114;AFR
+Liberia;48;70;118;AFR
+Libya;116;0;116;AFR
+Lithuania;18;96;114;EU
+Luxembourg;17;96;113;EU
+Madagascar;17;95;112;AFR
+Malawi;16;97;113;AFR
+Malaysia;8;102;110;ASI
+Maldives;42;78;120;ASI
+Mali;16;97;113;AFR
+Malta;17;96;113;EU
+Mauritania;24;91;115;AFR
+Mauritius;18;95;113;AFR
+Mexico;5;102;107;LAM
+Mongolia;31;83;114;ASI
+Montenegro;34;80;114;EUR
+Morocco;13;99;112;AFR
+Mozambique;19;92;111;AFR
+Myanmar;22;89;111;ASI
+Namibia;18;96;114;AFR
+Nepal;9;101;110;ASI
+Netherlands;7;102;109;EU
+Netherlands Antilles;69;51;120;LAM
+New Caledonia;25;89;114;OCE
+New Zealand;11;99;110;OCE
+Nicaragua;8;102;110;LAM
+Niger;18;94;112;AFR
+Nigeria;14;98;112;AFR
+Norway;10;99;109;EUR
+Oman;12;100;112;ASI
+Pakistan;9;103;112;ASI
+Panama;15;97;112;LAM
+Papua New Guinea;116;0;116;OCE
+Paraguay;15;98;113;LAM
+Peru;7;100;107;LAM
+Philippines;8;102;110;ASI
+Poland;9;101;110;EU
+Portugal;9;102;111;EU
+Puerto Rico;125;0;125;LAM
+Qatar;112;0;112;ASI
+Republic of Korea;7;103;110;ASI
+Republic of Moldova;25;89;114;EUR
+Romania;11;99;110;EU
+Russian Federation;11;100;111;ASI
+Rwanda;20;93;113;AFR
+Saint Kitts and Nevis;40;76;116;LAM
+Saint Lucia;34;82;116;LAM
+Saint Vincent and the Grenadines;41;76;117;LAM
+Samoa;52;67;119;OCE
+Sao Tome and Principe;53;62;115;AFR
+Saudi Arabia;10;101;111;ASI
+Senegal;13;98;111;AFR
+Serbia;21;91;112;EUR
+Serbia and Montenegro;130;0;130;EUR
+Sierra Leone;37;77;114;AFR
+Singapore;112;0;112;ASI
+Slovakia;12;98;110;EU
+Slovenia;16;98;114;EU
+Solomon Islands;46;71;117;OCE
+Somalia;117;0;117;AFR
+South Africa;7;103;110;AFR
+South Sudan;128;0;128;AFR
+Spain;6;103;109;EU
+Sri Lanka;11;102;113;ASI
+Sudan;32;92;124;AFR
+Suriname;32;83;115;LAM
+Swaziland;16;97;113;AFR
+Sweden;11;101;112;EU
+Switzerland;9;101;110;EUR
+Syrian Arab Republic;115;0;115;ASI
+Tajikistan;48;66;114;ASI
+Thailand;4;103;107;ASI
+The former Yugoslav Republic of Macedonia;16;97;113;EUR
+Timor-Leste;64;54;118;ASI
+Togo;22;93;115;AFR
+Trinidad and Tobago;19;95;114;LAM
+Tunisia;16;96;112;AFR
+Turkey;12;100;112;EUR
+Turkmenistan;64;54;118;ASI
+Uganda;10;101;111;AFR
+Ukraine;16;95;111;EUR
+United Arab Emirates;13;98;111;ASI
+United Kingdom;7;102;109;EU
+United Republic of Tanzania;8;103;111;AFR
+United States of America;5;102;107;NAM
+Uruguay;16;96;112;LAM
+USSR;130;0;130;ASI
+Uzbekistan;30;83;113;ASI
+Vanuatu;45;71;116;OCE
+Venezuela (Bolivarian Republic of);7;102;109;LAM
+Viet Nam;26;86;112;ASI
+Yemen;19;97;116;ASI
+Yugoslav SFR;130;0;130;EUR
+Zambia;12;99;111;AFR
+Zimbabwe;15;97;112;AFR
