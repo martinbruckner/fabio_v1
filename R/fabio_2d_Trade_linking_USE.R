@@ -69,7 +69,7 @@ fabio_trade_use <- function(year, regions, items){
   rm(Prod,TScast,BTD,BTDcast,CBS); gc()
   
   # melt and cast use table
-  use <- as.data.frame(data.table::melt(data.table::as.data.table(use), id=1:6, variable.name = "ISO"))
+  use <- as.data.frame(data.table::melt(data.table::as.data.table(use), id.vars=1:6, variable.name = "ISO"))
   use$Country.Code <- regions$Country.Code[match(use$ISO,regions$ISO)]
   use <- as.data.frame(data.table::dcast(data.table::as.data.table(use), Com.Code ~ Country.Code + Proc.Code, value.var = "value", fun.aggregate = sum))
   

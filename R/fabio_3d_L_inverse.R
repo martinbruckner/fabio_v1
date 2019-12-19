@@ -1,16 +1,17 @@
 ################################################
 # aggregate products & invert FABIO
 ################################################
+rm(list=ls()); gc()
 
 # Years to calculate hybridised FABIO for
 years <- 1986:2013
-
+year = 2012
 require(Matrix) # Necessary for forked processes
 
 fabio_inverse <- function(year){
   print(year)
+  # invert Z_mass
   Z_m <- readRDS(paste0("/mnt/nfs_fineprint/tmp/fabio/",year,"_Z_mass.rds"))
-  Z_p <- readRDS(paste0("/mnt/nfs_fineprint/tmp/fabio/",year,"_Z_price.rds"))
   X <- readRDS(paste0("/mnt/nfs_fineprint/tmp/fabio/",year,"_X.rds"))
   
   A <- t(t(Z_m)/X)
@@ -22,6 +23,10 @@ fabio_inverse <- function(year){
   L <- solve(L, tol = 1.0e-22)
   
   saveRDS(L, paste0("/mnt/nfs_fineprint/tmp/fabio/", year, "_L_mass.rds"))
+  saveRDS(L, paste0("../wu_share/WU/Projekte/GRU/04_Daten/", year, "_L_mass.rds"))
+  
+  # invert Z_price
+  Z_p <- readRDS(paste0("/mnt/nfs_fineprint/tmp/fabio/",year,"_Z_price.rds"))
   
   A <- t(t(Z_p)/X)
   A[!is.finite(A)] <- 0
@@ -32,7 +37,7 @@ fabio_inverse <- function(year){
   L <- solve(L, tol = 1.0e-22)
   
   saveRDS(L, paste0("/mnt/nfs_fineprint/tmp/fabio/", year, "_L_price.rds"))
-  
+  saveRDS(L, paste0("../wu_share/WU/Projekte/GRU/04_Daten/", year, "_L_price.rds"))
 }
 
 for(year in years){

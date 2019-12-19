@@ -315,12 +315,13 @@ names(Prod)[9] <- "Value"
 Prod <- Prod[,c(1:2,7:8,3:6,9)]
 # add fodder crops
 load(file="/mnt/nfs_fineprint/tmp/fabio/raw/Primary_raw.RData")
-foddercrops <- data.frame(Item.Code=c(rep(2000,16)),
-                          Item=c(rep("Fodder crops",16)),
-                          Prod.Code=c(636,637,638,639,640,641,642,643,644,645,646,647,648,649,651,655), 
-                          Prod=c("Forage and silage, maize","Forage and silage, sorghum","Forage and silage, rye grass","Forage and silage, grasses nes",
+# do not include items 639 "Forage and silage, grasses nes" and 645 "Mixed Grasses and Legumes"
+foddercrops <- data.frame(Item.Code=c(rep(2000,14)),
+                          Item=c(rep("Fodder crops",14)),
+                          Prod.Code=c(636,637,638,640,641,642,643,644,646,647,648,649,651,655), 
+                          Prod=c("Forage and silage, maize","Forage and silage, sorghum","Forage and silage, rye grass",
                                  "Forage and silage, clover","Forage and silage, alfalfa","Forage and silage, green oilseeds","Forage and silage, legumes",
-                                 "Cabbage for fodder","Mixed Grasses and Legumes","Turnips for fodder","Beets for fodder","Carrots for fodder",
+                                 "Cabbage for fodder","Turnips for fodder","Beets for fodder","Carrots for fodder",
                                  "Swedes for fodder","Forage products","Vegetables and roots fodder"))
 Fodder <- Primary_raw[Primary_raw$ItemCode %in% foddercrops$Prod.Code,3:10]
 names(Fodder) <- c("Country.Code","Country","Element.Code","Element","Prod.Code","Prod","Year","Value")

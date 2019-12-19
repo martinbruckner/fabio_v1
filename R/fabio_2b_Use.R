@@ -30,7 +30,7 @@ Prod_lvst_all <- Prod_lvst
 # Start loop for a series of years
 ##########################################################################
 # year=1986
-# year=2013
+# year=2012
 # for(year in 1986:2013){
 fabio_use <- function(year, Prod_lvst_all, Lvst, regions, items, TCF){
   print(year)
@@ -427,13 +427,23 @@ fabio_use <- function(year, Prod_lvst_all, Lvst, regions, items, TCF){
   # aggregate over countries and animal groups (i.e. husbandry processes)
   feedrequ_B <- stats::aggregate(. ~ Country.Code + ISO + Proc.Code + Item.Code + Item, feedrequ_B, sum)
   
+  # estimate fodder crop requirements as a share of "residues and fodder crops"
+  fodder_share <- data.frame(Proc.Code = c("p085", "p086", "p087", "p088", "p089", "p090", "p099", "p100"),
+                             Process = c("Cattle husbandry","Buffaloes husbandry","Sheep husbandry","Goats husbandry",
+                                         "Pigs farming","Poultry Birds farming","Dairy cattle husbandry","Dairy buffaloes husbandry"),
+                             value = c(0.9,0.9,0.9,0.9,0.1,0,0.9,0.9))
+  feedrequ_B$fodder_share <- fodder_share$value[match(feedrequ_B$Proc.Code,fodder_share$Proc.Code)]
+  feedrequ_B$Fodder <- feedrequ_B$Residues * feedrequ_B$fodder_share
+  feedrequ_B$fodder_share <- NULL
+  feedrequ_K$Fodder <- 0
+  
   # integrate Krausmann and Bouwman feed balances
   feedrequ <- rbind(feedrequ_K, feedrequ_B)
   
   # allocate total feed demand estimated with Krausmann-approach to crops, grass, residues etc.
   # region="USA"
   for(region in unique(feedrequ$ISO)){
-    sums <- colSums(feedrequ[feedrequ$ISO==region & feedrequ$Item.Code==0, 6:10])
+    sums <- colSums(feedrequ[feedrequ$ISO==region & feedrequ$Item.Code==0, c(6,8:10,12)])
     total <- sum(feedrequ$Total[feedrequ$ISO==region & feedrequ$Item.Code==0])
     # for countries where no cattle, poultry and pigs are produced, assume the following feed types
     if(total==0){
@@ -451,15 +461,10 @@ fabio_use <- function(year, Prod_lvst_all, Lvst, regions, items, TCF){
   for(region in unique(feedrequ$Country.Code)){
     cropsupply <- sum(feedsupply$DM[feedsupply$Feedtype=="Feed crops" & feedsupply$Country.Code==region])
     cropdemand <- sum(feedrequ$Crops[feedrequ$Country.Code==region])
-    otherssupply <- sum(feedrequ$Total[feedrequ$Country.Code==region]) - cropsupply
-    othersdemand <- sum(feedrequ$Total[feedrequ$Country.Code==region]) - cropdemand
-    if(othersdemand<0) othersdemand <- 0
     # process="p085"
     for(process in unique(feedrequ$Proc.Code[feedrequ$Country.Code==region])){
       feedrequ$Crops[feedrequ$Country.Code==region & feedrequ$Proc.Code==process] <-  
         feedrequ$Crops[feedrequ$Country.Code==region & feedrequ$Proc.Code==process] / cropdemand * cropsupply
-      feedrequ[feedrequ$Country.Code==region & feedrequ$Proc.Code==process, 7:10] <- 
-        feedrequ[feedrequ$Country.Code==region & feedrequ$Proc.Code==process, 7:10] / otherssupply * othersdemand
     }
   }
   
@@ -468,39 +473,29 @@ fabio_use <- function(year, Prod_lvst_all, Lvst, regions, items, TCF){
   for(region in unique(feedrequ$Country.Code)){
     animalsupply <- sum(feedsupply$DM[feedsupply$Feedtype=="Animal products" & feedsupply$Country.Code==region])
     animaldemand <- sum(feedrequ$Animalproducts[feedrequ$Country.Code==region])
-    otherssupply <- sum(feedrequ[feedrequ$Country.Code==region, 7:9])
-    othersdemand <- sum(feedrequ[feedrequ$Country.Code==region, 7:10]) - animalsupply
-    if(othersdemand<0) othersdemand <- 0
     # process="p085"
     for(process in unique(feedrequ$Proc.Code[feedrequ$Country.Code==region])){
       feedrequ$Animalproducts[feedrequ$Country.Code==region & feedrequ$Proc.Code==process] <- 
         feedrequ$Animalproducts[feedrequ$Country.Code==region & feedrequ$Proc.Code==process] / animaldemand * animalsupply
-      feedrequ[feedrequ$Country.Code==region & feedrequ$Proc.Code==process, 7:9] <- 
-        feedrequ[feedrequ$Country.Code==region & feedrequ$Proc.Code==process, 7:9] / otherssupply * othersdemand
     }
   }
   
-  # adapt grazing demand in order to comply with grazing and fodder crop supply, i.e. increase grazing demand and reduce demand for other feeds
+  # cap fodder crop demand at supply, if necessary
   # region=231
   for(region in unique(feedrequ$Country.Code)){
-    grasssupply <- sum(feedsupply$DM[feedsupply$Feedtype=="Grass" & feedsupply$Country.Code==region])
-    grassdemand <- sum(feedrequ$Grass[feedrequ$Country.Code==region])
-    otherssupply <- sum(feedrequ[feedrequ$Country.Code==region, c(7,9)])
-    othersdemand <- sum(feedrequ[feedrequ$Country.Code==region, 7:9]) - grasssupply
-    if(othersdemand<0) othersdemand <- 0
+    foddercropsupply <- sum(feedsupply$DM[feedsupply$Feedtype=="Grass" & feedsupply$Country.Code==region])
+    foddercropdemand <- sum(feedrequ$Residues[feedrequ$Country.Code==region])
     # process="p085"
     for(process in unique(feedrequ$Proc.Code[feedrequ$Country.Code==region])){
-      if(grasssupply>grassdemand){
-        feedrequ$Grass[feedrequ$Country.Code==region & feedrequ$Proc.Code==process] <- 
-          feedrequ$Grass[feedrequ$Country.Code==region & feedrequ$Proc.Code==process] / grassdemand * grasssupply
-        feedrequ[feedrequ$Country.Code==region & feedrequ$Proc.Code==process, c(7,9)] <- 
-          feedrequ[feedrequ$Country.Code==region & feedrequ$Proc.Code==process, c(7,9)] / otherssupply * othersdemand
+      if(foddercropsupply>foddercropdemand){
+        feedrequ$Residues[feedrequ$Country.Code==region & feedrequ$Proc.Code==process] <- 
+          feedrequ$Residues[feedrequ$Country.Code==region & feedrequ$Proc.Code==process] / foddercropdemand * foddercropsupply
       }
     }
   }
   
   feedrequ[is.na(feedrequ)] <- 0
-  
+  # feedrequ$check <- round((feedrequ$Total - (feedrequ$Crops+feedrequ$Residues+feedrequ$Grass+feedrequ$Scavenging+feedrequ$Animalproducts)) / feedrequ$Total * 100, 0)
   #--------------------------------------------------------------------
   # Allocation of crop and animal feed use
   #--------------------------------------------------------------------
@@ -530,17 +525,18 @@ fabio_use <- function(year, Prod_lvst_all, Lvst, regions, items, TCF){
   #--------------------------------------------------------------------
   # Allocation of grazing and fodder use
   #--------------------------------------------------------------------
-  # region=13
+  # region=11
   for(region in unique(feedrequ$Country.Code)){
     iso <- as.character(regions$ISO[regions$Country.Code==region])
-    totalfodder <- sum(feedrequ$Grass[feedrequ$Country.Code==region])
-    for(process in unique(feedrequ$Proc.Code[feedrequ$Country.Code==region & feedrequ$Grass>0])){
+    totalfodderdemand <- sum(feedrequ$Residues[feedrequ$Country.Code==region])
+    totalfoddersupply <- sum(feedsupply$DM[feedsupply$Country.Code==region & feedsupply$Item.Code==2000])
+    totalgrassdemand <- sum(feedrequ$Grass[feedrequ$Country.Code==region])
+    for(process in unique(feedrequ$Proc.Code[feedrequ$Country.Code==region & (feedrequ$Residues + feedrequ$Grass)>0])){
       feed <- "Grass"
-      demand <- feedrequ$Grass[feedrequ$Country.Code==region & feedrequ$Proc.Code==process]
-      supply <- feedsupply[feedsupply$Country.Code==region & feedsupply$Item=="Fodder crops",]
-      if(nrow(supply)==0) supply <- data.frame(DM=0)
-      feeduse[feeduse$Proc.Code==process & feeduse$Item=="Fodder crops",iso] <- supply$DM * demand / totalfodder
-      feeduse[feeduse$Proc.Code==process & feeduse$Item=="Grazing",iso] <- demand - supply$DM * demand / totalfodder
+      demandfodder <- feedrequ$Residues[feedrequ$Country.Code==region & feedrequ$Proc.Code==process]
+      demandgrass <- feedrequ$Grass[feedrequ$Country.Code==region & feedrequ$Proc.Code==process]
+      feeduse[feeduse$Proc.Code==process & feeduse$Item=="Fodder crops",iso] <- demandfodder / totalfodderdemand * totalfoddersupply
+      feeduse[feeduse$Proc.Code==process & feeduse$Item=="Grazing",iso] <- demandgrass
     }
   }
   feeduse[!is.finite(feeduse)] <- 0
@@ -641,6 +637,7 @@ fabio_use <- function(year, Prod_lvst_all, Lvst, regions, items, TCF){
 
   # save(results, file = paste0("/mnt/nfs_fineprint/tmp/fabio/data/yearly/",year,"_Optim.RData"))
   # load(file = paste0("/mnt/nfs_fineprint/tmp/fabio/data/yearly/",year,"_Optim.RData"))
+  # load(file = paste0("../wu_share/WU/Projekte/GRU/01_Projekte/1332_FINEPRINT/02_Activities & Work packages/WP2/Biomass/FABIO code/01_code & data/data/yearly/",year,"_Optim.RData"))
   
   # region=231
   for(region in regions$Country.Code){
@@ -709,7 +706,7 @@ fabio_use <- function(year, Prod_lvst_all, Lvst, regions, items, TCF){
   #-------------------------------------------------------------------------
   # Allocation of seed and waste
   #-------------------------------------------------------------------------
-  seedwaste <- CBS[(CBS$Waste+CBS$Seed)>0,c(1:4,14,15)]
+  seedwaste <- CBS[(CBS$Seed)>0,c(1:4,14,15)]
   # waste is now excluded, i.e. only seed is considered an own use
   seedwaste$seedwaste <- seedwaste$Seed # + seedwaste$Waste
   supply <- reshape2::melt(sup, id=c("Proc.Code","Process","Com.Code","Item.Code","Item"), variable.name = "ISO", value.name = "Value")
