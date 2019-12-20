@@ -30,20 +30,20 @@ BTD[,8:9][!is.finite(BTD[,8:9])] <- 0
 BTD$difference <- BTD$estimated - BTD$original
 BTD$difference_abs <- abs(BTD$estimated - BTD$original)
 
-BTD %>% 
+exports <- BTD %>% 
   group_by(From.Country) %>% 
-  summarise(difference = sum(difference),
-            difference_abs = sum(difference_abs))
-BTD %>% 
+  summarise(difference_pos = round(sum(difference[difference>0]) / sum(original) * 100,1),
+            difference_neg = round(sum(difference[difference<0]) / sum(original) * 100,1))
+imports <- BTD %>% 
   group_by(To.Country) %>% 
-  summarise(difference = sum(difference),
-            difference_abs = sum(difference_abs))
-BTD %>% 
+  summarise(difference_pos = round(sum(difference[difference>0]) / sum(original) * 100,1),
+            difference_neg = round(sum(difference[difference<0]) / sum(original) * 100,1))
+products <- BTD %>% 
   group_by(Item) %>% 
-  summarise(difference = sum(difference),
-            difference_abs = sum(difference_abs))
+  summarise(difference_pos = round(sum(difference[difference>0]) / sum(original) * 100,1),
+            difference_neg = round(sum(difference[difference<0]) / sum(original) * 100,1))
 
-
+##############################################################################################
 
 diff_from_country <- BTD %>% 
   group_by(From.Country) %>% 

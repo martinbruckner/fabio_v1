@@ -46,7 +46,7 @@ Prod.Code;Prod;Item.Code;Item;TCF
 226;Areca nuts;2551;Nuts and products;1
 234;Nuts, nes;2551;Nuts and products;1
 236;Soybeans;2555;Soyabeans;1
-242;Groundnuts, with shell;2551;Nuts and products;1
+242;Groundnuts, with shell;2556;Groundnuts (Shelled Eq);1
 249;Coconuts;2560;Coconuts - Incl Copra;1
 254;Oil, palm fruit;254;Oil, palm fruit;1
 256;Palm kernels;2562;Palm kernels;1
@@ -139,7 +139,7 @@ Prod.Code;Prod;Item.Code;Item;TCF
 656;Coffee, green;2630;Coffee and products;1
 661;Cocoa, beans;2633;Cocoa Beans and products;1
 667;Tea;2635;Tea (including mate);1
-671;Maté;2635;Tea (including mate);1
+671;Mat?;2635;Tea (including mate);1
 677;Hops;677;Hops;1
 687;Pepper (piper spp.);2640;Pepper;1
 689;Chillies and peppers, dry;2641;Pimento;1

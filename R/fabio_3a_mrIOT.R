@@ -17,10 +17,9 @@ rm(list=ls()); gc()
 # Start loop for a series of years
 ##########################################################################
 # year=1986
-year=2013
+# year=2013
 for(year in 1986:2013){
   print(year)
-  gc()
   #-------------------------------------------------------------------------
   # Read data
   #-------------------------------------------------------------------------
@@ -46,7 +45,7 @@ for(year in 1986:2013){
   Trans <- as.matrix(mr_sup_usd) / g
   rm(mr_sup_usd, g); gc()
   Trans[!is.finite(Trans)] <- 0
-  gc()
+  # gc()
   
   # calculate Z matrix (U * T)
   Z <- mr_use %*% Trans
@@ -62,7 +61,7 @@ for(year in 1986:2013){
   Trans <- as.matrix(mr_sup) / g
   rm(mr_sup, g); gc()
   Trans[!is.finite(Trans)] <- 0
-  gc()
+  # gc()
   
   # calculate Z matrix (U * T)
   Z <- mr_use %*% Trans
@@ -81,16 +80,16 @@ for(year in 1986:2013){
   #----------------------------------
   # alternative approaches
   #----------------------------------
-  
+  # 
   # # calculate input coefficient matrix
   # q <- rowSums(mr_use) + rowSums(mr_use_fd)
   # B <- mr_use / q
   # B[!is.finite(B)] <- 0
   # rm(mr_use,mr_sup_usd, q); gc()
-  
+  #
   # # calculate Z matrix (B * V)
   # Z <- B %*% mr_sup  # or multiply with mr_sup_usd
-  
+  #
   # # calculate Industry-output-proportions matrix
   # C_usd <- t(mr_sup_usd / rowSums(mr_sup_usd))
   # C <- t(mr_sup / rowSums(mr_sup))
@@ -102,6 +101,7 @@ for(year in 1986:2013){
   # V_usd_inv <- ginv(t(as.matrix(mr_sup_usd)))
   # 
   # T2_usd <- V_usd_inv %*% diag(q)
-  
 }
+
+
 
