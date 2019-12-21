@@ -80,7 +80,7 @@ Country.Code;Country;ISO;Region.Code;Region
 82;Gibraltar;GIB;9;OECD Europe
 83;Kiribati;KIR;16;Oceania
 84;Greece;GRC;9;OECD Europe
-85;Greenland;GRL;18;Greenland
+85;Greenland;GRL;9;OECD Europe
 86;Grenada;GRD;3;Central America
 87;Guadeloupe;GLP;3;Central America
 88;Guam;GUM;16;Oceania
@@ -102,7 +102,7 @@ Country.Code;Country;ISO;Region.Code;Region
 104;Ireland;IRL;9;OECD Europe
 105;Israel;ISR;12;Middle East
 106;Italy;ITA;9;OECD Europe
-107;Côte d'Ivoire;CIV;6;Western Africa
+107;C?te d'Ivoire;CIV;6;Western Africa
 108;Kazakhstan;KAZ;11;Former USSR
 109;Jamaica;JAM;3;Central America
 110;Japan;JPN;17;Japan
@@ -177,7 +177,7 @@ Country.Code;Country;ISO;Region.Code;Region
 179;Qatar;QAT;12;Middle East
 180;Palau;PLW;16;Oceania
 181;Zimbabwe;ZWE;8;Southern Africa
-182;Réunion;REU;7;Eastern Africa
+182;R?union;REU;7;Eastern Africa
 183;Romania;ROU;10;Eastern Europe
 184;Rwanda;RWA;7;Eastern Africa
 185;Russian Federation;RUS;11;Former USSR
@@ -252,7 +252,7 @@ Country.Code;Country;ISO;Region.Code;Region
 273;Montenegro;MNE;9;OECD Europe
 276;Sudan;SDN;7;Eastern Africa
 277;South Sudan;SSD;7;Eastern Africa
-279;Curaçao;CUW;3;Central America
+279;Cura?ao;CUW;3;Central America
 281;Saint-Martin (French Part);MAF;3;Central America
 299;Occupied Palestinian Territory;PSE;12;Middle East
 351;China;CHN;14;East Asia

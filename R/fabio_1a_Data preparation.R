@@ -301,7 +301,7 @@ Prod <- Prod_raw[,c(1,2,3,4,5,6,8,9,10)]
 rm(Prod_raw)
 names(Prod)[c(3,4)] <- c("Prod.Code","Prod")
 # convert to CBS item codes and aggregate Fodder crops
-cropcom <- read.csv2(file="./inst/fabio_input/Items_Prod-CBS.csv")
+cropcom <- read.csv(file="./inst/fabio_input/Items_Prod-CBS.csv")
 # merg data.tables -> much faster than merging data.frames
 # Prod <- merge(Prod, cropcom[,c(1,3,4)], by="Prod.Code", all.x=TRUE)
 Prod <- merge(data.table(Prod, key="Prod.Code"), data.table(cropcom[,c(1,3,4,5)], key="Prod.Code"))
@@ -446,7 +446,7 @@ load(file="/mnt/nfs_fineprint/tmp/fabio/raw/ProdEthanol_raw.RData")
 # prepare IEA data
 ProdEthanol_IEA <- ProdEthanol_IEA[-1,-2]
 names(ProdEthanol_IEA)[1] <- "Country.IEA"
-ProdEthanol_IEA <- melt(ProdEthanol_IEA, "Country.IEA", variable.names="Year", value.name = "Production")
+ProdEthanol_IEA <- reshape2::melt(ProdEthanol_IEA, "Country.IEA", variable.names="Year", value.name = "Production")
 ProdEthanol_IEA$Production <- as.numeric(ProdEthanol_IEA$Production)
 ProdEthanol_IEA <- ProdEthanol_IEA[is.finite(ProdEthanol_IEA$Production) & ProdEthanol_IEA$Production > 0,]
 names(ProdEthanol_IEA)[2] <- "Year"
@@ -463,7 +463,7 @@ ProdEthanol_IEA$Production <- round(ProdEthanol_IEA$Production / 0.64 * 1000, 2)
 # prepare EIA data
 ProdEthanol_EIA <- ProdEthanol_EIA[-(1:3),-2]
 names(ProdEthanol_EIA)[1] <- "Country.EIA"
-ProdEthanol_EIA <- melt(ProdEthanol_EIA, "Country.EIA", variable.names="Year", value.name = "Production")
+ProdEthanol_EIA <- reshape2::melt(ProdEthanol_EIA, "Country.EIA", variable.names="Year", value.name = "Production")
 ProdEthanol_EIA$Production <- as.numeric(ProdEthanol_EIA$Production)
 ProdEthanol_EIA <- ProdEthanol_EIA[is.finite(ProdEthanol_EIA$Production),]
 names(ProdEthanol_EIA)[2] <- "Year"

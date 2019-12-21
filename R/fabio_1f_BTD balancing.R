@@ -148,7 +148,7 @@ fabio_BTD_balancing <- function(year){
       actualimp <- colSums(data[,range])
       mult.imp <- targetimp / actualimp
       mult.imp[!is.finite(mult.imp)] <- 0
-      data[,range] <- as.matrix(data[,range]) %*% diag(mult.imp)
+      data[,range] <- t(t(as.matrix(data[,range])) * mult.imp)
       actualimp <- colSums(data[,range])
       actualexp <- rowSums(data[,range])
       deltaimp <- sum(actualimp) - sum(targetimp)

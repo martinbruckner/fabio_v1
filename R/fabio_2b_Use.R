@@ -7,6 +7,7 @@
 
 library(reshape2)
 library(data.table)
+require(tidyverse)
 
 rm(list=ls()); gc()
 
@@ -282,9 +283,10 @@ fabio_use <- function(year, Prod_lvst_all, Lvst, regions, items, TCF){
   commodities <- unique(sup[sup$Item.Code %in% c(866:1171,2029,2731:2737,2748:2749,843), 1:5])
   feedrequ_K <- cbind(regions[rep(seq_len(nrow(regions)),each=nrow(commodities)),1:3], commodities)
   feedrequ_K$Crops <- 0
-  feedrequ_K$Residues <- 0
   feedrequ_K$Grass <- 0
+  feedrequ_K$Residues <- 0
   feedrequ_K$Scavenging <- 0
+  feedrequ_K$Fodder <- 0
   feedrequ_K$Animalproducts <- 0
   feedrequ_K$Total <- 0
   
@@ -305,7 +307,7 @@ fabio_use <- function(year, Prod_lvst_all, Lvst, regions, items, TCF){
     }
   }
   
-  feedrequ_K <- feedrequ_K[feedrequ_K$Total>0,c(1,3,4,7:14)]
+  feedrequ_K <- feedrequ_K[feedrequ_K$Total>0,c(1,3,7,4,9:15)]
   
   #--------------------------------------------------------------------
   # estimate feed for cattle et al. (based on Bouwman et al. 2013)
@@ -328,135 +330,71 @@ fabio_use <- function(year, Prod_lvst_all, Lvst, regions, items, TCF){
   conversion_B <- conversion_B[conversion_B$Year==low,]
   conversion_B$Coefficient <- temp
   conversion_B$Year <- year
-  concordance <- data.frame(Proc.Code=c("p099","p100","p085","p086","p087","p088","p089","p090"),
-                            Prodtype=c("milk","milk","meat","meat","meat","meat","meat","meat"),
-                            Animal=c("Dairy cattle","Dairy cattle","Beef cattle","Beef cattle","Sheep and goats","Sheep and goats","Pigs","Poultry"),
-                            stringsAsFactors = F)
-  conversion_B <- merge(conversion_B, concordance, all.x = TRUE)
+  conversion_B <- conversion_B %>% 
+    spread(Feed, Coefficient)
+  conversion_B[is.na(conversion_B)] <- 0
+  names(conversion_B)[5:6] <- c("Animalproducts", "Crops")
   
-  # calculate feed demand for domestically produced meat and milk reduced by imported animals plus exported animals
-  feedrequ_B <- sup[sup$Item.Code %in% c(2848,2731,2732,2733,2734,2735,2736,2737,2748,2749,843), ]
-  feedrequ_B <- reshape2::melt(feedrequ_B, id=c("Proc.Code","Process","Com.Code","Item.Code","Item"), variable.name = "ISO", value.name = "Value")
-  feedrequ_B <- merge(feedrequ_B, regions[,c(1,3)], all.x = T)
+  # calculate feed demand
+  feedrequ_B <- Prod_lvst_all[Prod_lvst_all$Element=="Production" & Prod_lvst_all$Unit=="tonnes" & Prod_lvst_all$Year==year,]
   reg_feed <- read.csv(file="./inst/fabio_input/Regions_feed_Bouwman.csv", header=TRUE, sep=";")
-  feedrequ_B <- merge(feedrequ_B, reg_feed[,c(1,4)], all.x = TRUE)
-  concordance <- data.frame(Proc.Code=c("p099","p100","p101","p102","p103","p104","p105","p106","p107","p108","p109"),
-                            Target.Proc.Code=c("p099","p100","p101","p102","p103","p085","p086","p087","p088","p089","p090"),
+  feedrequ_B$Region.Code <- reg_feed$Region.Code[match(feedrequ_B$Country.Code,reg_feed$Country.Code)]
+  feedrequ_B$ISO <- regions$ISO[match(feedrequ_B$Country.Code,regions$Country.Code)]
+  feedrequ_B$ISO[is.na(feedrequ_B$ISO)] <- "ROW"
+  feedrequ_B$Country[is.na(feedrequ_B$Country)] <- "RoW"
+  concordance <- data.frame(Item.Code.lvst = c(944,972,1012,1032,1055,1775, 882,951,982,1020,1130),
+                            Item.lvst = c("Meat indigenous, cattle","Meat indigenous, buffalo","Meat indigenous, sheep","Meat indigenous, goat",
+                                          "Meat indigenous, pig","Meat indigenous, poultry","Milk, whole fresh cow",
+                                          "Milk, whole fresh buffalo","Milk, whole fresh sheep",
+                                          "Milk, whole fresh goat", "Milk, whole fresh camel"),
+                            Item.Code = c(866,946,976,1016,1034,2029, 2848,2848,2848,2848,2848),
+                            Item = c("Cattle","Buffaloes","Sheep","Goats","Pigs","Poultry Birds", "Milk - Excluding Butter",
+                                     "Milk - Excluding Butter","Milk - Excluding Butter","Milk - Excluding Butter","Milk - Excluding Butter"),
+                            Proc.Code=c("p085","p086","p087","p088","p089","p090","p099","p100","p101","p102","p103"),
+                            Animal=c("Beef cattle","Beef cattle","Sheep and goats","Sheep and goats","Pigs","Poultry","Dairy cattle","Dairy cattle"
+                                     ,"Dairy cattle","Dairy cattle","Dairy cattle"),
                             stringsAsFactors = F)
-  feedrequ_B$Target.Proc.Code <- concordance$Target.Proc.Code[match(feedrequ_B$Proc.Code, concordance$Proc.Code)]
-  feedrequ_B <- feedrequ_B[!is.na(feedrequ_B$Target.Proc.Code),]
+  names(feedrequ_B)[3:4] <- names(concordance)[1:2]
+  feedrequ_B <- merge(feedrequ_B, concordance[,-2], by="Item.Code.lvst")
+  feedrequ_B <- merge(feedrequ_B, conversion_B, by=c("Animal","Region.Code","Year"))
+  # assume a share of fodder crops in residues of 80% for ruminants and 20% for pigs and 0% poultry
+  feedrequ_B$Fodder <- feedrequ_B$Residues * 0.8
+  feedrequ_B$Fodder[feedrequ_B$Animal=="Pigs"] <- feedrequ_B$Residues[feedrequ_B$Animal=="Pigs"] * 0.2
+  feedrequ_B$Fodder[feedrequ_B$Animal=="Poultry"] <- feedrequ_B$Fodder[feedrequ_B$Animal=="Poultry"] * 0
+  feedrequ_B$Residues <- feedrequ_B$Residues - feedrequ_B$Fodder
+  # multiply feed requirement coefficients with meat and milk production values
+  feedrequ_B[,c("Animalproducts", "Crops","Grass","Residues","Fodder","Scavenging")] <- 
+    feedrequ_B[,c("Animalproducts", "Crops","Grass","Residues","Fodder","Scavenging")] * feedrequ_B$Value
+  feedrequ_B$Country.Code[! feedrequ_B$Country.Code %in% regions$Country.Code] <- 999
+  feedrequ_B <- feedrequ_B %>% 
+    select(-Country, -Element.Code, -Element, -Unit, -Animal, -Region, -Region.Code, -Item.Code.lvst, -Item.lvst, -Value, -Year) %>% 
+    group_by(Country.Code, ISO, Item.Code, Proc.Code) %>% 
+    summarise(Crops = sum(Crops), Grass = sum(Grass), Residues = sum(Residues), Scavenging = sum(Scavenging), Fodder = sum(Fodder), Animalproducts = sum(Animalproducts)) %>% 
+    mutate(Total = Crops + Grass + Residues + Scavenging + Fodder + Animalproducts) %>% 
+    as.data.frame()
   
-  feedrequ_B$Prodtype <- "meat"
-  feedrequ_B$Prodtype[feedrequ_B$Item.Code==2848] <- "milk"
-  
-  # estimate meat produced from domestic animals, including both meat produced here from indigenous animals and meat produced elsewhere from exported animals
-  temp <- Prod_lvst_all[Prod_lvst_all$Element=="Production" & Prod_lvst_all$Unit %in% c("Head", "1000 Head") & Prod_lvst_all$Year==year,]
-  temp$Value[temp$Unit=="Head"] <- temp$Value[temp$Unit=="Head"] / 1000
-  temp$Unit[temp$Unit=="Head"] <- "1000 Head"
-  concordance <- data.frame(Item.Code.lvst = c(944,972,1032,1012,1775,1055),
-                            Item.lvst = c("Meat indigenous, cattle","Meat indigenous, buffalo","Meat indigenous, goat","Meat indigenous, sheep",
-                                          "Meat indigenous, poultry","Meat indigenous, pig"),
-                            Item.Code = c(866,946,1016,976,2029,1034),
-                            Item = c("Cattle","Buffaloes","Goats","Sheep","Poultry Birds","Pigs"),
-                            Proc.Code=c("p104","p105","p107","p106","p109","p108"))
-  names(temp)[3:4] <- names(concordance)[1:2]
-  temp <- merge(temp, concordance[,-2], by="Item.Code.lvst", all.x = T)
-  temp <- temp[!is.na(temp$Item.Code),]
-  temp <- temp[,c(2,10,7,12,9)]
-  
-  exp <- stats::aggregate(Value ~ From.Country.Code + Item.Code + Year, BTD[BTD$Item.Code %in% concordance$Item.Code,], sum)
-  exp <- exp[!exp$Value==0,]
-  exp <- merge(exp, concordance[,c(3,5)], all.x = T)
-  exp <- exp[,c(2,1,3,5,4)]
-  names(exp) <- names(temp)
-  
-  temp$ID <- paste(temp$Country.Code, temp$Item.Code, temp$Year)
-  exp$ID <- paste(exp$Country.Code, exp$Item.Code, exp$Year)
-  temp$Exp <- exp$Value[match(temp$ID,exp$ID)]
-  temp$Exp[is.na(temp$Exp)] <- 0
-  # calculate the share of exports in domestic animal production
-  temp$Exp <- temp$Exp / (temp$Value + temp$Exp)
-  
-  # merge export share to feedrequ_B
-  feedrequ_B <- merge(feedrequ_B, temp[,c(1,4,7)], all.x = T)
-  feedrequ_B$Exp[!is.finite(feedrequ_B$Exp)] <- 0
-  feedrequ_B$Exp[feedrequ_B$Prodtype=="milk"] <- 0
-  
-  # estimate meat produced from domestic animals (try to add exports to meat from indigenous animals)
-  feedrequ_B$Value <- feedrequ_B$Value / (1 - feedrequ_B$Exp)
-  feedrequ_B$Exp <- NULL
-  feedrequ_B$Proc.Code <- NULL
-  names(feedrequ_B)[9] <- "Proc.Code"
-  
-  # merge feed coefficients to feedrequ_B
-  feedrequ_B$ID <- paste(feedrequ_B$Region.Code, feedrequ_B$Proc.Code, feedrequ_B$Prodtype, sep = ".")
-  conversion_B$ID <- paste(conversion_B$Region.Code, conversion_B$Proc.Code, conversion_B$Prodtype, sep = ".")
-  
-  temp <- conversion_B[conversion_B$Feed=="Feed crops",]
-  feedrequ_B <- merge(feedrequ_B, temp[,c("Coefficient","ID"), ], all.x = T)
-  names(feedrequ_B)[ncol(feedrequ_B)] <- "Crops"
-  
-  temp <- conversion_B[conversion_B$Feed=="Residues",]
-  feedrequ_B <- merge(feedrequ_B, temp[,c("Coefficient","ID"), ], all.x = T)
-  names(feedrequ_B)[ncol(feedrequ_B)] <- "Residues"
-  
-  temp <- conversion_B[conversion_B$Feed=="Grass",]
-  feedrequ_B <- merge(feedrequ_B, temp[,c("Coefficient","ID"), ], all.x = T)
-  names(feedrequ_B)[ncol(feedrequ_B)] <- "Grass"
-  
-  temp <- conversion_B[conversion_B$Feed=="Scavenging",]
-  feedrequ_B <- merge(feedrequ_B, temp[,c("Coefficient","ID"), ], all.x = T)
-  names(feedrequ_B)[ncol(feedrequ_B)] <- "Scavenging"
-  
-  temp <- conversion_B[conversion_B$Feed=="Animal products",]
-  feedrequ_B <- merge(feedrequ_B, temp[,c("Coefficient","ID"), ], all.x = T)
-  names(feedrequ_B)[ncol(feedrequ_B)] <- "Animalproducts"
-  feedrequ_B[is.na(feedrequ_B)] <- 0
-  
-  # calculate feed requirements
-  feedrequ_B$Crops <- feedrequ_B$Crops * feedrequ_B$Value
-  feedrequ_B$Residues <- feedrequ_B$Residues * feedrequ_B$Value
-  feedrequ_B$Grass <- feedrequ_B$Grass * feedrequ_B$Value
-  feedrequ_B$Scavenging <- feedrequ_B$Scavenging * feedrequ_B$Value
-  feedrequ_B$Animalproducts <- feedrequ_B$Animalproducts * feedrequ_B$Value
-  feedrequ_B$Total <- feedrequ_B$Crops + feedrequ_B$Residues + feedrequ_B$Grass + feedrequ_B$Scavenging + feedrequ_B$Animalproducts
-  feedrequ_B <- feedrequ_B[feedrequ_B$Total>0, c(2,3,10,6,7,12:17)]
-  feedrequ_B$Item.Code <- 0
-  feedrequ_B$Item <- "all"
-  
-  # aggregate over countries and animal groups (i.e. husbandry processes)
-  feedrequ_B <- stats::aggregate(. ~ Country.Code + ISO + Proc.Code + Item.Code + Item, feedrequ_B, sum)
-  
-  # estimate fodder crop requirements as a share of "residues and fodder crops"
-  fodder_share <- data.frame(Proc.Code = c("p085", "p086", "p087", "p088", "p089", "p090", "p099", "p100"),
-                             Process = c("Cattle husbandry","Buffaloes husbandry","Sheep husbandry","Goats husbandry",
-                                         "Pigs farming","Poultry Birds farming","Dairy cattle husbandry","Dairy buffaloes husbandry"),
-                             value = c(0.9,0.9,0.9,0.9,0.1,0,0.9,0.9))
-  feedrequ_B$fodder_share <- fodder_share$value[match(feedrequ_B$Proc.Code,fodder_share$Proc.Code)]
-  feedrequ_B$Fodder <- feedrequ_B$Residues * feedrequ_B$fodder_share
-  feedrequ_B$fodder_share <- NULL
-  feedrequ_K$Fodder <- 0
+  # allocate total feed demand estimated with Krausmann-approach to crops, grass, residues etc. according to the average feed distribution based on Bouwman-approach
+  # region="USA"
+  for(region in unique(feedrequ_K$ISO)){
+    sums <- colSums(feedrequ_B[feedrequ_B$ISO==region, c(5:10)])
+    total <- sum(feedrequ_B$Total[feedrequ_B$ISO==region])
+    # for countries where no cattle, poultry and pigs are produced, assume the following feed types
+    if(total==0){
+      sums <- c(0.3,0.4,0.1,0.1,0.1,0)
+      names(sums) <- c("Crops","Grass","Residues","Scavenging","Fodder","Animalproducts")
+      total <- sum(sums)
+    }
+    #i="Crops"
+    for(i in names(sums)){
+      feedrequ_K[feedrequ_K$ISO==region, i] <- feedrequ_K$Total[feedrequ_K$ISO==region] / total * sums[i]
+    }
+  }
   
   # integrate Krausmann and Bouwman feed balances
   feedrequ <- rbind(feedrequ_K, feedrequ_B)
   
-  # allocate total feed demand estimated with Krausmann-approach to crops, grass, residues etc.
-  # region="USA"
-  for(region in unique(feedrequ$ISO)){
-    sums <- colSums(feedrequ[feedrequ$ISO==region & feedrequ$Item.Code==0, c(6,8:10,12)])
-    total <- sum(feedrequ$Total[feedrequ$ISO==region & feedrequ$Item.Code==0])
-    # for countries where no cattle, poultry and pigs are produced, assume the following feed types
-    if(total==0){
-      sums <- c(1,2,2,1,1)
-      total <- sum(sums)
-    }
-    #i=1
-    for(i in 1:length(sums)){
-      feedrequ[feedrequ$ISO==region & feedrequ$Item.Code>0, 5+i] <- feedrequ$Total[feedrequ$ISO==region & feedrequ$Item.Code>0] / total * sums[i]
-    }
-  }
   
-  # adapt feed crop demand in order to comply with feed crops supply, i.e. increase crop demand and reduce demand for other feeds, and vice versa
+  # adapt feed crop demand in order to comply with feed crops supply
   # region=231
   for(region in unique(feedrequ$Country.Code)){
     cropsupply <- sum(feedsupply$DM[feedsupply$Feedtype=="Feed crops" & feedsupply$Country.Code==region])
@@ -468,7 +406,7 @@ fabio_use <- function(year, Prod_lvst_all, Lvst, regions, items, TCF){
     }
   }
   
-  # adapt animal feed demand in order to comply with animal product supply, i.e. increase animal product demand and reduce demand for other feeds, and vice versa
+  # adapt animal feed demand in order to comply with animal product supply
   # region=231
   for(region in unique(feedrequ$Country.Code)){
     animalsupply <- sum(feedsupply$DM[feedsupply$Feedtype=="Animal products" & feedsupply$Country.Code==region])
@@ -480,17 +418,17 @@ fabio_use <- function(year, Prod_lvst_all, Lvst, regions, items, TCF){
     }
   }
   
-  # cap fodder crop demand at supply, if necessary
+  # adapt fodder crop demand in order to comply with fodder crop supply
   # region=231
   for(region in unique(feedrequ$Country.Code)){
-    foddercropsupply <- sum(feedsupply$DM[feedsupply$Feedtype=="Grass" & feedsupply$Country.Code==region])
-    foddercropdemand <- sum(feedrequ$Residues[feedrequ$Country.Code==region])
+    foddercropsupply <- sum(feedsupply$DM[feedsupply$Item=="Fodder crops" & feedsupply$Country.Code==region])
+    foddercropdemand <- sum(feedrequ$Fodder[feedrequ$Country.Code==region])
     # process="p085"
     for(process in unique(feedrequ$Proc.Code[feedrequ$Country.Code==region])){
-      if(foddercropsupply>foddercropdemand){
-        feedrequ$Residues[feedrequ$Country.Code==region & feedrequ$Proc.Code==process] <- 
-          feedrequ$Residues[feedrequ$Country.Code==region & feedrequ$Proc.Code==process] / foddercropdemand * foddercropsupply
-      }
+      # if(foddercropsupply>foddercropdemand){
+        feedrequ$Fodder[feedrequ$Country.Code==region & feedrequ$Proc.Code==process] <- 
+          feedrequ$Fodder[feedrequ$Country.Code==region & feedrequ$Proc.Code==process] / foddercropdemand * foddercropsupply
+      # }
     }
   }
   
@@ -635,7 +573,7 @@ fabio_use <- function(year, Prod_lvst_all, Lvst, regions, items, TCF){
   }
   print("End optim")
 
-  # save(results, file = paste0("/mnt/nfs_fineprint/tmp/fabio/data/yearly/",year,"_Optim.RData"))
+  save(results, file = paste0("/mnt/nfs_fineprint/tmp/fabio/data/yearly/",year,"_Optim.RData"))
   # load(file = paste0("/mnt/nfs_fineprint/tmp/fabio/data/yearly/",year,"_Optim.RData"))
   # load(file = paste0("../wu_share/WU/Projekte/GRU/01_Projekte/1332_FINEPRINT/02_Activities & Work packages/WP2/Biomass/FABIO code/01_code & data/data/yearly/",year,"_Optim.RData"))
   
