@@ -34,7 +34,6 @@ fabio_trade_sup <- function(year, regions, items){
   #-------------------------------------------------------------------------
   load(file=paste0("/mnt/nfs_fineprint/tmp/fabio/data/yearly/",year,"_sup.RData"))
   load(file=paste0("/mnt/nfs_fineprint/tmp/fabio/data/yearly/",year,"_sup_usd.RData"))
-  load(file=paste0("/mnt/nfs_fineprint/tmp/fabio/data/yearly/",year,"_BTD_balanced.RData"))
   nrproc <- length(unique(sup$Proc.Code))
   nrcom <- length(unique(sup$Com.Code))
   nrreg <- nrow(regions)

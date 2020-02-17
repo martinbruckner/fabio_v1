@@ -1,0 +1,217 @@
+Area.Code,Area,Code_water,Country_water,Code_fabio,Country_fabio
+1,Armenia,1,Armenia,1,Armenia
+2,Afghanistan,2,Afghanistan,2,Afghanistan
+3,Albania,3,Albania,3,Albania
+4,Algeria,4,Algeria,4,Algeria
+5,American Samoa,5,American Samoa,999,RoW
+7,Angola,7,Angola,7,Angola
+8,Antigua and Barbuda,8,Antigua and Barbuda,8,Antigua and Barbuda
+9,Argentina,9,Argentina,9,Argentina
+10,Australia,10,Australia,10,Australia
+11,Austria,11,Austria,11,Austria
+12,Bahamas,12,Bahamas,12,Bahamas
+13,Bahrain,13,Bahrain,13,Bahrain
+14,Barbados,14,Barbados,14,Barbados
+16,Bangladesh,16,Bangladesh,16,Bangladesh
+17,Bermuda,17,Bermuda,999,RoW
+18,Bhutan,18,Bhutan,999,RoW
+19,Bolivia (Plurinational State of),19,Bolivia,19,Bolivia (Plurinational State of)
+20,Botswana,20,Botswana,20,Botswana
+21,Brazil,21,Brazil,21,Brazil
+23,Belize,23,Belize,23,Belize
+25,Solomon Islands,25,Solomon Islands,25,Solomon Islands
+26,Brunei Darussalam,26,Brunei Darussalam,26,Brunei Darussalam
+27,Bulgaria,27,Bulgaria,27,Bulgaria
+28,Myanmar,28,Myanmar,28,Myanmar
+29,Burundi,29,Burundi,29,Burundi
+32,Cameroon,32,Cameroon,32,Cameroon
+33,Canada,33,Canada,33,Canada
+35,Cabo Verde,35,Cape Verde,35,Cabo Verde
+36,Cayman Islands,36,Cayman Islands,999,RoW
+37,Central African Republic,37,Central African Republic,37,Central African Republic
+38,Sri Lanka,38,Sri Lanka,38,Sri Lanka
+39,Chad,39,Chad,39,Chad
+40,Chile,40,Chile,40,Chile
+41,"China, mainland",351,China,41,"China, mainland"
+44,Colombia,44,Colombia,44,Colombia
+45,Comoros,45,Comoros,999,RoW
+46,Congo,46,Congo,46,Congo
+47,Cook Islands,47,Cook Islands,999,RoW
+48,Costa Rica,48,Costa Rica,48,Costa Rica
+49,Cuba,49,Cuba,49,Cuba
+50,Cyprus,50,Cyprus,50,Cyprus
+52,Azerbaijan,52,Azerbaijan,52,Azerbaijan
+53,Benin,53,Benin,53,Benin
+54,Denmark,54,Denmark,54,Denmark
+55,Dominica,55,Dominica,55,Dominica
+56,Dominican Republic,56,Dominican Republic,56,Dominican Republic
+57,Belarus,57,Belarus,57,Belarus
+58,Ecuador,58,Ecuador,58,Ecuador
+59,Egypt,59,Egypt,59,Egypt
+60,El Salvador,60,El Salvador,60,El Salvador
+61,Equatorial Guinea,61,Equatorial Guinea,999,RoW
+63,Estonia,63,Estonia,63,Estonia
+64,Faroe Islands,64,Faroe Islands,999,RoW
+66,Fiji,66,Fiji,66,Fiji
+67,Finland,67,Finland,67,Finland
+68,France,68,France,68,France
+69,French Guiana,69,French Guiana,999,RoW
+70,French Polynesia,70,French Polynesia,70,French Polynesia
+72,Djibouti,72,Djibouti,72,Djibouti
+73,Georgia,73,Georgia,73,Georgia
+74,Gabon,74,Gabon,74,Gabon
+75,Gambia,75,Gambia,75,Gambia
+79,Germany,79,Germany,79,Germany
+80,Bosnia and Herzegovina,80,Bosnia and Herzegovina,80,Bosnia and Herzegovina
+81,Ghana,81,Ghana,81,Ghana
+83,Kiribati,83,Kiribati,83,Kiribati
+84,Greece,84,Greece,84,Greece
+86,Grenada,86,Grenada,86,Grenada
+87,Guadeloupe,87,Guadeloupe,999,RoW
+88,Guam,88,Guam,999,RoW
+89,Guatemala,89,Guatemala,89,Guatemala
+90,Guinea,90,Guinea,90,Guinea
+91,Guyana,91,Guyana,91,Guyana
+93,Haiti,93,Haiti,93,Haiti
+95,Honduras,95,Honduras,95,Honduras
+96,"China, Hong Kong SAR",351,China,96,"China, Hong Kong SAR"
+97,Hungary,97,Hungary,97,Hungary
+98,Croatia,98,Croatia,98,Croatia
+99,Iceland,99,Iceland,99,Iceland
+100,India,100,India,100,India
+101,Indonesia,101,Indonesia,101,Indonesia
+102,Iran (Islamic Republic of),102,"Iran, Islamic Republic of",102,Iran (Islamic Republic of)
+103,Iraq,103,Iraq,103,Iraq
+104,Ireland,104,Ireland,104,Ireland
+105,Israel,105,Israel,105,Israel
+106,Italy,106,Italy,106,Italy
+107,Côte d'Ivoire,107,Côte d'Ivoire,107,Côte d'Ivoire
+108,Kazakhstan,108,Kazakhstan,108,Kazakhstan
+109,Jamaica,109,Jamaica,109,Jamaica
+110,Japan,110,Japan,110,Japan
+112,Jordan,112,Jordan,112,Jordan
+113,Kyrgyzstan,113,Kyrgyzstan,113,Kyrgyzstan
+114,Kenya,114,Kenya,114,Kenya
+115,Cambodia,115,Cambodia,115,Cambodia
+116,Democratic People's Republic of Korea,116,"Korea, Democratic People's Republic of",116,Democratic People's Republic of Korea
+117,Republic of Korea,117,"Korea, Republic of",117,Republic of Korea
+118,Kuwait,118,Kuwait,118,Kuwait
+119,Latvia,119,Latvia,119,Latvia
+120,Lao People's Democratic Republic,120,Lao People's Democratic Republic,120,Lao People's Democratic Republic
+121,Lebanon,121,Lebanon,121,Lebanon
+122,Lesotho,122,Lesotho,122,Lesotho
+123,Liberia,123,Liberia,123,Liberia
+124,Libya,124,Libyan Arab Jamahiriya,124,Libya
+125,Liechtenstein,999,Global average,999,RoW
+126,Lithuania,126,Lithuania,126,Lithuania
+127,Marshall Islands,127,Marshall Islands,999,RoW
+128,"China, Macao SAR",351,China,128,"China, Macao SAR"
+129,Madagascar,129,Madagascar,129,Madagascar
+130,Malawi,130,Malawi,130,Malawi
+131,Malaysia,131,Malaysia,131,Malaysia
+132,Maldives,132,Maldives,132,Maldives
+133,Mali,133,Mali,133,Mali
+134,Malta,134,Malta,134,Malta
+135,Martinique,135,Martinique,999,RoW
+136,Mauritania,136,Mauritania,136,Mauritania
+137,Mauritius,137,Mauritius,137,Mauritius
+138,Mexico,138,Mexico,138,Mexico
+141,Mongolia,141,Mongolia,141,Mongolia
+142,Montserrat,142,Montserrat,999,RoW
+143,Morocco,143,Morocco,143,Morocco
+144,Mozambique,144,Mozambique,144,Mozambique
+145,Micronesia (Federated States of),145,"Micronesia, Federated States of",999,RoW
+146,Republic of Moldova,146,Moldova,146,Republic of Moldova
+147,Namibia,147,Namibia,147,Namibia
+148,Nauru,148,Nauru,999,RoW
+149,Nepal,149,Nepal,149,Nepal
+150,Netherlands,150,Netherlands,150,Netherlands
+153,New Caledonia,153,New Caledonia,153,New Caledonia
+154,The former Yugoslav Republic of Macedonia,154,The former Yugoslav Republic of Macedonia,154,The former Yugoslav Republic of Macedonia
+155,Vanuatu,155,Vanuatu,155,Vanuatu
+156,New Zealand,156,New Zealand,156,New Zealand
+157,Nicaragua,157,Nicaragua,157,Nicaragua
+158,Niger,158,Niger,158,Niger
+159,Nigeria,159,Nigeria,159,Nigeria
+160,Niue,160,Niue,999,RoW
+162,Norway,162,Norway,162,Norway
+165,Pakistan,165,Pakistan,165,Pakistan
+166,Panama,166,Panama,166,Panama
+167,Czechia,167,Czech Republic,167,Czech Republic
+168,Papua New Guinea,168,Papua New Guinea,168,Papua New Guinea
+169,Paraguay,169,Paraguay,169,Paraguay
+170,Peru,170,Peru,170,Peru
+171,Philippines,171,Philippines,171,Philippines
+173,Poland,173,Poland,173,Poland
+174,Portugal,174,Portugal,174,Portugal
+175,Guinea-Bissau,175,Guinea-Bissau,175,Guinea-Bissau
+176,Timor-Leste,176,Timor-Leste,176,Timor-Leste
+177,Puerto Rico,177,Puerto Rico,177,Puerto Rico
+178,Eritrea,178,Eritrea,178,Eritrea
+179,Qatar,179,Qatar,179,Qatar
+181,Zimbabwe,181,Zimbabwe,181,Zimbabwe
+182,Réunion,182,Réunion,999,RoW
+183,Romania,183,Romania,183,Romania
+184,Rwanda,184,Rwanda,184,Rwanda
+185,Russian Federation,185,Russian Federation,185,Russian Federation
+187,"Saint Helena, Ascension and Tristan da Cunha",999,Global average,999,RoW
+188,Saint Kitts and Nevis,188,Saint Kitts and Nevis,188,Saint Kitts and Nevis
+189,Saint Lucia,189,Saint Lucia,189,Saint Lucia
+190,Saint Pierre and Miquelon,190,Saint Pierre and Miquelon,999,RoW
+191,Saint Vincent and the Grenadines,191,Saint Vincent and Grenadines,191,Saint Vincent and the Grenadines
+193,Sao Tome and Principe,193,Sao Tome and Principe,193,Sao Tome and Principe
+194,Saudi Arabia,194,Saudi Arabia,194,Saudi Arabia
+195,Senegal,195,Senegal,195,Senegal
+196,Seychelles,196,Seychelles,999,RoW
+197,Sierra Leone,197,Sierra Leone,197,Sierra Leone
+198,Slovenia,198,Slovenia,198,Slovenia
+199,Slovakia,199,Slovakia,199,Slovakia
+200,Singapore,200,Singapore,200,Singapore
+201,Somalia,201,Somalia,201,Somalia
+202,South Africa,202,South Africa,202,South Africa
+203,Spain,203,Spain,203,Spain
+205,Western Sahara,205,Western Sahara,999,RoW
+206,Sudan (former),206,Sudan,276,Sudan
+207,Suriname,207,Suriname,207,Suriname
+208,Tajikistan,208,Tajikistan,208,Tajikistan
+209,Swaziland,209,Swaziland,209,Swaziland
+210,Sweden,210,Sweden,210,Sweden
+211,Switzerland,211,Switzerland,211,Switzerland
+212,Syrian Arab Republic,212,Syrian Arab Republic,212,Syrian Arab Republic
+213,Turkmenistan,213,Turkmenistan,213,Turkmenistan
+214,"China, Taiwan Province of",351,China,214,"China, Taiwan Province of"
+215,United Republic of Tanzania,215,"Tanzania, United Republic of",215,United Republic of Tanzania
+216,Thailand,216,Thailand,216,Thailand
+217,Togo,217,Togo,217,Togo
+218,Tokelau,218,Tokelau,999,RoW
+219,Tonga,219,Tonga,999,RoW
+220,Trinidad and Tobago,220,Trinidad and Tobago,220,Trinidad and Tobago
+221,Oman,221,Oman,221,Oman
+222,Tunisia,222,Tunisia,222,Tunisia
+223,Turkey,223,Turkey,223,Turkey
+225,United Arab Emirates,225,United Arab Emirates,225,United Arab Emirates
+226,Uganda,226,Uganda,226,Uganda
+227,Tuvalu,227,Tuvalu,999,RoW
+229,United Kingdom,229,United Kingdom,229,United Kingdom
+230,Ukraine,230,Ukraine,230,Ukraine
+231,United States of America,231,United States of America,231,United States of America
+233,Burkina Faso,233,Burkina Faso,233,Burkina Faso
+234,Uruguay,234,Uruguay,234,Uruguay
+235,Uzbekistan,235,Uzbekistan,235,Uzbekistan
+236,Venezuela (Bolivarian Republic of),236,"Venezuela, Bolivarian Republic of",236,Venezuela (Bolivarian Republic of)
+237,Viet Nam,237,Viet Nam,237,Viet Nam
+238,Ethiopia,238,Ethiopia,238,Ethiopia
+239,British Virgin Islands,999,Global average,999,RoW
+240,United States Virgin Islands,999,Global average,999,RoW
+243,Wallis and Futuna Islands,243,Wallis and Futuna Islands,999,RoW
+244,Samoa,244,Samoa,244,Samoa
+249,Yemen,249,Yemen,249,Yemen
+250,Democratic Republic of the Congo,250,"Congo, Democratic Republic of",250,Democratic Republic of the Congo
+251,Zambia,251,Zambia,251,Zambia
+255,Belgium,255,Belgium,255,Belgium
+256,Luxembourg,256,Luxembourg,256,Luxembourg
+272,Serbia,186,Serbia and Montenegro,272,Serbia
+273,Montenegro,186,Serbia and Montenegro,273,Montenegro
+276,Sudan,206,Sudan,276,Sudan
+277,South Sudan,206,Sudan,277,South Sudan
+299,Occupied Palestinian Territory,299,Occupied Palestinian Territory,999,RoW

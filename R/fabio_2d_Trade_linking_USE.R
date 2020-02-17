@@ -69,7 +69,7 @@ fabio_trade_use <- function(year, regions, items){
   rm(Prod,TScast,BTD,BTDcast,CBS); gc()
   
   # melt and cast use table
-  use <- as.data.frame(data.table::melt(data.table::as.data.table(use), id=1:6, variable.name = "ISO"))
+  use <- as.data.frame(data.table::melt(data.table::as.data.table(use), id.vars=1:6, variable.name = "ISO"))
   use$Country.Code <- regions$Country.Code[match(use$ISO,regions$ISO)]
   use <- as.data.frame(data.table::dcast(data.table::as.data.table(use), Com.Code ~ Country.Code + Proc.Code, value.var = "value", fun.aggregate = sum))
   
@@ -101,20 +101,26 @@ fabio_trade_use <- function(year, regions, items){
 }
 
 
-# library(parallel)
-# # Calculate the number of cores
-# no_cores <- detectCores() - 1
-# # Initiate cluster
-# cl <- makeCluster(no_cores)
-# # Years to run
-# years <- (1986+0):(1986+5)
-# # start parallel
-# parLapply(cl, years, fabio_trade_use, items=items, regions=regions)
-# # stop cluster
-# stopCluster(cl)
+library(parallel)
+# Calculate the number of cores
+no_cores <- detectCores() - 2
 
-
-for(year in 1986:2013){
-  fabio_trade_use(year=year, items=items, regions=regions)
+# run junks of 6 years (for memory reasons)
+for(i in 0:4){
+  # Initiate cluster
+  cl <- makeCluster(no_cores)
+  # Years to run
+  years <- (1986+6*i):(1986+6*i+5)
+  if(2013 %in% years) years <- 2010:2013
+  print(years)
+  # start parallel
+  parLapply(cl, years, fabio_trade_use, items=items, regions=regions)
+  # stop cluster
+  stopCluster(cl)
 }
+
+
+# for(year in 1986:2013){
+#   fabio_trade_use(year=year, items=items, regions=regions)
+# }
 

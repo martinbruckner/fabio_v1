@@ -1,0 +1,25 @@
+Com.Code;FAO.Code;Item;Com.Group;blue;Unit;Source:
+c097;866;Cattle;Live animals;29200;1000 L per 1000 animals;http://www.fao.org/3/I9692EN/i9692en.pdf
+c098;946;Buffaloes;Live animals;29200;1000 L per 1000 animals;
+c099;976;Sheep;Live animals;1825;1000 L per 1000 animals;
+c100;1016;Goats;Live animals;1825;1000 L per 1000 animals;
+c101;1034;Pigs;Live animals;5110;1000 L per 1000 animals;
+c102;2029;Poultry Birds;Live animals;146;1000 L per 1000 animals;
+c103;1096;Horses;Live animals;14600;1000 L per 1000 animals;
+c104;1107;Asses;Live animals;7300;1000 L per 1000 animals;
+c105;1110;Mules;Live animals;7300;1000 L per 1000 animals;
+c106;1126;Camels;Live animals;7300;1000 L per 1000 animals;
+c107;1157;Camelids, other;Live animals;7300;1000 L per 1000 animals;
+c108;1140;Rabbits and hares;Live animals;146;1000 L per 1000 animals;
+c109;1150;Rodents, other;Live animals;146;1000 L per 1000 animals;
+c110;1171;Live animals, other;Live animals;5110;1000 L per 1000 animals;
+c115;2731;Bovine Meat;Meat;8,75;1000 L per tonne;
+c116;2732;Mutton & Goat Meat;Meat;7,53;1000 L per tonne;
+c117;2733;Pigmeat;Meat;6,57;1000 L per tonne;
+c118;2734;Poultry Meat;Meat;2,43;1000 L per tonne;
+c119;2735;Meat, Other;Meat;6,32;1000 L per tonne;
+c120;2736;Offals, Edible;Meat;6,32;1000 L per tonne;
+c121;2737;Fats, Animals, Raw;Animal fats;6,32;1000 L per tonne;
+c122;2748;Hides and skins;Hides, skins, wool;6,32;1000 L per tonne;
+c123;2749;Meat Meal;Meat;6,32;1000 L per tonne;
+c124;843;Pet food;Meat;6,32;1000 L per tonne;

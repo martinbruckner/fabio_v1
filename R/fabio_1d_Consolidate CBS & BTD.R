@@ -58,13 +58,15 @@ for(year in 1986:2013){
   # replace negative values in BTD with zero
   BTD[,9:11][BTD[,9:11]<0] <- 0
   
+  # get missing timber supply from stock
+  CBS$StockVariation[CBS$Item.Code %in% 1864:1867 & CBS$OtherUses < 0] <- CBS$OtherUses[CBS$Item.Code %in% 1864:1867 & CBS$OtherUses < 0]
+  CBS$OtherUses[CBS$Item.Code %in% 1864:1867 & CBS$OtherUses < 0] <- 0
+  
   # replace negative values in CBS with zero and balance supply and use
   CBS[,c(6,7,10:16)][CBS[,c(6,7,10:16)]<0] <- 0 
-  # take supply and stock change as given and re-balance uses
+  # balance CBS
   CBS$TotalSupply <- CBS$Production + CBS$Imports
-  CBS[,10:16] <- round(CBS[,10:16] / rowSums(CBS[,10:16]) * (CBS$TotalSupply - CBS$StockVariation))
   CBS[is.na(CBS)] <- 0
-  
   CBS$Balancing <- CBS$TotalSupply - rowSums(CBS[,c(8,10:16)])
   
   # Allocate supply (Prod + Imp - Exp - Bal) to Uses, where values missing
@@ -83,9 +85,6 @@ for(year in 1986:2013){
   CBS$Feed[CBS$Item.Code %in% commodities] <- CBS$Feed[CBS$Item.Code %in% commodities] + 
     CBS$Balancing[CBS$Item.Code %in% commodities]
   CBS$Balancing[CBS$Item.Code %in% commodities] <- 0
-  # For the rest: assume food use: Food = Production + Imports - Exports - Balancing - Seed - Processing
-  CBS$Food <- CBS$Food + CBS$Balancing
-  CBS$Balancing <- 0
   
   # # Check discrepancies between trade flows reported in CBS and BTD
   # #-------------------------------------------------------------------------

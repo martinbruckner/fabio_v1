@@ -1,0 +1,193 @@
+Code,Country,Green_water
+1,Armenia,240
+2,Afghanistan,331
+3,Albania,317
+4,Algeria,868
+7,Angola,329
+8,Antigua and Barbuda,315
+9,Argentina,287
+10,Australia,762
+11,Austria,202
+12,Bahamas,315
+13,Bahrain,92
+14,Barbados,315
+15,Belgium-Luxembourg,315
+16,Bangladesh,301
+19,Bolivia (Plurinational State of),1591
+20,Botswana,395
+21,Brazil,307
+23,Belize,328
+25,Solomon Islands,315
+26,Brunei Darussalam,301
+27,Bulgaria,570
+28,Myanmar,306
+29,Burundi,281
+32,Cameroon,450
+33,Canada,203
+35,Cabo Verde,315
+37,Central African Republic,329
+38,Sri Lanka,438
+39,Chad,453
+40,Chile,224
+41,"China, mainland",225
+44,Colombia,272
+46,Congo,283
+48,Costa Rica,315
+49,Cuba,338
+50,Cyprus,668
+51,Czechoslovakia,162
+52,Azerbaijan,256
+53,Benin,366
+54,Denmark,68
+55,Dominica,315
+56,Dominican Republic,334
+57,Belarus,151
+58,Ecuador,283
+59,Egypt,225
+60,El Salvador,299
+63,Estonia,131
+66,Fiji,315
+67,Finland,119
+68,France,156
+70,French Polynesia,315
+72,Djibouti,366
+73,Georgia,194
+74,Gabon,271
+75,Gambia,382
+79,Germany,131
+80,Bosnia and Herzegovina,195
+81,Ghana,319
+83,Kiribati,315
+84,Greece,277
+86,Grenada,315
+89,Guatemala,315
+90,Guinea,347
+91,Guyana,273
+93,Haiti,310
+95,Honduras,305
+96,"China, Hong Kong SAR",315
+97,Hungary,280
+98,Croatia,329
+99,Iceland,315
+100,India,407
+101,Indonesia,339
+102,Iran (Islamic Republic of),458
+103,Iraq,188
+104,Ireland,121
+105,Israel,311
+106,Italy,218
+107,Côte d'Ivoire,310
+108,Kazakhstan,278
+109,Jamaica,331
+110,Japan,149
+112,Jordan,2316
+113,Kyrgyzstan,229
+114,Kenya,399
+115,Cambodia,334
+116,Democratic People's Republic of Korea,195
+117,Republic of Korea,240
+118,Kuwait,198
+119,Latvia,134
+120,Lao People's Democratic Republic,294
+121,Lebanon,237
+122,Lesotho,340
+123,Liberia,315
+124,Libya,246
+126,Lithuania,140
+128,"China, Macao SAR",315
+129,Madagascar,323
+130,Malawi,368
+131,Malaysia,337
+132,Maldives,315
+133,Mali,421
+134,Malta,315
+136,Mauritania,419
+137,Mauritius,315
+138,Mexico,174
+141,Mongolia,214
+143,Morocco,347
+144,Mozambique,353
+146,Republic of Moldova,212
+147,Namibia,287
+149,Nepal,330
+150,Netherlands,118
+151,Netherlands Antilles,315
+153,New Caledonia,315
+154,The former Yugoslav Republic of Macedonia,315
+155,Vanuatu,315
+156,New Zealand,251
+157,Nicaragua,305
+158,Niger,431
+159,Nigeria,420
+162,Norway,118
+165,Pakistan,349
+166,Panama,301
+167,Czech Republic,162
+168,Papua New Guinea,289
+169,Paraguay,428
+170,Peru,374
+171,Philippines,331
+173,Poland,152
+174,Portugal,309
+175,Guinea-Bissau,338
+176,Timor-Leste,315
+177,Puerto Rico,315
+178,Eritrea,554
+179,Qatar,247
+181,Zimbabwe,379
+183,Romania,258
+184,Rwanda,272
+185,Russian Federation,196
+186,Serbia and Montenegro,342
+188,Saint Kitts and Nevis,315
+189,Saint Lucia,315
+191,Saint Vincent and the Grenadines,315
+193,Sao Tome and Principe,315
+194,Saudi Arabia,408
+195,Senegal,397
+197,Sierra Leone,350
+198,Slovenia,159
+199,Slovakia,189
+200,Singapore,328
+201,Somalia,431
+202,South Africa,385
+203,Spain,173
+207,Suriname,295
+208,Tajikistan,291
+209,Swaziland,315
+210,Sweden,135
+211,Switzerland,138
+212,Syrian Arab Republic,434
+213,Turkmenistan,309
+214,"China, Taiwan Province of",315
+215,United Republic of Tanzania,355
+216,Thailand,334
+217,Togo,324
+220,Trinidad and Tobago,333
+221,Oman,425
+222,Tunisia,316
+223,Turkey,261
+225,United Arab Emirates,169
+226,Uganda,286
+228,USSR,196
+229,United Kingdom,117
+230,Ukraine,196
+231,United States of America,372
+233,Burkina Faso,427
+234,Uruguay,231
+235,Uzbekistan,317
+236,Venezuela (Bolivarian Republic of),300
+237,Viet Nam,293
+238,Ethiopia,395
+244,Samoa,315
+248,Yugoslav SFR,315
+249,Yemen,355
+250,Democratic Republic of the Congo,312
+251,Zambia,354
+255,Belgium,102
+256,Luxembourg,157
+272,Serbia,342
+273,Montenegro,342
+276,Sudan,417
+277,South Sudan,417
+999,RoW,315

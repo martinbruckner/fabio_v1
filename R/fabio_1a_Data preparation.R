@@ -301,7 +301,7 @@ Prod <- Prod_raw[,c(1,2,3,4,5,6,8,9,10)]
 rm(Prod_raw)
 names(Prod)[c(3,4)] <- c("Prod.Code","Prod")
 # convert to CBS item codes and aggregate Fodder crops
-cropcom <- read.csv2(file="./inst/fabio_input/Items_Prod-CBS.csv")
+cropcom <- read.csv(file="./inst/fabio_input/Items_Prod-CBS.csv")
 # merg data.tables -> much faster than merging data.frames
 # Prod <- merge(Prod, cropcom[,c(1,3,4)], by="Prod.Code", all.x=TRUE)
 Prod <- merge(data.table(Prod, key="Prod.Code"), data.table(cropcom[,c(1,3,4,5)], key="Prod.Code"))
@@ -315,12 +315,13 @@ names(Prod)[9] <- "Value"
 Prod <- Prod[,c(1:2,7:8,3:6,9)]
 # add fodder crops
 load(file="/mnt/nfs_fineprint/tmp/fabio/raw/Primary_raw.RData")
-foddercrops <- data.frame(Item.Code=c(rep(2000,16)),
-                          Item=c(rep("Fodder crops",16)),
-                          Prod.Code=c(636,637,638,639,640,641,642,643,644,645,646,647,648,649,651,655), 
-                          Prod=c("Forage and silage, maize","Forage and silage, sorghum","Forage and silage, rye grass","Forage and silage, grasses nes",
+# do not include items 639 "Forage and silage, grasses nes" and 645 "Mixed Grasses and Legumes"
+foddercrops <- data.frame(Item.Code=c(rep(2000,14)),
+                          Item=c(rep("Fodder crops",14)),
+                          Prod.Code=c(636,637,638,640,641,642,643,644,646,647,648,649,651,655), 
+                          Prod=c("Forage and silage, maize","Forage and silage, sorghum","Forage and silage, rye grass",
                                  "Forage and silage, clover","Forage and silage, alfalfa","Forage and silage, green oilseeds","Forage and silage, legumes",
-                                 "Cabbage for fodder","Mixed Grasses and Legumes","Turnips for fodder","Beets for fodder","Carrots for fodder",
+                                 "Cabbage for fodder","Turnips for fodder","Beets for fodder","Carrots for fodder",
                                  "Swedes for fodder","Forage products","Vegetables and roots fodder"))
 Fodder <- Primary_raw[Primary_raw$ItemCode %in% foddercrops$Prod.Code,3:10]
 names(Fodder) <- c("Country.Code","Country","Element.Code","Element","Prod.Code","Prod","Year","Value")
@@ -445,7 +446,7 @@ load(file="/mnt/nfs_fineprint/tmp/fabio/raw/ProdEthanol_raw.RData")
 # prepare IEA data
 ProdEthanol_IEA <- ProdEthanol_IEA[-1,-2]
 names(ProdEthanol_IEA)[1] <- "Country.IEA"
-ProdEthanol_IEA <- melt(ProdEthanol_IEA, "Country.IEA", variable.names="Year", value.name = "Production")
+ProdEthanol_IEA <- reshape2::melt(ProdEthanol_IEA, "Country.IEA", variable.names="Year", value.name = "Production")
 ProdEthanol_IEA$Production <- as.numeric(ProdEthanol_IEA$Production)
 ProdEthanol_IEA <- ProdEthanol_IEA[is.finite(ProdEthanol_IEA$Production) & ProdEthanol_IEA$Production > 0,]
 names(ProdEthanol_IEA)[2] <- "Year"
@@ -462,7 +463,7 @@ ProdEthanol_IEA$Production <- round(ProdEthanol_IEA$Production / 0.64 * 1000, 2)
 # prepare EIA data
 ProdEthanol_EIA <- ProdEthanol_EIA[-(1:3),-2]
 names(ProdEthanol_EIA)[1] <- "Country.EIA"
-ProdEthanol_EIA <- melt(ProdEthanol_EIA, "Country.EIA", variable.names="Year", value.name = "Production")
+ProdEthanol_EIA <- reshape2::melt(ProdEthanol_EIA, "Country.EIA", variable.names="Year", value.name = "Production")
 ProdEthanol_EIA$Production <- as.numeric(ProdEthanol_EIA$Production)
 ProdEthanol_EIA <- ProdEthanol_EIA[is.finite(ProdEthanol_EIA$Production),]
 names(ProdEthanol_EIA)[2] <- "Year"
