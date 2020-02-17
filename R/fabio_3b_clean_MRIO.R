@@ -32,6 +32,16 @@ for(year in 1986:2013){
   Zm <- readRDS(file=paste0("/mnt/nfs_fineprint/tmp/fabio/",year,"_Z_mass.rds"))
   Y <- readRDS(file=paste0("/mnt/nfs_fineprint/tmp/fabio/",year,"_Y.rds"))
   X <- readRDS(file=paste0("/mnt/nfs_fineprint/tmp/fabio/",year,"_X.rds"))
+  E <- readRDS(file=paste0("/mnt/nfs_fineprint/tmp/fabio/",year,"_E.rds"))
+  
+  # clean data
+  Zp <- round(Zp,2)
+  # Zp[Zp<0] <-0
+  Zm <- round(Zm,2)
+  # Zm[Zm<0] <-0
+  Y[Y[,"ROW_Balancing"]<0,"ROW_Balancing"] <- 0
+  Y <- round(Y,2)
+  X <- rowSums(Zm) + rowSums(Y)
   
   
   # save results
