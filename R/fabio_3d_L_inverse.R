@@ -20,8 +20,8 @@ fabio_inverse <- function(year){
   diag(A)[diag(A)==1] <- 1 - 1e-10
   
   L <- diag(nrow(A))-A
-  L <- solve(L, tol = 1.0e-60)
-  
+  L <- solve(L, tol = 1.0e-40)
+  L[L<0] <- 0
   saveRDS(L, paste0("/mnt/nfs_fineprint/tmp/fabio/", year, "_L_mass.rds"))
   # saveRDS(L, paste0("../wu_share/WU/Projekte/GRU/04_Daten/", year, "_L_mass.rds"))
   
@@ -34,8 +34,8 @@ fabio_inverse <- function(year){
   diag(A)[diag(A)==1] <- 1 - 1e-10
   
   L <- diag(nrow(A))-A
-  L <- solve(L, tol = 1.0e-60)
-  
+  L <- solve(L, tol = 1.0e-40)
+  L[L<0] <- 0
   saveRDS(L, paste0("/mnt/nfs_fineprint/tmp/fabio/", year, "_L_price.rds"))
   # saveRDS(L, paste0("../wu_share/WU/Projekte/GRU/04_Daten/", year, "_L_price.rds"))
 }

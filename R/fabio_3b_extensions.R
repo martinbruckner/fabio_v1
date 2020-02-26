@@ -61,10 +61,12 @@ for(year in years){
   E$Landuse <- Landuse$Value[match(E$ID,Landuse$ID)]
   E$Landuse[!is.finite(E$Landuse)] <- 0
   E$Landuse[E$Group != "Primary crops" & E$Item!="Sweeteners, Other"] <- 0
+  E$Landuse[E$Landuse<0] <- 0
   E$Biomass <- Biomass$Value[match(E$ID,Biomass$ID)]
   E$Biomass[!is.finite(E$Biomass)] <- 0
   E$Biomass[E$Group != "Primary crops"] <- 0
   E$Biomass[E$Item=="Grazing"] <- X[E$Item=="Grazing"]
+  E$Landuse[E$Landuse<0] <- 0
   
   saveRDS(E, file=paste0("/mnt/nfs_fineprint/tmp/fabio/",year,"_E.rds"))
 }
