@@ -7,7 +7,7 @@ FABIO provides a set of multi-regional physical supply-use and input-output tabl
 
 To cite FABIO work please refer to this paper:
 
-Bruckner, M., Wood, R., Moran, D., Kuschnig, N., Wieland, H., Maus, V., Börner, J., 2019. FABIO – The Construction of the Food and Agriculture Input-Output Model. Environmental Science & Technology 53(19), 11302-11312. DOI: 10.1021/acs.est.9b03554
+Bruckner, M., Wood, R., Moran, D., Kuschnig, N., Wieland, H., Maus, V., Börner, J., 2019. FABIO – The Construction of the Food and Agriculture Input-Output Model. Environmental Science & Technology 53(19), 11302-11312. www.doi.org/10.1021/acs.est.9b03554
 
 ### License
 
