@@ -17,7 +17,7 @@ This repository provides all scripts and auxiliary data, which are distributed u
 
 ### Reproducibility
 
-Due to changes in the structure of the data sets provided by FAOSTAT after these scripts were written, they currently cannot be run. We are currently revising the code and will adapt it accordingly.
+Due to changes in the structure of the datasets provided by FAOSTAT, this version of the FABIO scripts cannot be run with the latest version of FAOSTAT datasets.
 
 ### Database
 
