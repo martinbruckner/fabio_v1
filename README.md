@@ -1,7 +1,9 @@
-# FABIO
+# FABIO v1
 ### The Food and Agriculture Biomass Input-Output database
 
 FABIO provides a set of multi-regional physical supply-use and input-output tables covering global agriculture and forestry. The work is based on mostly freely available data from FAOSTAT, IEA, EIA, and UN Comtrade/BACI. FABIO currently covers 191 countries + RoW, 121 processes and 130 commodities for 1986-2013.
+
+This repository provides all codes used to generate version 1 of the FABIO database. The most recent version of the codes is available here: https://github.com/fineprint-global/fabio
 
 ### How to cite
 
